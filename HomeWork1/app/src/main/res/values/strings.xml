@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Home Work №1</string>
+    <string name="first_activity">First activity</string>
+    <string name="reset">Reset</string>
+    <string name="second_activity">Second activity</string>
+    <string name="start_service">Start service</string>
+    <string name="start_activity_2">Start activity 2</string>
+    <string name="longitude">Longitude:</string>
+    <string name="_0">0</string>
+    <string name="latitude">Latitude:</string>
+    <string name="hello_service">Hello from service!!!</string>
+    <string name="error">Error!</string>
+</resources>
