@@ -2,6 +2,7 @@ package ru.s44khin.homework1
 
 import android.annotation.SuppressLint
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.widget.Toast
@@ -11,6 +12,11 @@ import com.google.android.gms.location.LocationServices
 
 
 class Service : Service() {
+
+    companion object {
+        fun createIntent(context: Context) = Intent(context, Service::class.java)
+    }
+
     private val fusedLocationClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(this)
     }
@@ -25,11 +31,11 @@ class Service : Service() {
             if (taskLocation.isSuccessful && taskLocation.result != null) {
                 val location = taskLocation.result
 
-                val intent = Intent("EXTRA_GEOLOCATION")
+                val broadcastManagerIntent = Intent("EXTRA_GEOLOCATION")
                     .putExtra("LATITUDE", location.latitude)
                     .putExtra("LONGITUDE", location.longitude)
 
-                LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+                LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastManagerIntent)
             } else {
                 Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show()
             }

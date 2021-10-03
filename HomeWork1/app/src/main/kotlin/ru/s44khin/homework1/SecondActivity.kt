@@ -11,8 +11,13 @@ import ru.s44khin.homework1.databinding.ActivitySecondBinding
 
 class SecondActivity : AppCompatActivity() {
 
-    private var _binding: ActivitySecondBinding? = null
-    private val binding get() = _binding!!
+    companion object {
+        fun createIntent(context: Context) = Intent(context, SecondActivity::class.java)
+    }
+
+    private val binding: ActivitySecondBinding by lazy {
+        ActivitySecondBinding.inflate(layoutInflater)
+    }
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
@@ -32,15 +37,13 @@ class SecondActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        _binding = ActivitySecondBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.buttonStartService.setOnClickListener {
             val filter = IntentFilter()
             filter.addAction("EXTRA_GEOLOCATION")
             LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter)
-            startService(Intent(this, Service::class.java))
+            startService(Service.createIntent(this))
         }
     }
 }
