@@ -2,7 +2,6 @@ package ru.s44khin.homework1
 
 import android.Manifest
 import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -13,15 +12,16 @@ import ru.s44khin.homework1.databinding.ActivityFirstBinding
 
 class FirstActivity : AppCompatActivity() {
 
-    private var _binding: ActivityFirstBinding? = null
-    private val binding get() = _binding!!
+    private val binding: ActivityFirstBinding by lazy {
+        ActivityFirstBinding.inflate(layoutInflater)
+    }
 
     private val permissions = registerForActivityResult(RequestPermission()) { granted ->
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             when {
                 granted -> {
                     binding.buttonGetGeolocation.setOnClickListener {
-                        location.launch(Intent(this, SecondActivity::class.java))
+                        location.launch(SecondActivity.createIntent(this))
                     }
                 }
                 else -> {
@@ -41,8 +41,6 @@ class FirstActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        _binding = ActivityFirstBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         permissions.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
