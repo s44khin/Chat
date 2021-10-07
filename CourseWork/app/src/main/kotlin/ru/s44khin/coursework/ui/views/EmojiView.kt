@@ -17,17 +17,17 @@ class EmojiView @JvmOverloads constructor(
         private val SUPPORTED_DRAWABLE_STATE = intArrayOf(android.R.attr.state_selected)
     }
 
-    private var text = ""
+    var text = ""
+    var emoji = ""
+    var textColor = Color.BLACK
+    var textSize = 24f
+    var marginBetween = 0f
     private val textBounds = Rect()
     private val textCoordinate = PointF()
-    private var emoji = ""
     private val emojiBounds = Rect()
     private val emojiCoordinate = PointF()
-    private var marginBetween = 0f
-    private val textPaint = Paint().apply {
-        textAlign = Paint.Align.LEFT
-        isAntiAlias = true
-    }
+
+    private val textPaint = Paint()
 
     init {
         val attrsArray = context.obtainStyledAttributes(
@@ -40,13 +40,19 @@ class EmojiView @JvmOverloads constructor(
         text = attrsArray.getString(R.styleable.EmojiView_text) ?: ""
         emoji = attrsArray.getString(R.styleable.EmojiView_emoji) ?: ""
         marginBetween = attrsArray.getDimension(R.styleable.EmojiView_marginBetween, 0f)
-        textPaint.color = attrsArray.getColor(R.styleable.EmojiView_textColor, Color.BLACK)
-        textPaint.textSize = attrsArray.getDimension(R.styleable.EmojiView_textSize, 24f)
+        textColor = attrsArray.getColor(R.styleable.EmojiView_textColor, Color.BLACK)
+        textSize = attrsArray.getDimension(R.styleable.EmojiView_textSize, 24f)
 
         attrsArray.recycle()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        textPaint.apply {
+            textSize = this@EmojiView.textSize
+            color = textColor
+            isAntiAlias = true
+        }
+
         textPaint.getTextBounds(text, 0, text.length, textBounds)
         textPaint.getTextBounds(emoji, 0, emoji.length, emojiBounds)
 

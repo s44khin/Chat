@@ -28,30 +28,26 @@ class FlexBoxLayout @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var totalWidth = paddingLeft + paddingRight
+        var totalWidth = paddingLeft + paddingEnd
         var totalHeight = paddingTop + paddingBottom
+
+        val maxWidth = MeasureSpec.getSize(widthMeasureSpec)
 
         for (i in 0 until childCount) {
             val child = getChildAt(i)
 
-            measureChildWithMargins(
-                child,
-                widthMeasureSpec,
-                totalWidth,
-                heightMeasureSpec,
-                totalHeight
-            )
+            measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0)
 
-            if (totalWidth + child.measuredWidth + marginBetween > MeasureSpec.getSize(widthMeasureSpec)) {
+            if (totalWidth + child.measuredWidth + marginBetween.toInt() > maxWidth) {
+                totalHeight += child.measuredHeight + marginBetween.toInt()
                 totalWidth = 0
-                totalHeight += child.measuredHeight
             }
 
-            totalWidth += child.width + marginBetween.toInt()
+            totalWidth += child.measuredWidth + marginBetween.toInt()
         }
 
-        val resultWidth = resolveSize(MeasureSpec.getSize(widthMeasureSpec), widthMeasureSpec)
-        val resultHeight = resolveSize(totalHeight + getChildAt(0).height, heightMeasureSpec)
+        val resultWidth = resolveSize(maxWidth, widthMeasureSpec)
+        val resultHeight = resolveSize(totalHeight + getChildAt(0).measuredHeight, heightMeasureSpec)
 
         setMeasuredDimension(resultWidth, resultHeight)
     }
