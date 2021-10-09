@@ -17,17 +17,17 @@ class EmojiView @JvmOverloads constructor(
         private val SUPPORTED_DRAWABLE_STATE = intArrayOf(android.R.attr.state_selected)
     }
 
-    var text = ""
-    var emoji = ""
-    var textColor = Color.BLACK
-    var textSize = 24f
-    var marginBetween = 0f
-    private val textBounds = Rect()
-    private val textCoordinate = PointF()
-    private val emojiBounds = Rect()
-    private val emojiCoordinate = PointF()
+    private var paint = Paint()
+    private var textBounds = Rect()
+    private var emojiBounds = Rect()
+    private var textCoordinate = PointF()
+    private var emojiCoordinate = PointF()
 
-    private val textPaint = Paint()
+    var emoji = ""
+    var text = ""
+    var textColor = Color.BLACK
+    var textSize = context.resources.getDimension(R.dimen.defaultTextSize)
+    var marginBetween = context.resources.getDimension(R.dimen.marginBetween).toInt()
 
     init {
         val attrsArray = context.obtainStyledAttributes(
@@ -37,50 +37,57 @@ class EmojiView @JvmOverloads constructor(
             defStyleRes
         )
 
-        text = attrsArray.getString(R.styleable.EmojiView_text) ?: ""
-        emoji = attrsArray.getString(R.styleable.EmojiView_emoji) ?: ""
-        marginBetween = attrsArray.getDimension(R.styleable.EmojiView_marginBetween, 0f)
+        emoji = attrsArray.getString(R.styleable.EmojiView_emoji) ?: "❌"
+        text = attrsArray.getString(R.styleable.EmojiView_text) ?: "0"
         textColor = attrsArray.getColor(R.styleable.EmojiView_textColor, Color.BLACK)
-        textSize = attrsArray.getDimension(R.styleable.EmojiView_textSize, 24f)
+
+        textSize = attrsArray.getDimension(
+            R.styleable.EmojiView_textSize,
+            context.resources.getDimension(R.dimen.defaultTextSize)
+        )
+
+        marginBetween = attrsArray.getDimension(
+            R.styleable.EmojiView_marginBetween,
+            context.resources.getDimension(R.dimen.marginBetween)
+        ).toInt()
 
         attrsArray.recycle()
+
+        paint.apply {
+            color = textColor
+            textSize = this@EmojiView.textSize
+            isAntiAlias = true
+            textAlign = Paint.Align.LEFT
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        textPaint.apply {
-            textSize = this@EmojiView.textSize
-            color = textColor
-            isAntiAlias = true
-        }
-
-        textPaint.getTextBounds(text, 0, text.length, textBounds)
-        textPaint.getTextBounds(emoji, 0, emoji.length, emojiBounds)
+        paint.getTextBounds(emoji, 0, emoji.length, emojiBounds)
+        paint.getTextBounds(text, 0, text.length, textBounds)
 
         val totalWidth =
-            textBounds.width() + emojiBounds.width() + paddingRight + paddingLeft + marginBetween
-        val totalHeight =
-            maxOf(textBounds.height(), emojiBounds.height()) + paddingTop + paddingBottom
+            paddingLeft + emojiBounds.width() + marginBetween + textBounds.width() + paddingRight
 
-        val resultWidth = resolveSize(totalWidth.toInt(), widthMeasureSpec)
+        val totalHeight =
+            paddingTop + maxOf(emojiBounds.height(), textBounds.height()) + paddingBottom
+
+        val resultWidth = resolveSize(totalWidth, widthMeasureSpec)
         val resultHeight = resolveSize(totalHeight, heightMeasureSpec)
 
         setMeasuredDimension(resultWidth, resultHeight)
     }
 
-    /**
-     * Текст крепится к левому краю, emoji к правому краю
-     */
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        textCoordinate.x = paddingStart.toFloat()
-        textCoordinate.y = h / 2f + textBounds.height() / 2f
+        emojiCoordinate.x = paddingLeft.toFloat()
+        emojiCoordinate.y = height / 2f + textBounds.height() / 2f
 
-        emojiCoordinate.x = (width - emojiBounds.width() - paddingEnd).toFloat()
-        emojiCoordinate.y = h / 2f + textBounds.height() / 2f
+        textCoordinate.x = (paddingLeft + emojiBounds.width() + marginBetween).toFloat()
+        textCoordinate.y = height / 2f + textBounds.height() / 2f
     }
 
     override fun onDraw(canvas: Canvas) {
-        canvas.drawText(text, textCoordinate.x, textCoordinate.y, textPaint)
-        canvas.drawText(emoji, emojiCoordinate.x, emojiCoordinate.y, textPaint)
+        canvas.drawText(emoji, emojiCoordinate.x, emojiCoordinate.y, paint)
+        canvas.drawText(text, textCoordinate.x, textCoordinate.y, paint)
     }
 
     override fun onCreateDrawableState(extraSpace: Int): IntArray {

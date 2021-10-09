@@ -3,5 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#2A9D8F</color>
-    <color name="colorOnPrimary">#FFFFFFFF</color>
+    <color name="onPrimary">#FFFFFFFF</color>
+    <color name="background">#FFFFFF</color>
+    <color name="message">#F6F6F6</color>
+    <color name="messageSelected">#AAAAAA</color>
 </resources>
