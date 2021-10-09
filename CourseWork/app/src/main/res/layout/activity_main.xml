@@ -6,12 +6,4 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <ru.s44khin.coursework.ui.views.EmojiView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/emoji_view_background"
-        app:textSize="24sp"
-        android:padding="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
