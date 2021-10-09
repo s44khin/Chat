@@ -14,6 +14,22 @@ class FlexBoxLayout @JvmOverloads constructor(
 
     var marginBetween = context.resources.getDimension(R.dimen.marginBetween).toInt()
 
+    init {
+        val attrsArray = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.FlexBoxLayout,
+            defStyleAttr,
+            defStyleRes
+        )
+
+        marginBetween = attrsArray.getDimension(
+            R.styleable.FlexBoxLayout_marginBetween,
+            context.resources.getDimension(R.dimen.marginBetween)
+        ).toInt()
+
+        attrsArray.recycle()
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         var totalWidth = paddingLeft + paddingRight
         var totalHeight = paddingTop + (getChildAt(0)?.measuredHeight ?: 0) + paddingBottom

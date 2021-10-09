@@ -13,4 +13,15 @@
     <declare-styleable name="FlexBoxLayout">
         <attr name="marginBetween" />
     </declare-styleable>
+
+    <declare-styleable name="MessageView">
+        <attr name="alignment" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+        <attr name="messageCornerRadius" format="dimension" />
+        <attr name="messagePadding" format="dimension" />
+        <attr name="avatarMessageMargin" format="dimension" />
+        <attr name="messageFlexBoxMargin" format="dimension" />
+    </declare-styleable>
 </resources>
