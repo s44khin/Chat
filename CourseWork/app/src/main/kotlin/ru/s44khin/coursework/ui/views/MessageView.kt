@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import ru.s44khin.coursework.R
 
 class MessageView @JvmOverloads constructor(
@@ -17,7 +18,7 @@ class MessageView @JvmOverloads constructor(
 ) : ViewGroup(context, attrs, defStyleAttr, defStyleRes) {
 
     private var paint = Paint().apply {
-        color = resources.getColor(R.color.message)
+        color = ContextCompat.getColor(context, R.color.message)
     }
 
     var avatar: ImageView
@@ -113,12 +114,12 @@ class MessageView @JvmOverloads constructor(
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) = when (alignment) {
-        0 -> onLayoutLeft(changed, l, t, r, b)
-        1 -> onLayoutRight(changed, l, t, r, b)
+        0 -> onLayoutLeft()
+        1 -> onLayoutRight()
         else -> throw Exception("Expected \"left\" or \"right\", but received $alignment")
     }
 
-    private fun onLayoutLeft(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+    private fun onLayoutLeft() {
         avatar.layout(
             paddingLeft,
             paddingTop,
@@ -152,7 +153,7 @@ class MessageView @JvmOverloads constructor(
         )
     }
 
-    private fun onLayoutRight(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+    private fun onLayoutRight() {
         avatar.layout(
             width - paddingRight - avatar.measuredWidth,
             paddingTop,
