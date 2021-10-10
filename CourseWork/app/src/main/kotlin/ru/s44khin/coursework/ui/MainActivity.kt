@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.setPadding
 import ru.s44khin.coursework.R
 import ru.s44khin.coursework.databinding.ActivityMainBinding
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         binding.messageFirst.flexBoxLayout.addView(
             ImageView(this).apply {
