@@ -3,4 +3,5 @@
     <dimen name="defaultTextSize">16sp</dimen>
     <dimen name="marginBetween">10dp</dimen>
     <dimen name="cornerRadius">20dp</dimen>
+    <dimen name="defaultPadding">16dp</dimen>
 </resources>
