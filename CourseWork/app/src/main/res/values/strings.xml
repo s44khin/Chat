@@ -3,5 +3,7 @@
     <string name="profile">profile</string>
     <string name="message_sample">Привет! lorem ipsum test message dalshe zabil</string>
     <string name="profile_sample">Darrell Steward</string>
-    <string name="Message">Сообщение</string>
+    <string name="message">Сообщение</string>
+    <string name="write">Написать…</string>
+    <string name="send">Отправить</string>
 </resources>
