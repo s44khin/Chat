@@ -3,6 +3,7 @@ package ru.s44khin.coursework.ui.views
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -20,6 +21,11 @@ class MessageView @JvmOverloads constructor(
     private var paint = Paint().apply {
         color = ContextCompat.getColor(context, R.color.message)
     }
+
+    private val avatarBounds = Rect()
+    private val profileBounds = Rect()
+    private val messageBounds = Rect()
+    private val flexBoxBounds = Rect()
 
     var avatar: ImageView
     var profile: TextView
@@ -113,112 +119,91 @@ class MessageView @JvmOverloads constructor(
         setMeasuredDimension(resultWidth, resultHeight)
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) = when (alignment) {
-        0 -> onLayoutLeft()
-        1 -> onLayoutRight()
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) = when (alignment) {
+        0 -> onSizeChangedLeft()
+        1 -> onSizeChangedRight()
         else -> throw Exception("Expected \"left\" or \"right\", but received $alignment")
     }
 
-    private fun onLayoutLeft() {
-        avatar.layout(
-            paddingLeft,
-            paddingTop,
-            paddingLeft + avatar.measuredWidth,
-            paddingTop + avatar.measuredHeight
-        )
+    private fun onSizeChangedLeft() {
+        avatarBounds.apply {
+            left = paddingLeft
+            top = paddingTop
+            right = avatar.measuredWidth
+            bottom = avatar.measuredHeight
+        }
 
-        profile.layout(
-            paddingLeft + avatarMessageMargin + messagePadding + avatar.measuredWidth,
-            paddingTop + messagePadding,
-            paddingLeft + avatarMessageMargin + messagePadding +
-                    avatar.measuredWidth + profile.measuredWidth,
-            paddingTop + messagePadding + profile.measuredHeight
-        )
+        profileBounds.apply {
+            left = paddingLeft + avatarMessageMargin + messagePadding + avatarBounds.width()
+            top = paddingTop + messagePadding
+            right = left + profile.measuredWidth
+            bottom = top + profile.measuredHeight
+        }
 
-        message.layout(
-            paddingLeft + avatarMessageMargin + messagePadding + avatar.measuredWidth,
-            paddingTop + messagePadding + profile.measuredHeight,
-            paddingLeft + avatarMessageMargin + messagePadding +
-                    avatar.measuredWidth + message.measuredWidth,
-            paddingTop + messagePadding + profile.measuredHeight + message.measuredHeight
-        )
+        messageBounds.apply {
+            left = profileBounds.left
+            top = profileBounds.bottom
+            right = left + message.measuredWidth
+            bottom = top + message.measuredHeight
+        }
 
-        flexBoxLayout.layout(
-            paddingLeft + avatarMessageMargin + avatar.measuredWidth,
-            paddingTop + 2 * messagePadding + profile.measuredHeight +
-                    message.measuredHeight + messageFlexBoxMargin,
-            paddingLeft + avatarMessageMargin + avatar.measuredWidth + flexBoxLayout.measuredWidth,
-            paddingTop + 2 * messagePadding + profile.measuredHeight +
-                    messageFlexBoxMargin + message.measuredHeight + flexBoxLayout.measuredHeight
-        )
+        flexBoxBounds.apply {
+            left = profileBounds.left - messagePadding
+            top = messageBounds.bottom + messageFlexBoxMargin + messagePadding
+            right = left + flexBoxLayout.measuredWidth
+            bottom = top + flexBoxLayout.measuredHeight
+        }
     }
 
-    private fun onLayoutRight() {
-        avatar.layout(
-            width - paddingRight - avatar.measuredWidth,
-            paddingTop,
-            width,
-            paddingTop + avatar.measuredHeight
-        )
+    private fun onSizeChangedRight() {
+        avatarBounds.apply {
+            right = width - paddingRight
+            top = paddingTop
+            left = right - avatar.measuredWidth
+            bottom = top + avatar.measuredHeight
+        }
 
-        profile.layout(
-            paddingLeft + messagePadding,
-            paddingTop + messagePadding,
-            width - paddingRight - avatar.measuredWidth - avatarMessageMargin - messagePadding,
-            paddingTop + messagePadding + profile.measuredHeight
-        )
+        profileBounds.apply {
+            right = avatarBounds.left - avatarMessageMargin - messagePadding
+            top = paddingTop + messagePadding
+            left = right - maxOf(profile.measuredWidth, message.measuredWidth)
+            bottom = top + profile.measuredHeight
+        }
 
-        message.layout(
-            paddingLeft + messagePadding,
-            paddingTop + messagePadding + profile.measuredHeight,
-            width - paddingRight - avatar.measuredWidth - avatarMessageMargin - messagePadding,
-            paddingTop + messagePadding + profile.measuredHeight + message.measuredHeight
-        )
+        messageBounds.apply {
+            right = profileBounds.right
+            top = profileBounds.bottom
+            left = right - maxOf(profile.measuredWidth, message.measuredWidth)
+            bottom = top + message.measuredHeight
+        }
 
-        flexBoxLayout.layout(
-            paddingLeft,
-            paddingTop + 2 * messagePadding + profile.measuredHeight +
-                    message.measuredHeight + messageFlexBoxMargin,
-            width - avatar.measuredWidth - avatarMessageMargin,
-            paddingTop + 2 * messagePadding + profile.measuredHeight +
-                    message.measuredHeight + messageFlexBoxMargin + flexBoxLayout.measuredHeight
-        )
+        flexBoxBounds.apply {
+            right = avatarBounds.left - avatarMessageMargin
+            top = messageBounds.bottom + messageFlexBoxMargin + messagePadding
+            left = right - maxOf(profile.measuredWidth, message.measuredWidth) - 2 * messagePadding
+            bottom = top + flexBoxLayout.measuredHeight
+        }
     }
 
-    override fun dispatchDraw(canvas: Canvas) = when (alignment) {
-        0 -> {
-            canvas.drawRoundRect(
-                (paddingLeft + avatarMessageMargin + avatar.measuredWidth).toFloat(),
-                paddingTop.toFloat(),
-                (paddingLeft + avatarMessageMargin + messagePadding + avatar.measuredWidth + maxOf(
-                    profile.measuredWidth,
-                    message.measuredWidth
-                )).toFloat(),
-                (paddingTop + 2 * messagePadding +
-                        profile.measuredHeight + message.measuredHeight).toFloat(),
-                messageCornerRadius.toFloat(),
-                messageCornerRadius.toFloat(),
-                paint
-            )
-            super.dispatchDraw(canvas)
-        }
-        1 -> {
-            canvas.drawRoundRect(
-                paddingLeft.toFloat(),
-                paddingTop.toFloat(),
-                (width - avatar.measuredWidth - avatarMessageMargin).toFloat(),
-                (paddingTop + 2 * messagePadding +
-                        profile.measuredHeight + message.measuredHeight).toFloat(),
-                messageCornerRadius.toFloat(),
-                messageCornerRadius.toFloat(),
-                paint
-            )
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        avatar.layout(avatarBounds.left, avatarBounds.top, avatarBounds.right, avatarBounds.bottom)
+        profile.layout(profileBounds.left, profileBounds.top, profileBounds.right, profileBounds.bottom)
+        message.layout(messageBounds.left, messageBounds.top, messageBounds.right, messageBounds.bottom)
+        flexBoxLayout.layout(flexBoxBounds.left, flexBoxBounds.top, flexBoxBounds.right, flexBoxBounds.bottom)
+    }
 
-            super.dispatchDraw(canvas)
-        }
-        else -> {
-            super.dispatchDraw(canvas)
-        }
+    override fun dispatchDraw(canvas: Canvas) {
+        canvas.drawRoundRect(
+            (profileBounds.left - messagePadding).toFloat(),
+            (profileBounds.top - messagePadding).toFloat(),
+            (maxOf(profileBounds.right, messageBounds.right) + messagePadding).toFloat(),
+            (messageBounds.bottom + messagePadding).toFloat(),
+            messageCornerRadius.toFloat(),
+            messageCornerRadius.toFloat(),
+            paint
+        )
+
+        super.dispatchDraw(canvas)
     }
 
     override fun generateLayoutParams(attrs: AttributeSet?): LayoutParams {
