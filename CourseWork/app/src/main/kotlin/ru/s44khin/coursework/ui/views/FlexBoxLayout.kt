@@ -34,16 +34,20 @@ class FlexBoxLayout @JvmOverloads constructor(
         var totalWidth = paddingLeft + paddingRight
         var totalHeight = paddingTop + (getChildAt(0)?.measuredHeight ?: 0) + paddingBottom
 
-        var maxWidth = MeasureSpec.getSize(widthMeasureSpec)
+        val width = MeasureSpec.getSize(widthMeasureSpec)
+        var maxWidth = 0
 
         for (i in 0 until childCount) {
             val child = getChildAt(i)
 
             measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0)
 
-            if (totalWidth + child.measuredWidth > maxWidth) {
+            if (totalWidth + child.measuredWidth > width) {
                 totalHeight += child.measuredHeight + marginBetween
                 totalWidth = paddingLeft + paddingRight
+
+                if (totalWidth > maxWidth)
+                    maxWidth = totalWidth
             }
 
             totalWidth += child.measuredWidth + marginBetween
@@ -62,7 +66,7 @@ class FlexBoxLayout @JvmOverloads constructor(
         for (i in 0 until childCount) {
             val child = getChildAt(i)
 
-            if (currentLeft + child.measuredWidth + paddingLeft > width) {
+            if (currentLeft + child.measuredWidth + paddingRight > r - l) {
                 currentTop += child.measuredHeight + marginBetween
                 currentLeft = paddingLeft
             }

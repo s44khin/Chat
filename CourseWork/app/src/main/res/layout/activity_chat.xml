@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="@dimen/defaultPadding"
-        android:paddingBottom="@dimen/defaultPadding"
+        android:paddingBottom="64dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:clipToPadding="false"

@@ -100,7 +100,7 @@ class MessageView @JvmOverloads constructor(
         measureChildWithMargins(
             flexBoxLayout,
             widthMeasureSpec,
-            totalWidth,
+            totalWidth - 2 * messagePadding,
             heightMeasureSpec,
             totalHeight
         )
@@ -148,9 +148,9 @@ class MessageView @JvmOverloads constructor(
         }
 
         flexBoxBounds.apply {
-            left = profileBounds.left - messagePadding
+            left = avatarBounds.right + avatarMessageMargin
             top = messageBounds.bottom + messageFlexBoxMargin + messagePadding
-            right = left + flexBoxLayout.measuredWidth
+            right = left + maxOf(messageBounds.width(), profileBounds.width()) + 2 * messagePadding
             bottom = top + flexBoxLayout.measuredHeight
         }
     }
