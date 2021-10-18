@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#2A9D8F</color>
+    <color name="onPrimary">#FFFFFFFF</color>
+    <color name="background">#FFFFFF</color>
+    <color name="message">#F6F6F6</color>
+    <color name="messageSelected">#D6D6D6</color>
+    <color name="textColor">#FF000000</color>
+</resources>
