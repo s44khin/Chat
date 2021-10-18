@@ -18,6 +18,11 @@ class MessageView @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : ViewGroup(context, attrs, defStyleAttr, defStyleRes) {
 
+    companion object {
+        const val LEFT = 0
+        const val RIGHT = 1
+    }
+
     private var paint = Paint().apply {
         color = ContextCompat.getColor(context, R.color.message)
     }
@@ -120,8 +125,8 @@ class MessageView @JvmOverloads constructor(
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) = when (alignment) {
-        0 -> onSizeChangedLeft()
-        1 -> onSizeChangedRight()
+        LEFT -> onSizeChangedLeft()
+        RIGHT -> onSizeChangedRight()
         else -> throw Exception("Expected \"left\" or \"right\", but received $alignment")
     }
 
@@ -150,7 +155,7 @@ class MessageView @JvmOverloads constructor(
         flexBoxBounds.apply {
             left = avatarBounds.right + avatarMessageMargin
             top = messageBounds.bottom + messageFlexBoxMargin + messagePadding
-            right = left + maxOf(messageBounds.width(), profileBounds.width()) + 2 * messagePadding
+            right = left + flexBoxLayout.measuredWidth
             bottom = top + flexBoxLayout.measuredHeight
         }
     }
@@ -180,7 +185,7 @@ class MessageView @JvmOverloads constructor(
         flexBoxBounds.apply {
             right = avatarBounds.left - avatarMessageMargin
             top = messageBounds.bottom + messageFlexBoxMargin + messagePadding
-            left = right - maxOf(profile.measuredWidth, message.measuredWidth) - 2 * messagePadding
+            left = right - flexBoxLayout.measuredWidth
             bottom = top + flexBoxLayout.measuredHeight
         }
     }

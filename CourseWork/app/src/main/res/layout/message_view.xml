@@ -27,6 +27,6 @@
 
     <ru.s44khin.coursework.ui.views.FlexBoxLayout
         android:id="@+id/reactions"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </merge>

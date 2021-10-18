@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
-        android:src="@drawable/round_sentiment_satisfied_alt_24"
+        android:src="@drawable/ic_emoji"
         app:layout_constraintStart_toEndOf="@id/message"
         app:layout_constraintTop_toTopOf="@id/message"
         app:tint="@color/gray" />
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/send"
         android:elevation="0dp"
-        android:src="@drawable/round_attach_file_24"
+        android:src="@drawable/ic_attach_file"
         app:backgroundTint="@color/chatBottomInput"
         app:elevation="0dp"
         app:fabCustomSize="42dp"
