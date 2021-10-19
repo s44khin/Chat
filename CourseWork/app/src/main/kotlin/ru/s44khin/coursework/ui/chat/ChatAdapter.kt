@@ -94,17 +94,17 @@ class ChatAdapter(
                     LayoutInflater.from(context)
                         .inflate(R.layout.chat_add_button, holder.flexBoxLayout).apply {
                             setOnClickListener {
-                                showEmojiBottomSheet(context, item, holder.flexBoxLayout)
+                                showBottomSheet(context, item, holder.flexBoxLayout)
                             }
                         }
 
                 for ((emoji, text) in item.reactions)
                     holder.flexBoxLayout.addView(
-                        addEmojiView(context, item, holder.flexBoxLayout, emoji, text)
+                        addEmojiView(item, holder.flexBoxLayout, emoji, text)
                     )
 
                 holder.message.setOnLongClickListener {
-                    showEmojiBottomSheet(context, item, holder.flexBoxLayout)
+                    showBottomSheet(context, item, holder.flexBoxLayout)
                 }
             }
             TYPE_MESSAGE_RIGHT -> {
@@ -121,17 +121,17 @@ class ChatAdapter(
                     LayoutInflater.from(context)
                         .inflate(R.layout.chat_add_button, holder.flexBoxLayout).apply {
                             setOnClickListener {
-                                showEmojiBottomSheet(context, item, holder.flexBoxLayout)
+                                showBottomSheet(context, item, holder.flexBoxLayout)
                             }
                         }
 
                 for ((emoji, text) in item.reactions)
                     holder.flexBoxLayout.addView(
-                        addEmojiView(context, item, holder.flexBoxLayout, emoji, text)
+                        addEmojiView(item, holder.flexBoxLayout, emoji, text)
                     )
 
                 holder.message.setOnLongClickListener {
-                    showEmojiBottomSheet(context, item, holder.flexBoxLayout)
+                    showBottomSheet(context, item, holder.flexBoxLayout)
                 }
             }
             else -> throw Exception("Invalid view type")
@@ -143,19 +143,18 @@ class ChatAdapter(
         is Int -> TYPE_DATE
         is Message -> {
             val item = items[position] as Message
-            if (item.alignment == 0) TYPE_MESSAGE_LEFT else TYPE_MESSAGE_RIGHT
+            if (item.alignment == MessageView.LEFT) TYPE_MESSAGE_LEFT else TYPE_MESSAGE_RIGHT
         }
         else -> throw Exception("Invalid view type")
     }
 
     private fun addEmojiView(
-        context: Context,
         item: Message,
         flexBoxLayout: FlexBoxLayout,
         emoji: String,
         text: Int,
         isSelected: Boolean = false
-    ) = EmojiView(context).apply {
+    ) = EmojiView(flexBoxLayout.context).apply {
         setPadding(20)
         this.emoji = emoji
         this.text = text.toString()
@@ -188,11 +187,7 @@ class ChatAdapter(
         }
     }
 
-    private fun showEmojiBottomSheet(
-        context: Context,
-        item: Message,
-        flexBoxLayout: FlexBoxLayout
-    ): Boolean {
+    private fun showBottomSheet(context: Context, item: Message, flexBox: FlexBoxLayout): Boolean {
         val fragmentManager = (context as FragmentActivity).supportFragmentManager
         val emojiBottomSheet = EmojiBottomSheet()
 
@@ -208,16 +203,16 @@ class ChatAdapter(
                         check = false
 
                 if (check) {
-                    if (flexBoxLayout.childCount == 0)
+                    if (flexBox.childCount == 0)
                         LayoutInflater.from(context)
-                            .inflate(R.layout.chat_add_button, flexBoxLayout).apply {
+                            .inflate(R.layout.chat_add_button, flexBox).apply {
                                 setOnClickListener {
-                                    showEmojiBottomSheet(context, item, flexBoxLayout)
+                                    showBottomSheet(context, item, flexBox)
                                 }
                             }
 
-                    flexBoxLayout.addView(
-                        addEmojiView(context, item, flexBoxLayout, emoji, 1, true)
+                    flexBox.addView(
+                        addEmojiView(item, flexBox, emoji, 1, true)
                     )
                 }
 

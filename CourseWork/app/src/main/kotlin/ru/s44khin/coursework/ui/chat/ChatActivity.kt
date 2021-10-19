@@ -53,26 +53,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun setButtons() = binding.messageInput.message.doOnTextChanged { text, _, _, _ ->
         binding.messageInput.send.apply {
-            setOnClickListener {
-                if (text?.length != 0) {
-                    val message = Message(
-                        date = (System.currentTimeMillis() / 1000).toInt(),
-                        avatar = "",
-                        profile = "Petya Petkin",
-                        message = text.toString(),
-                        reactions = mutableListOf(),
-                        alignment = 1
-                    )
-
-                    if (parse(message.date) != parse((list[list.lastIndex] as Message).date))
-                        list.add(message.date)
-
-                    list.add(message)
-                    binding.messageInput.message.setText("")
-                    binding.recyclerView.adapter?.notifyItemInserted(list.lastIndex)
-                    binding.recyclerView.scrollToPosition(list.lastIndex)
-                }
-            }
+            setOnClickListener { addMessage(text) }
 
             if (text?.length == 0) {
                 backgroundTintList = ColorStateList.valueOf(
@@ -107,6 +88,27 @@ class ChatActivity : AppCompatActivity() {
                 )
                 setColorFilter(Color.WHITE)
             }
+        }
+    }
+
+    private fun addMessage(text: CharSequence?) {
+        if (text?.length != 0) {
+            val message = Message(
+                date = (System.currentTimeMillis() / 1000).toInt(),
+                avatar = "",
+                profile = "Petya Petkin",
+                message = text.toString(),
+                reactions = mutableListOf(),
+                alignment = 1
+            )
+
+            if (parse(message.date) != parse((list[list.lastIndex] as Message).date))
+                list.add(message.date)
+
+            list.add(message)
+            binding.messageInput.message.setText("")
+            binding.recyclerView.adapter?.notifyItemInserted(list.lastIndex)
+            binding.recyclerView.scrollToPosition(list.lastIndex)
         }
     }
 }
