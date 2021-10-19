@@ -16,7 +16,8 @@ class EmojiBottomSheet : BottomSheetDialogFragment() {
         const val TAG = "EmojiBottomSheet"
     }
 
-    private var binding: FragmentEmojiBottomSheetBinding? = null
+    private var _binding: FragmentEmojiBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,16 +26,16 @@ class EmojiBottomSheet : BottomSheetDialogFragment() {
     ): View = inflater.inflate(R.layout.fragment_emoji_bottom_sheet, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentEmojiBottomSheetBinding.bind(view)
+        _binding = FragmentEmojiBottomSheetBinding.bind(view)
 
-        binding!!.recyclerView.apply {
+        binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, 5)
             adapter = EmojiAdapter(emojiList, this@EmojiBottomSheet)
         }
     }
 
     override fun onDestroyView() {
-        binding = null
+        _binding = null
         super.onDestroyView()
     }
 }
