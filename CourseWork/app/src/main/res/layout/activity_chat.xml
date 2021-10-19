@@ -8,11 +8,11 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/defaultPadding"
-        android:paddingBottom="64dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:clipToPadding="false"
+        android:paddingStart="10dp"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingEnd="10dp"
+        android:paddingBottom="64dp"
         app:layout_constraintBottom_toTopOf="@id/messageInput"
         app:layout_constraintTop_toTopOf="parent" />
 
