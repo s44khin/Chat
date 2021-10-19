@@ -1,9 +1,6 @@
 package ru.s44khin.coursework.ui.chat
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +9,6 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import androidx.fragment.app.FragmentActivity
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.s44khin.coursework.R
@@ -30,6 +26,8 @@ class ChatAdapter(
         const val TYPE_DATE = 0
         const val TYPE_MESSAGE_LEFT = 1
         const val TYPE_MESSAGE_RIGHT = 2
+        const val REQUEST_KEY = "RequestEmoji"
+        const val RESULT_KEY = "ResultEmoji"
     }
 
     class DateViewHolder(itemView: View) : ViewHolder(itemView) {
@@ -191,40 +189,32 @@ class ChatAdapter(
         val fragmentManager = (context as FragmentActivity).supportFragmentManager
         val emojiBottomSheet = EmojiBottomSheet()
 
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(p0: Context?, p1: Intent?) {
-                val emoji = p1?.getStringExtra("EMOJI") ?: ""
-                fragmentManager.beginTransaction().remove(emojiBottomSheet).commit()
+        fragmentManager.setFragmentResultListener(REQUEST_KEY, context) { _, bundle ->
+            val emoji = bundle.getString(RESULT_KEY) ?: return@setFragmentResultListener
+            fragmentManager.beginTransaction().remove(emojiBottomSheet).commit()
 
-                var check = true
+            var check = true
 
-                for (i in item.reactions.indices)
-                    if (item.reactions[i].first == emoji)
-                        check = false
+            for (i in item.reactions.indices)
+                if (item.reactions[i].first == emoji)
+                    check = false
 
-                if (check) {
-                    if (flexBox.childCount == 0)
-                        LayoutInflater.from(context)
-                            .inflate(R.layout.chat_add_button, flexBox).apply {
-                                setOnClickListener {
-                                    showBottomSheet(context, item, flexBox)
-                                }
+            if (check) {
+                if (flexBox.childCount == 0)
+                    LayoutInflater.from(context)
+                        .inflate(R.layout.chat_add_button, flexBox).apply {
+                            setOnClickListener {
+                                showBottomSheet(context, item, flexBox)
                             }
+                        }
 
-                    flexBox.addView(
-                        addEmojiView(item, flexBox, emoji, 1, true)
-                    )
-                }
-
-
-                item.reactions.add(emoji to 1)
-                LocalBroadcastManager.getInstance(context).unregisterReceiver(this)
+                flexBox.addView(
+                    addEmojiView(item, flexBox, emoji, 1, true)
+                )
             }
-        }
 
-        val filter = IntentFilter()
-        filter.addAction("EXTRA_EMOJI")
-        LocalBroadcastManager.getInstance(context).registerReceiver(receiver, filter)
+            item.reactions.add(emoji to 1)
+        }
 
         emojiBottomSheet.show(fragmentManager, EmojiBottomSheet.TAG)
         return true

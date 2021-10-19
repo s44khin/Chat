@@ -29,7 +29,7 @@ class EmojiBottomSheet : BottomSheetDialogFragment() {
 
         binding!!.recyclerView.apply {
             layoutManager = GridLayoutManager(context, 5)
-            adapter = EmojiAdapter(emojiList)
+            adapter = EmojiAdapter(emojiList, this@EmojiBottomSheet)
         }
     }
 
