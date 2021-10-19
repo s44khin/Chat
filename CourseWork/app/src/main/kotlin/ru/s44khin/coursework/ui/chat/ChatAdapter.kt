@@ -4,12 +4,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import androidx.fragment.app.FragmentActivity
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.s44khin.coursework.R
 import ru.s44khin.coursework.data.model.Message
 import ru.s44khin.coursework.ui.views.EmojiView
+import ru.s44khin.coursework.ui.views.FlexBoxLayout
 import ru.s44khin.coursework.ui.views.MessageView
 import ru.s44khin.coursework.utils.parse
 
@@ -37,11 +37,19 @@ class ChatAdapter(
     }
 
     class LeftViewHolder(itemView: View) : ViewHolder(itemView) {
-        val message: MessageView = itemView.findViewById(R.id.chatMessageLeft)
+        private val messageView: MessageView = itemView.findViewById(R.id.chatMessageLeft)
+        val avatar: ImageView = messageView.avatar
+        val profile: TextView = messageView.profile
+        val message: TextView = messageView.message
+        val flexBoxLayout: FlexBoxLayout = messageView.flexBoxLayout
     }
 
     class RightViewHolder(itemView: View) : ViewHolder(itemView) {
-        val message: MessageView = itemView.findViewById(R.id.chatMessageRight)
+        private val messageView: MessageView = itemView.findViewById(R.id.chatMessageRight)
+        val avatar: ImageView = messageView.avatar
+        val profile: TextView = messageView.profile
+        val message: TextView = messageView.message
+        val flexBoxLayout: FlexBoxLayout = messageView.flexBoxLayout
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
@@ -77,30 +85,54 @@ class ChatAdapter(
                 val item = items[position] as Message
                 val context = holder.message.context
 
-                holder.message.profile.text = item.profile
-                holder.message.message.text = item.message
-                holder.message.flexBoxLayout.alignment = 0
-                holder.message.flexBoxLayout.removeAllViews()
+                holder.profile.text = item.profile
+                holder.message.text = item.message
+                holder.flexBoxLayout.alignment = 0
+                holder.flexBoxLayout.removeAllViews()
+
+                if (item.reactions.size != 0)
+                    LayoutInflater.from(context)
+                        .inflate(R.layout.chat_add_button, holder.flexBoxLayout).apply {
+                            setOnClickListener {
+                                showEmojiBottomSheet(context, item, holder.flexBoxLayout)
+                            }
+                        }
 
                 for ((emoji, text) in item.reactions)
-                    holder.message.flexBoxLayout.addView(addEmojiView(item, holder, context, emoji, text))
+                    holder.flexBoxLayout.addView(
+                        addEmojiView(context, item, holder.flexBoxLayout, emoji, text)
+                    )
 
-                holder.message.setOnLongClickListener { onLongClickListener(context, item, holder) }
+                holder.message.setOnLongClickListener {
+                    showEmojiBottomSheet(context, item, holder.flexBoxLayout)
+                }
             }
             TYPE_MESSAGE_RIGHT -> {
                 holder as RightViewHolder
                 val item = items[position] as Message
                 val context = holder.message.context
 
-                holder.message.profile.text = item.profile
-                holder.message.message.text = item.message
-                holder.message.flexBoxLayout.alignment = 1
-                holder.message.flexBoxLayout.removeAllViews()
+                holder.profile.text = item.profile
+                holder.message.text = item.message
+                holder.flexBoxLayout.alignment = 1
+                holder.flexBoxLayout.removeAllViews()
+
+                if (item.reactions.size != 0)
+                    LayoutInflater.from(context)
+                        .inflate(R.layout.chat_add_button, holder.flexBoxLayout).apply {
+                            setOnClickListener {
+                                showEmojiBottomSheet(context, item, holder.flexBoxLayout)
+                            }
+                        }
 
                 for ((emoji, text) in item.reactions)
-                    holder.message.flexBoxLayout.addView(addEmojiView(item, holder, context, emoji, text))
+                    holder.flexBoxLayout.addView(
+                        addEmojiView(context, item, holder.flexBoxLayout, emoji, text)
+                    )
 
-                holder.message.setOnLongClickListener { onLongClickListener(context, item, holder) }
+                holder.message.setOnLongClickListener {
+                    showEmojiBottomSheet(context, item, holder.flexBoxLayout)
+                }
             }
             else -> throw Exception("Invalid view type")
         }
@@ -117,9 +149,9 @@ class ChatAdapter(
     }
 
     private fun addEmojiView(
-        item: Message,
-        holder: ViewHolder,
         context: Context,
+        item: Message,
+        flexBoxLayout: FlexBoxLayout,
         emoji: String,
         text: Int,
         isSelected: Boolean = false
@@ -133,40 +165,33 @@ class ChatAdapter(
             R.drawable.emoji_view_background,
             null
         )
-        setOnClickListener {
-            if (this.isSelected) {
-                this.text = (Integer.parseInt(this.text) - 1).toString()
-                this.isSelected = false
+        setOnClickListener { emojiView ->
+            emojiView as EmojiView
+
+            if (emojiView.isSelected) {
+                emojiView.text = (Integer.parseInt(emojiView.text) - 1).toString()
+                emojiView.isSelected = false
             } else {
-                this.text = (Integer.parseInt(this.text) + 1).toString()
-                this.isSelected = true
+                emojiView.text = (Integer.parseInt(emojiView.text) + 1).toString()
+                emojiView.isSelected = true
             }
 
-            if (this.text == "0") {
+            if (emojiView.text == "0")
                 for (i in item.reactions.lastIndex downTo 0)
-                    if (item.reactions[i].first == this.emoji) {
+                    if (item.reactions[i].first == emojiView.emoji) {
                         item.reactions.removeAt(i)
+                        flexBoxLayout.removeViewAt(i + 1)
 
-                        when (item.alignment) {
-                            MessageView.LEFT -> {
-                                holder as LeftViewHolder
-                                holder.message.flexBoxLayout.removeViewAt(i)
-                            }
-                            MessageView.RIGHT -> {
-                                holder as RightViewHolder
-                                holder.message.flexBoxLayout.removeViewAt(i)
-                            }
-                        }
-
+                        if (flexBoxLayout.childCount == 1)
+                            flexBoxLayout.removeAllViews()
                     }
-            }
         }
     }
 
-    private fun onLongClickListener(
+    private fun showEmojiBottomSheet(
         context: Context,
         item: Message,
-        holder: ViewHolder
+        flexBoxLayout: FlexBoxLayout
     ): Boolean {
         val fragmentManager = (context as FragmentActivity).supportFragmentManager
         val emojiBottomSheet = EmojiBottomSheet()
@@ -179,30 +204,25 @@ class ChatAdapter(
                 var check = true
 
                 for (i in item.reactions.indices)
-                    if (item.reactions[i].first == emoji) {
+                    if (item.reactions[i].first == emoji)
                         check = false
-                    }
 
                 if (check) {
-                    when(item.alignment) {
-                        MessageView.LEFT -> {
-                            holder as LeftViewHolder
-                            holder.message.flexBoxLayout.addView(
-                                addEmojiView(item, holder, context, emoji, 1, true)
-                            )
-                        }
-                        MessageView.RIGHT -> {
-                            holder as RightViewHolder
-                            holder.message.flexBoxLayout.addView(
-                                addEmojiView(item, holder, context, emoji, 1, true)
-                            )
-                        }
-                        else -> throw Exception()
-                    }
+                    if (flexBoxLayout.childCount == 0)
+                        LayoutInflater.from(context)
+                            .inflate(R.layout.chat_add_button, flexBoxLayout).apply {
+                                setOnClickListener {
+                                    showEmojiBottomSheet(context, item, flexBoxLayout)
+                                }
+                            }
 
-                    item.reactions.add(emoji to 1)
+                    flexBoxLayout.addView(
+                        addEmojiView(context, item, flexBoxLayout, emoji, 1, true)
+                    )
                 }
 
+
+                item.reactions.add(emoji to 1)
                 LocalBroadcastManager.getInstance(context).unregisterReceiver(this)
             }
         }
