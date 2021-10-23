@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.s44khin.coursework.R
 import ru.s44khin.coursework.databinding.FragmentEmojiBottomSheetBinding
+import ru.s44khin.coursework.ui.adapters.EmojiAdapter
 import ru.s44khin.coursework.utils.emojiList
 
 class EmojiBottomSheet : BottomSheetDialogFragment() {
@@ -32,5 +33,10 @@ class EmojiBottomSheet : BottomSheetDialogFragment() {
             layoutManager = GridLayoutManager(context, 5)
             adapter = EmojiAdapter(emojiList, this@EmojiBottomSheet)
         }
+    }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

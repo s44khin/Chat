@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">CourseWork</string>
-    <string name="profile">profile</string>
-    <string name="message_sample">Привет! lorem ipsum test message dalshe zabil</string>
-    <string name="profile_sample">Darrell Steward</string>
-    <string name="message">Сообщение</string>
-    <string name="write">Написать…</string>
-    <string name="send">Отправить</string>
+    <string name="profile">Profile</string>
+    <string name="channels">Channels</string>
+    <string name="subscribed">Subscribed</string>
+    <string name="allStreams">All streams</string>
+    <string name="people">People</string>
+    <string name="messageSample">Привет! lorem ipsum test message dalshe zabil</string>
+    <string name="profileSample">Darrell Steward</string>
+    <string name="message">Message</string>
+    <string name="write">Write…</string>
+    <string name="send">Send</string>
     <string name="plus">+</string>
+    <string name="imAMeeting">Im a meeting</string>
+    <string name="online">online</string>
+    <string name="logOut">Log out</string>
+    <string name="emailSample">darrel@company.com</string>
 </resources>

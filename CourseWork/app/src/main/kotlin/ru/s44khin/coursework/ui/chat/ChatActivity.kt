@@ -1,5 +1,7 @@
 package ru.s44khin.coursework.ui.chat
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -11,10 +13,15 @@ import ru.s44khin.coursework.R
 import ru.s44khin.coursework.data.model.Message
 import ru.s44khin.coursework.data.repository.MainRepository
 import ru.s44khin.coursework.databinding.ActivityChatBinding
+import ru.s44khin.coursework.ui.adapters.ChatAdapter
 import ru.s44khin.coursework.utils.parse
 import java.util.*
 
 class ChatActivity : AppCompatActivity() {
+
+    companion object{
+        fun createIntent(context: Context) = Intent(context, ChatActivity::class.java)
+    }
 
     private val binding: ActivityChatBinding by lazy {
         ActivityChatBinding.inflate(layoutInflater)

@@ -1,4 +1,4 @@
-package ru.s44khin.coursework.ui.chat
+package ru.s44khin.coursework.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.s44khin.coursework.R
 import ru.s44khin.coursework.data.model.Message
+import ru.s44khin.coursework.ui.chat.EmojiBottomSheet
 import ru.s44khin.coursework.ui.views.EmojiView
 import ru.s44khin.coursework.ui.views.FlexBoxLayout
 import ru.s44khin.coursework.ui.views.MessageView
 import ru.s44khin.coursework.utils.parse
 
 class ChatAdapter(
-    private val items: List<Any>
+    private val messages: List<Any>
 ) : RecyclerView.Adapter<ViewHolder>() {
 
     companion object {
@@ -75,72 +76,72 @@ class ChatAdapter(
         when (getItemViewType(position)) {
             TYPE_DATE -> {
                 holder as DateViewHolder
-                val item = items[position] as Int
+                val item = messages[position] as Int
                 holder.date.text = parse(item)
             }
             TYPE_MESSAGE_LEFT -> {
                 holder as LeftViewHolder
-                val item = items[position] as Message
+                val message = messages[position] as Message
                 val context = holder.message.context
 
-                holder.profile.text = item.profile
-                holder.message.text = item.message
+                holder.profile.text = message.profile
+                holder.message.text = message.message
                 holder.flexBoxLayout.alignment = 0
                 holder.flexBoxLayout.removeAllViews()
 
-                if (item.reactions.size != 0)
+                if (message.reactions.size != 0)
                     LayoutInflater.from(context)
                         .inflate(R.layout.chat_add_button, holder.flexBoxLayout).apply {
                             setOnClickListener {
-                                showBottomSheet(context, item, holder.flexBoxLayout)
+                                showBottomSheet(context, message, holder.flexBoxLayout)
                             }
                         }
 
-                for ((emoji, text) in item.reactions)
+                for ((emoji, text) in message.reactions)
                     holder.flexBoxLayout.addView(
-                        addEmojiView(item, holder.flexBoxLayout, emoji, text)
+                        addEmojiView(message, holder.flexBoxLayout, emoji, text)
                     )
 
                 holder.message.setOnLongClickListener {
-                    showBottomSheet(context, item, holder.flexBoxLayout)
+                    showBottomSheet(context, message, holder.flexBoxLayout)
                 }
             }
             TYPE_MESSAGE_RIGHT -> {
                 holder as RightViewHolder
-                val item = items[position] as Message
+                val message = messages[position] as Message
                 val context = holder.message.context
 
-                holder.profile.text = item.profile
-                holder.message.text = item.message
+                holder.profile.text = message.profile
+                holder.message.text = message.message
                 holder.flexBoxLayout.alignment = 1
                 holder.flexBoxLayout.removeAllViews()
 
-                if (item.reactions.size != 0)
+                if (message.reactions.size != 0)
                     LayoutInflater.from(context)
                         .inflate(R.layout.chat_add_button, holder.flexBoxLayout).apply {
                             setOnClickListener {
-                                showBottomSheet(context, item, holder.flexBoxLayout)
+                                showBottomSheet(context, message, holder.flexBoxLayout)
                             }
                         }
 
-                for ((emoji, text) in item.reactions)
+                for ((emoji, text) in message.reactions)
                     holder.flexBoxLayout.addView(
-                        addEmojiView(item, holder.flexBoxLayout, emoji, text)
+                        addEmojiView(message, holder.flexBoxLayout, emoji, text)
                     )
 
                 holder.message.setOnLongClickListener {
-                    showBottomSheet(context, item, holder.flexBoxLayout)
+                    showBottomSheet(context, message, holder.flexBoxLayout)
                 }
             }
             else -> throw Exception("Invalid view type")
         }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = messages.size
 
-    override fun getItemViewType(position: Int) = when (items[position]) {
+    override fun getItemViewType(position: Int) = when (messages[position]) {
         is Int -> TYPE_DATE
         is Message -> {
-            val item = items[position] as Message
+            val item = messages[position] as Message
             if (item.alignment == MessageView.LEFT) TYPE_MESSAGE_LEFT else TYPE_MESSAGE_RIGHT
         }
         else -> throw Exception("Invalid view type")
