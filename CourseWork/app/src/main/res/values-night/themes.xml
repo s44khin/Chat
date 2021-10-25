@@ -3,7 +3,7 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:statusBarColor">@color/background</item>
-        <item name="android:navigationBarColor">#272727</item>
+        <item name="android:navigationBarColor">@color/chatBottom</item>
         <item name="textColor">@color/white</item>
     </style>
 </resources>
