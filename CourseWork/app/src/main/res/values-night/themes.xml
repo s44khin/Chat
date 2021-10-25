@@ -1,9 +1,9 @@
 <resources>
-    <style name="Theme.CourseWork" parent="Theme.MaterialComponents.DayNight">
+    <style name="Theme.CourseWork" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:statusBarColor">@color/background</item>
-        <item name="android:navigationBarColor">#1F1F1F</item>
+        <item name="android:navigationBarColor">#272727</item>
         <item name="textColor">@color/white</item>
     </style>
 </resources>

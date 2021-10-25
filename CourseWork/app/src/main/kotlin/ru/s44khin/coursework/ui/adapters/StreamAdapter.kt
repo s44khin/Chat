@@ -36,7 +36,7 @@ class StreamAdapter(
             if (position == 0)
                 visibility = View.VISIBLE
         }
-        holder.name.setOnClickListener {
+        holder.name.rootView.setOnClickListener {
             holder.recyclerView.visibility = when (holder.recyclerView.visibility) {
                 View.VISIBLE -> View.GONE
                 View.GONE -> View.VISIBLE

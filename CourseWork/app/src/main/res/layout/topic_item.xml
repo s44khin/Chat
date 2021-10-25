@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/textColor"
         android:textSize="18sp"
-        tools:text="#bugs" />
+        tools:text="Testing" />
 
     <TextView
         android:id="@+id/topicMessages"
