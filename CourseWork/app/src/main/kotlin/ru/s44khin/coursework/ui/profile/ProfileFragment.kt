@@ -12,9 +12,10 @@ import ru.s44khin.coursework.data.model.Profile
 import ru.s44khin.coursework.data.repository.MainRepository
 import ru.s44khin.coursework.databinding.FragmentProfileBinding
 
-class ProfileFragment: Fragment() {
+class ProfileFragment : Fragment() {
 
-    private lateinit var binding: FragmentProfileBinding
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
     private val profile: Profile by lazy {
         MainRepository().getProfile()
     }
@@ -24,7 +25,7 @@ class ProfileFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,5 +42,10 @@ class ProfileFragment: Fragment() {
             .load(profile.avatar)
             .centerCrop()
             .into(binding.avatar)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

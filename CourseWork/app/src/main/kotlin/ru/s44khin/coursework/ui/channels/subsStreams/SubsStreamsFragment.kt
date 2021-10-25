@@ -11,9 +11,10 @@ import ru.s44khin.coursework.data.repository.MainRepository
 import ru.s44khin.coursework.databinding.FragmentStreamsBinding
 import ru.s44khin.coursework.ui.adapters.StreamAdapter
 
-class SubsStreamsFragment() : Fragment() {
+class SubsStreamsFragment : Fragment() {
 
-    private lateinit var binding: FragmentStreamsBinding
+    private var _binding: FragmentStreamsBinding? = null
+    private val binding get() = _binding!!
     private val streams: List<Stream> by lazy {
         MainRepository().getSubsStreams()
     }
@@ -23,7 +24,7 @@ class SubsStreamsFragment() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStreamsBinding.inflate(inflater, container, false)
+        _binding = FragmentStreamsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -35,5 +36,10 @@ class SubsStreamsFragment() : Fragment() {
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             adapter = StreamAdapter(streams)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

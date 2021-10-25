@@ -14,7 +14,8 @@ import ru.s44khin.coursework.ui.adapters.PeopleAdapter
 
 class PeopleFragment : Fragment(R.layout.fragment_people) {
 
-    private lateinit var binding: FragmentPeopleBinding
+    private var _binding: FragmentPeopleBinding? = null
+    private val binding get() = _binding!!
     private val peoples: List<Profile> by lazy {
         MainRepository().getPeoples()
     }
@@ -24,7 +25,7 @@ class PeopleFragment : Fragment(R.layout.fragment_people) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPeopleBinding.inflate(inflater, container, false)
+        _binding = FragmentPeopleBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -35,5 +36,10 @@ class PeopleFragment : Fragment(R.layout.fragment_people) {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = PeopleAdapter(peoples)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

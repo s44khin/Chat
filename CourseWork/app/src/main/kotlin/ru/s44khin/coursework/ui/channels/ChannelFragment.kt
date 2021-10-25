@@ -13,14 +13,15 @@ import ru.s44khin.coursework.ui.channels.subsStreams.SubsStreamsFragment
 
 class ChannelFragment : Fragment() {
 
-    private lateinit var binding: FragmentChannelsBinding
+    private var _binding: FragmentChannelsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentChannelsBinding.inflate(inflater, container, false)
+        _binding = FragmentChannelsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,5 +38,10 @@ class ChannelFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabs[position]
         }.attach()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
