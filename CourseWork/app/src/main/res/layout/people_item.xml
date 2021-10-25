@@ -5,16 +5,17 @@
     android:layout_height="wrap_content"
     android:background="?android:selectableItemBackground"
     android:clickable="true"
+    android:focusable="true"
     android:padding="16dp">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/peopleAdapterAvatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        app:riv_corner_radius="30dp"
         android:src="@drawable/avatar_preview"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="30dp" />
 
     <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="wrap_content"

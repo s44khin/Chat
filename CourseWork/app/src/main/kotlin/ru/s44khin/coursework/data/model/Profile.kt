@@ -1,6 +1,6 @@
 package ru.s44khin.coursework.data.model
 
-data class Profile (
+data class Profile(
     val name: String,
     val status: String,
     val avatar: String,

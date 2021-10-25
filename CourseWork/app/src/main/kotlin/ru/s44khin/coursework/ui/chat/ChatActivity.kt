@@ -19,7 +19,7 @@ import java.util.*
 
 class ChatActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         fun createIntent(context: Context) = Intent(context, ChatActivity::class.java)
     }
 

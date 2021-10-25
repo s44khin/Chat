@@ -15,4 +15,6 @@
     <string name="online">online</string>
     <string name="logOut">Log out</string>
     <string name="emailSample">darrel@company.com</string>
+    <string name="emojis">emojis</string>
+    <string name="avatar">avatar</string>
 </resources>
