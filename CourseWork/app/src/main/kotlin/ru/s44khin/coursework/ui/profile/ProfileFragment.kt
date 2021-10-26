@@ -30,17 +30,21 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
 
-        binding.profile.text = profile.name
-        binding.status.text = profile.status
-        binding.online.apply {
-            text = if (profile.online) "online" else "offline"
-            setTextColor(if (profile.online) Color.GREEN else Color.RED)
+    private fun initViews() = binding.apply {
+        val item = this@ProfileFragment.profile
+        profile.text = item.name
+        status.text = item.status
+        online.apply {
+            text = if (item.online) "online" else "offline"
+            setTextColor(if (item.online) Color.GREEN else Color.RED)
         }
-        Glide.with(binding.avatar)
-            .load(profile.avatar)
+        Glide.with(avatar)
+            .load(item.avatar)
             .centerCrop()
-            .into(binding.avatar)
+            .into(avatar)
     }
 
     override fun onDestroyView() {

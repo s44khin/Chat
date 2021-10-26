@@ -30,12 +30,12 @@ class SubsStreamsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
+    }
 
-        binding.recyclerView.apply {
-            layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-            adapter = StreamAdapter(streams)
-        }
+    private fun initRecyclerView() = binding.recyclerView.apply {
+        layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        adapter = StreamAdapter(streams)
     }
 
     override fun onDestroyView() {

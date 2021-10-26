@@ -27,7 +27,10 @@ class ChannelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initTabs()
+    }
 
+    private fun initTabs() {
         val tabs = listOf(getString(R.string.subscribed), getString(R.string.allStreams))
         binding.viewPager.adapter = PagerAdapter(
             mutableListOf(AllStreamsFragment(), SubsStreamsFragment()),

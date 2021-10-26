@@ -45,58 +45,40 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
-        setRecyclerView()
-        setButtons()
+        initRecyclerView()
+        initButtons()
     }
 
-    private fun setRecyclerView() = binding.recyclerView.apply {
-        val manager =
-            LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
-        manager.stackFromEnd = true
-
-        layoutManager = manager
+    private fun initRecyclerView() = binding.recyclerView.apply {
+        layoutManager = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
         adapter = ChatAdapter(list)
+        scrollToPosition(list.lastIndex)
     }
 
-    private fun setButtons() = binding.messageInput.message.doOnTextChanged { text, _, _, _ ->
+    private fun initButtons() = binding.messageInput.message.doOnTextChanged { text, _, _, _ ->
         binding.messageInput.send.apply {
             setOnClickListener { addMessage(text) }
-
-            if (text?.length == 0) {
-                backgroundTintList = ColorStateList.valueOf(
-                    ResourcesCompat.getColor(
-                        resources,
-                        R.color.message,
-                        null
-                    )
-                )
-                setImageDrawable(
-                    ResourcesCompat.getDrawable(
-                        resources,
-                        R.drawable.ic_attach_file,
-                        null
-                    )
-                )
-                setColorFilter(Color.GRAY)
-            } else {
-                backgroundTintList = ColorStateList.valueOf(
-                    ResourcesCompat.getColor(
-                        resources,
-                        R.color.primary,
-                        null
-                    )
-                )
-                setImageDrawable(
-                    ResourcesCompat.getDrawable(
-                        resources,
-                        R.drawable.ic_send,
-                        null
-                    )
-                )
-                setColorFilter(Color.WHITE)
-            }
+            backgroundTintList = setButtonsBackground(text?.length ?: 0)
+            setImageDrawable(setButtonsImage(text?.length ?: 0))
+            setColorFilter(setButtonsColor(text?.length ?: 0))
         }
     }
+
+    private fun setButtonsBackground(length: Int) = ColorStateList.valueOf(
+        ResourcesCompat.getColor(
+            resources,
+            if (length == 0) R.color.message else R.color.primary,
+            null
+        )
+    )
+
+    private fun setButtonsImage(length: Int) = ResourcesCompat.getDrawable(
+        resources,
+        if (length == 0) R.drawable.ic_attach_file else R.drawable.ic_send,
+        null
+    )
+
+    private fun setButtonsColor(length: Int) = if (length == 0) Color.GRAY else Color.WHITE
 
     private fun addMessage(text: CharSequence?) {
         if (text?.length != 0) {
