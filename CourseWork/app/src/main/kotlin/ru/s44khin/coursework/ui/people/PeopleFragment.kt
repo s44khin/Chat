@@ -12,7 +12,7 @@ import ru.s44khin.coursework.data.repository.MainRepository
 import ru.s44khin.coursework.databinding.FragmentPeopleBinding
 import ru.s44khin.coursework.ui.adapters.PeopleAdapter
 
-class PeopleFragment : Fragment(R.layout.fragment_people) {
+class PeopleFragment : Fragment() {
 
     private var _binding: FragmentPeopleBinding? = null
     private val binding get() = _binding!!

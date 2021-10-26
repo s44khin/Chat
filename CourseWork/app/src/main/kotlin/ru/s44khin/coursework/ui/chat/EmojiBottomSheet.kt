@@ -16,14 +16,15 @@ class EmojiBottomSheet : BottomSheetDialogFragment() {
         const val TAG = "EmojiBottomSheet"
     }
 
-    private lateinit var binding: FragmentEmojiBottomSheetBinding
+    private var _binding: FragmentEmojiBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentEmojiBottomSheetBinding.inflate(inflater, container, false)
+        _binding = FragmentEmojiBottomSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -32,5 +33,10 @@ class EmojiBottomSheet : BottomSheetDialogFragment() {
             layoutManager = GridLayoutManager(context, 5)
             adapter = EmojiAdapter(emojiList, this@EmojiBottomSheet)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

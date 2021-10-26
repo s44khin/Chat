@@ -44,7 +44,7 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        setSupportActionBar(binding.toolBar)
         setRecyclerView()
         setButtons()
     }
