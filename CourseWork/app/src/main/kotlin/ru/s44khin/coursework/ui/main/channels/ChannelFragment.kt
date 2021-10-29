@@ -1,15 +1,16 @@
-package ru.s44khin.coursework.ui.channels
+package ru.s44khin.coursework.ui.main.channels
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.s44khin.coursework.R
 import ru.s44khin.coursework.databinding.FragmentChannelsBinding
-import ru.s44khin.coursework.ui.channels.allStreams.AllStreamsFragment
-import ru.s44khin.coursework.ui.channels.subsStreams.SubsStreamsFragment
+import ru.s44khin.coursework.ui.main.channels.allStreams.AllStreamsFragment
+import ru.s44khin.coursework.ui.main.channels.subsStreams.SubsStreamsFragment
 
 class ChannelFragment : Fragment() {
 

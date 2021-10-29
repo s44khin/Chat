@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navChannels"
-        android:name="ru.s44khin.coursework.ui.channels.ChannelFragment"
+        android:name="ru.s44khin.coursework.ui.main.channels.ChannelFragment"
         android:label="@string/channels"
         tools:layout="@layout/fragment_channels" />
 
     <fragment
         android:id="@+id/navPeople"
-        android:name="ru.s44khin.coursework.ui.people.PeopleFragment"
+        android:name="ru.s44khin.coursework.ui.main.people.PeopleFragment"
         android:label="@string/people"
         tools:layout="@layout/fragment_people" />
 
     <fragment
         android:id="@+id/navProfile"
-        android:name="ru.s44khin.coursework.ui.profile.ProfileFragment"
+        android:name="ru.s44khin.coursework.ui.main.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

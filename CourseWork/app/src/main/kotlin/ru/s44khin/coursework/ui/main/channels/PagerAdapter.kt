@@ -1,4 +1,4 @@
-package ru.s44khin.coursework.ui.channels
+package ru.s44khin.coursework.ui.main.channels
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

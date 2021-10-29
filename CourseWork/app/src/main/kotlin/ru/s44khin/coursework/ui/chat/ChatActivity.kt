@@ -5,10 +5,13 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.widget.doOnTextChanged
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.s44khin.coursework.R
 import ru.s44khin.coursework.data.model.Message
 import ru.s44khin.coursework.data.repository.MainRepository
@@ -27,35 +30,49 @@ class ChatActivity : AppCompatActivity() {
         ActivityChatBinding.inflate(layoutInflater)
     }
 
-    private val list: MutableList<Any> by lazy {
-        val messages = MainRepository().getMessages()
-        val result = mutableListOf(messages[0].date, messages[0])
+    private var list = mutableListOf<Any>()
 
-        for (i in 0 until messages.lastIndex) {
-            if (messages[i].date != messages[i + 1].date)
-                result.add(messages[i + 1].date)
+    private val dispose = MainRepository().getMessages()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+            { messages ->
+                val result = mutableListOf(messages[0].date, messages[0])
 
-            result.add(messages[i + 1])
-        }
+                for (i in 0 until messages.lastIndex) {
+                    if (messages[i].date != messages[i + 1].date)
+                        result.add(messages[i + 1].date)
 
-        result
-    }
+                    result.add(messages[i + 1])
+                }
+
+                list = result
+                initRecyclerView(result)
+            },
+            {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+            }
+        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
-        initRecyclerView()
         initButtons()
     }
 
-    private fun initRecyclerView() = binding.recyclerView.apply {
+    override fun onDestroy() {
+        super.onDestroy()
+        dispose.dispose()
+    }
+
+    private fun initRecyclerView(list: List<Any>) = binding.recyclerView.apply {
         layoutManager = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
         adapter = ChatAdapter(list)
         scrollToPosition(list.lastIndex)
     }
 
-    private fun initButtons() = binding.messageInput.message.doOnTextChanged { text, _, _, _ ->
+    private fun initButtons() = binding.messageInput.message.doAfterTextChanged { text ->
         binding.messageInput.send.apply {
             setOnClickListener { addMessage(text) }
             backgroundTintList = setButtonsBackground(text?.length ?: 0)

@@ -1,23 +1,22 @@
-package ru.s44khin.coursework.ui.channels.subsStreams
+package ru.s44khin.coursework.ui.main.channels.allStreams
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.s44khin.coursework.data.model.Stream
-import ru.s44khin.coursework.data.repository.MainRepository
 import ru.s44khin.coursework.databinding.FragmentStreamsBinding
 import ru.s44khin.coursework.ui.adapters.StreamAdapter
+import ru.s44khin.coursework.ui.main.MainViewModel
 
-class SubsStreamsFragment : Fragment() {
+class AllStreamsFragment : Fragment() {
 
     private var _binding: FragmentStreamsBinding? = null
     private val binding get() = _binding!!
-    private val streams: List<Stream> by lazy {
-        MainRepository().getSubsStreams()
-    }
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,10 +29,12 @@ class SubsStreamsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
+        viewModel.allStreams.observe(viewLifecycleOwner) {
+            initRecyclerView(it)
+        }
     }
 
-    private fun initRecyclerView() = binding.recyclerView.apply {
+    private fun initRecyclerView(streams: List<Stream>) = binding.recyclerView.apply {
         layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         adapter = StreamAdapter(streams)
     }
