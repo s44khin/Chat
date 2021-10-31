@@ -1,5 +1,6 @@
 package ru.s44khin.coursework.data.repository
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import ru.s44khin.coursework.data.model.Message
 import ru.s44khin.coursework.data.model.Profile
@@ -177,13 +178,13 @@ class MainRepository {
         subscriber.onSuccess(listOf(profile1, profile2))
     }
 
-    fun getSubsStreams() = Single.create<List<Stream>> { subscriber ->
-        Thread.sleep(range.random())
-        subscriber.onSuccess(subsStreams)
+    fun getSubsStreams(text: String = "") : Observable<List<Stream>> {
+        return Observable.fromCallable() { subsStreams }
+            .map { streams -> streams.filter { it.name.contains(text, true) } }
     }
 
-    fun getAllStreams() = Single.create<List<Stream>> { subscriber ->
-        Thread.sleep(range.random())
-        subscriber.onSuccess(allStreams)
+    fun getAllStreams(text: String = "") : Observable<List<Stream>> {
+        return Observable.fromCallable() { allStreams }
+            .map { streams -> streams.filter { it.name.contains(text, true) } }
     }
 }

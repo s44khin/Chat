@@ -12,6 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import ru.s44khin.coursework.data.model.Profile
 import ru.s44khin.coursework.data.model.Stream
 import ru.s44khin.coursework.data.repository.MainRepository
+import java.util.concurrent.TimeUnit
 
 class MainViewModel : ViewModel() {
 
@@ -32,8 +33,40 @@ class MainViewModel : ViewModel() {
     init {
         downloadPeople()
         downloadProfile()
-        downloadAllStreams()
-        downloadSubsStreams()
+        searchSubsStreams()
+        searchAllStreams()
+    }
+
+    fun searchSubsStreams(text: String = "") {
+        MainRepository().getSubsStreams(text)
+            .subscribeOn(Schedulers.io())
+            .debounce(1000, TimeUnit.MILLISECONDS, Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = {
+                    _subsStreams.value = it
+                },
+                onError = {
+                    Log.e("Error", it.message.toString())
+                }
+            )
+            .addTo(disposeBag)
+    }
+
+    fun searchAllStreams(text: String = "") {
+        MainRepository().getAllStreams(text)
+            .subscribeOn(Schedulers.io())
+            .debounce(1000, TimeUnit.MILLISECONDS, Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onNext = {
+                    _allStreams.value = it
+                },
+                onError = {
+                    Log.e("Error", it.message.toString())
+                }
+            )
+            .addTo(disposeBag)
     }
 
     private fun downloadPeople() {
@@ -53,28 +86,6 @@ class MainViewModel : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = { _profile.value = it },
-                onError = { Log.e("Error", it.message.toString()) }
-            )
-            .addTo(disposeBag)
-    }
-
-    private fun downloadSubsStreams() {
-        MainRepository().getSubsStreams()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = { _subsStreams.value = it },
-                onError = { Log.e("Error", it.message.toString()) }
-            )
-            .addTo(disposeBag)
-    }
-
-    private fun downloadAllStreams() {
-        MainRepository().getAllStreams()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = { _allStreams.value = it },
                 onError = { Log.e("Error", it.message.toString()) }
             )
             .addTo(disposeBag)

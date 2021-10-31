@@ -35,20 +35,27 @@ class ChatAdapter(
         val date: TextView = itemView.findViewById(R.id.chatDateItem)
     }
 
-    class LeftViewHolder(itemView: View) : ViewHolder(itemView) {
-        private val messageView: MessageView = itemView.findViewById(R.id.chatMessageLeft)
-        val avatar: ImageView = messageView.avatar
-        val profile: TextView = messageView.profile
-        val message: TextView = messageView.message
-        val flexBoxLayout: FlexBoxLayout = messageView.flexBoxLayout
+    abstract class MessageViewHolder(itemView: View) : ViewHolder(itemView) {
+        abstract val avatar: ImageView
+        abstract val profile: TextView
+        abstract val message: TextView
+        abstract val flexBoxLayout: FlexBoxLayout
     }
 
-    class RightViewHolder(itemView: View) : ViewHolder(itemView) {
+    class LeftViewHolder(itemView: View) : MessageViewHolder(itemView) {
+        private val messageView: MessageView = itemView.findViewById(R.id.chatMessageLeft)
+        override val avatar: ImageView = messageView.avatar
+        override val profile: TextView = messageView.profile
+        override val message: TextView = messageView.message
+        override val flexBoxLayout: FlexBoxLayout = messageView.flexBoxLayout
+    }
+
+    class RightViewHolder(itemView: View) : MessageViewHolder(itemView) {
         private val messageView: MessageView = itemView.findViewById(R.id.chatMessageRight)
-        val avatar: ImageView = messageView.avatar
-        val profile: TextView = messageView.profile
-        val message: TextView = messageView.message
-        val flexBoxLayout: FlexBoxLayout = messageView.flexBoxLayout
+        override val avatar: ImageView = messageView.avatar
+        override val profile: TextView = messageView.profile
+        override val message: TextView = messageView.message
+        override val flexBoxLayout: FlexBoxLayout = messageView.flexBoxLayout
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
@@ -72,69 +79,41 @@ class ChatAdapter(
         else -> throw Exception("Invalid view type")
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        when (getItemViewType(position)) {
-            TYPE_DATE -> {
-                holder as DateViewHolder
-                val item = messages[position] as Int
-                holder.date.text = parse(item)
-            }
-            TYPE_MESSAGE_LEFT -> {
-                holder as LeftViewHolder
-                val message = messages[position] as Message
-                val context = holder.message.context
-
-                holder.profile.text = message.profile
-                holder.message.text = message.message
-                holder.flexBoxLayout.alignment = 0
-                holder.flexBoxLayout.removeAllViews()
-
-                if (message.reactions.size != 0)
-                    LayoutInflater.from(context)
-                        .inflate(R.layout.chat_add_button, holder.flexBoxLayout).apply {
-                            setOnClickListener {
-                                showBottomSheet(context, message, holder.flexBoxLayout)
-                            }
-                        }
-
-                for ((emoji, text) in message.reactions)
-                    holder.flexBoxLayout.addView(
-                        addEmojiView(message, holder.flexBoxLayout, emoji, text)
-                    )
-
-                holder.message.setOnLongClickListener {
-                    showBottomSheet(context, message, holder.flexBoxLayout)
-                }
-            }
-            TYPE_MESSAGE_RIGHT -> {
-                holder as RightViewHolder
-                val message = messages[position] as Message
-                val context = holder.message.context
-
-                holder.profile.text = message.profile
-                holder.message.text = message.message
-                holder.flexBoxLayout.alignment = 1
-                holder.flexBoxLayout.removeAllViews()
-
-                if (message.reactions.size != 0)
-                    LayoutInflater.from(context)
-                        .inflate(R.layout.chat_add_button, holder.flexBoxLayout).apply {
-                            setOnClickListener {
-                                showBottomSheet(context, message, holder.flexBoxLayout)
-                            }
-                        }
-
-                for ((emoji, text) in message.reactions)
-                    holder.flexBoxLayout.addView(
-                        addEmojiView(message, holder.flexBoxLayout, emoji, text)
-                    )
-
-                holder.message.setOnLongClickListener {
-                    showBottomSheet(context, message, holder.flexBoxLayout)
-                }
-            }
-            else -> throw Exception("Invalid view type")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = when (messages[position]) {
+        is Int -> {
+            holder as DateViewHolder
+            val item = messages[position] as Int
+            holder.date.text = parse(item)
         }
+        is Message -> {
+            holder as MessageViewHolder
+            val message = messages[position] as Message
+            val context = holder.message.context
+
+            holder.profile.text = message.profile
+            holder.message.text = message.message
+            holder.flexBoxLayout.alignment = 0
+            holder.flexBoxLayout.removeAllViews()
+
+            if (message.reactions.size != 0)
+                LayoutInflater.from(context)
+                    .inflate(R.layout.chat_add_button, holder.flexBoxLayout).apply {
+                        setOnClickListener {
+                            showBottomSheet(context, message, holder.flexBoxLayout)
+                        }
+                    }
+
+            for ((emoji, text) in message.reactions)
+                holder.flexBoxLayout.addView(
+                    addEmojiView(message, holder.flexBoxLayout, emoji, text)
+                )
+
+            holder.message.setOnLongClickListener {
+                showBottomSheet(context, message, holder.flexBoxLayout)
+            }
+        }
+        else -> throw Exception("Invalid view type")
+    }
 
     override fun getItemCount() = messages.size
 
