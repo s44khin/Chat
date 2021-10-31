@@ -43,7 +43,7 @@ class ProfileFragment : Fragment() {
         }
         Glide.with(avatar)
             .load(item.avatar)
-            .centerCrop()
+            .circleCrop()
             .into(avatar)
     }
 

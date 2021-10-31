@@ -29,6 +29,7 @@ class MainViewModel : ViewModel() {
     val profile: LiveData<Profile> = _profile
 
     private val disposeBag = CompositeDisposable()
+    private val repository = MainRepository()
 
     init {
         downloadPeople()
@@ -37,59 +38,51 @@ class MainViewModel : ViewModel() {
         searchAllStreams()
     }
 
-    fun searchSubsStreams(text: String = "") {
-        MainRepository().getSubsStreams(text)
-            .subscribeOn(Schedulers.io())
-            .debounce(1000, TimeUnit.MILLISECONDS, Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onNext = {
-                    _subsStreams.value = it
-                },
-                onError = {
-                    Log.e("Error", it.message.toString())
-                }
-            )
-            .addTo(disposeBag)
-    }
+    fun searchSubsStreams(text: String = "") = repository.getSubsStreams(text)
+        .subscribeOn(Schedulers.io())
+        .debounce(1000, TimeUnit.MILLISECONDS, Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onNext = {
+                _subsStreams.value = it
+            },
+            onError = {
+                Log.e("Error", it.message.toString())
+            }
+        )
+        .addTo(disposeBag)
 
-    fun searchAllStreams(text: String = "") {
-        MainRepository().getAllStreams(text)
-            .subscribeOn(Schedulers.io())
-            .debounce(1000, TimeUnit.MILLISECONDS, Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onNext = {
-                    _allStreams.value = it
-                },
-                onError = {
-                    Log.e("Error", it.message.toString())
-                }
-            )
-            .addTo(disposeBag)
-    }
+    fun searchAllStreams(text: String = "") = repository.getAllStreams(text)
+        .subscribeOn(Schedulers.io())
+        .debounce(1000, TimeUnit.MILLISECONDS, Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onNext = {
+                _allStreams.value = it
+            },
+            onError = {
+                Log.e("Error", it.message.toString())
+            }
+        )
+        .addTo(disposeBag)
 
-    private fun downloadPeople() {
-        MainRepository().getPeople()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = { _people.value = it },
-                onError = { Log.e("Error", it.message.toString()) }
-            )
-            .addTo(disposeBag)
-    }
+    private fun downloadPeople() = repository.getPeople()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onSuccess = { _people.value = it },
+            onError = { Log.e("Error", it.message.toString()) }
+        )
+        .addTo(disposeBag)
 
-    private fun downloadProfile() {
-        MainRepository().getProfile()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = { _profile.value = it },
-                onError = { Log.e("Error", it.message.toString()) }
-            )
-            .addTo(disposeBag)
-    }
+    private fun downloadProfile() = repository.getProfile()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onSuccess = { _profile.value = it },
+            onError = { Log.e("Error", it.message.toString()) }
+        )
+        .addTo(disposeBag)
 
     override fun onCleared() {
         super.onCleared()

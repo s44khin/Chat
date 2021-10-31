@@ -6,6 +6,7 @@ import ru.s44khin.coursework.data.model.Message
 import ru.s44khin.coursework.data.model.Profile
 import ru.s44khin.coursework.data.model.Stream
 import ru.s44khin.coursework.data.model.Topic
+import java.util.concurrent.TimeUnit
 
 class MainRepository {
 
@@ -178,13 +179,15 @@ class MainRepository {
         subscriber.onSuccess(listOf(profile1, profile2))
     }
 
-    fun getSubsStreams(text: String = "") : Observable<List<Stream>> {
+    fun getSubsStreams(text: String = ""): Observable<List<Stream>> {
         return Observable.fromCallable() { subsStreams }
+            .delay(range.random(), TimeUnit.MILLISECONDS)
             .map { streams -> streams.filter { it.name.contains(text, true) } }
     }
 
-    fun getAllStreams(text: String = "") : Observable<List<Stream>> {
+    fun getAllStreams(text: String = ""): Observable<List<Stream>> {
         return Observable.fromCallable() { allStreams }
+            .delay(range.random(), TimeUnit.MILLISECONDS)
             .map { streams -> streams.filter { it.name.contains(text, true) } }
     }
 }

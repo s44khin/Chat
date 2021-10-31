@@ -36,7 +36,7 @@ class PeopleAdapter(
             email.text = profile.email
             Glide.with(avatar)
                 .load(profile.avatar)
-                .centerCrop()
+                .circleCrop()
                 .into(avatar)
         }
 
