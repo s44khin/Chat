@@ -12,7 +12,13 @@ class FlexBoxLayout @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : ViewGroup(context, attrs, defStyleAttr, defStyleRes) {
 
+    companion object {
+        const val LEFT = 0
+        const val RIGHT = 1
+    }
+
     var marginBetween = context.resources.getDimension(R.dimen.marginBetween).toInt()
+    var alignment: Int
 
     init {
         val attrsArray = context.obtainStyledAttributes(
@@ -21,6 +27,8 @@ class FlexBoxLayout @JvmOverloads constructor(
             defStyleAttr,
             defStyleRes
         )
+
+        alignment = attrsArray.getInt(R.styleable.MessageView_alignment, 0)
 
         marginBetween = attrsArray.getDimension(
             R.styleable.FlexBoxLayout_marginBetween,
@@ -34,14 +42,14 @@ class FlexBoxLayout @JvmOverloads constructor(
         var totalWidth = paddingLeft + paddingRight
         var totalHeight = paddingTop + (getChildAt(0)?.measuredHeight ?: 0) + paddingBottom
 
-        var maxWidth = MeasureSpec.getSize(widthMeasureSpec)
+        val width = MeasureSpec.getSize(widthMeasureSpec)
 
         for (i in 0 until childCount) {
             val child = getChildAt(i)
 
-            measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0)
+            measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, totalHeight)
 
-            if (totalWidth + child.measuredWidth > maxWidth) {
+            if (totalWidth + child.measuredWidth > width) {
                 totalHeight += child.measuredHeight + marginBetween
                 totalWidth = paddingLeft + paddingRight
             }
@@ -49,20 +57,26 @@ class FlexBoxLayout @JvmOverloads constructor(
             totalWidth += child.measuredWidth + marginBetween
         }
 
-        val resultWidth = resolveSize(maxWidth, widthMeasureSpec)
+        val resultWidth = resolveSize(width, widthMeasureSpec)
         val resultHeight = resolveSize(totalHeight, heightMeasureSpec)
 
         setMeasuredDimension(resultWidth, resultHeight)
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) = when(alignment) {
+        LEFT -> onLayoutLeft()
+        RIGHT -> onLayoutRight()
+        else -> throw Exception("Expected \"left\" or \"right\", but received $alignment")
+    }
+
+    private fun onLayoutLeft() {
         var currentLeft = paddingLeft
         var currentTop = paddingTop
 
         for (i in 0 until childCount) {
             val child = getChildAt(i)
 
-            if (currentLeft + child.measuredWidth + paddingLeft > width) {
+            if (currentLeft + child.measuredWidth + paddingRight > width) {
                 currentTop += child.measuredHeight + marginBetween
                 currentLeft = paddingLeft
             }
@@ -75,6 +89,29 @@ class FlexBoxLayout @JvmOverloads constructor(
             )
 
             currentLeft += child.measuredWidth + marginBetween
+        }
+    }
+
+    private fun onLayoutRight() {
+        var currentRight = width - paddingRight
+        var currentTop = paddingTop
+
+        for (i in 0 until childCount) {
+            val child = getChildAt(i)
+
+            if (currentRight - child.measuredWidth - paddingLeft < 0) {
+                currentTop += child.measuredHeight + marginBetween
+                currentRight = width - paddingRight
+            }
+
+            child.layout(
+                currentRight - child.measuredWidth,
+                currentTop,
+                currentRight,
+                currentTop + child.measuredHeight
+            )
+
+            currentRight -= (child.measuredWidth + marginBetween)
         }
     }
 

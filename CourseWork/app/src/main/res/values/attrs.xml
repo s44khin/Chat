@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="marginBetween" format="dimension" />
+    <attr name="alignment" format="enum">
+        <enum name="left" value="0" />
+        <enum name="right" value="1" />
+    </attr>
 
     <declare-styleable name="EmojiView">
         <attr name="text" format="string" />
@@ -11,14 +15,12 @@
     </declare-styleable>
 
     <declare-styleable name="FlexBoxLayout">
+        <attr name="alignment" />
         <attr name="marginBetween" />
     </declare-styleable>
 
     <declare-styleable name="MessageView">
-        <attr name="alignment" format="enum">
-            <enum name="left" value="0" />
-            <enum name="right" value="1" />
-        </attr>
+        <attr name="alignment" />
         <attr name="messageCornerRadius" format="dimension" />
         <attr name="messagePadding" format="dimension" />
         <attr name="avatarMessageMargin" format="dimension" />
