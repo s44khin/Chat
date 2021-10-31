@@ -1,4 +1,4 @@
-package ru.s44khin.coursework.ui.chat
+package ru.s44khin.coursework.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.s44khin.coursework.R
 
 class EmojiAdapter(
-    private val items: List<String>,
+    private val emojis: List<String>,
     private val fragment: BottomSheetDialogFragment
 ) : RecyclerView.Adapter<EmojiAdapter.ViewHolder>() {
 
@@ -24,14 +24,14 @@ class EmojiAdapter(
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.emoji.text = items[position]
+        holder.emoji.text = emojis[position]
         holder.emoji.setOnClickListener {
             fragment.setFragmentResult(
                 ChatAdapter.REQUEST_KEY,
-                bundleOf(ChatAdapter.RESULT_KEY to items[position])
+                bundleOf(ChatAdapter.RESULT_KEY to emojis[position])
             )
         }
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = emojis.size
 }

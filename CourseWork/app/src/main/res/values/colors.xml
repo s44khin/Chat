@@ -3,8 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#888888</color>
+    <color name="yellow">#E9C46A</color>
     <color name="primary">#2A9D8F</color>
-    <color name="onPrimary">#FFFFFFFF</color>
     <color name="background">#FFFFFF</color>
     <color name="chatBottom">#FFFFFF</color>
     <color name="chatBottomInput">#F6F6F6</color>

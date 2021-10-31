@@ -192,9 +192,24 @@ class MessageView @JvmOverloads constructor(
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         avatar.layout(avatarBounds.left, avatarBounds.top, avatarBounds.right, avatarBounds.bottom)
-        profile.layout(profileBounds.left, profileBounds.top, profileBounds.right, profileBounds.bottom)
-        message.layout(messageBounds.left, messageBounds.top, messageBounds.right, messageBounds.bottom)
-        flexBoxLayout.layout(flexBoxBounds.left, flexBoxBounds.top, flexBoxBounds.right, flexBoxBounds.bottom)
+        profile.layout(
+            profileBounds.left,
+            profileBounds.top,
+            profileBounds.right,
+            profileBounds.bottom
+        )
+        message.layout(
+            messageBounds.left,
+            messageBounds.top,
+            messageBounds.right,
+            messageBounds.bottom
+        )
+        flexBoxLayout.layout(
+            flexBoxBounds.left,
+            flexBoxBounds.top,
+            flexBoxBounds.right,
+            flexBoxBounds.bottom
+        )
     }
 
     override fun dispatchDraw(canvas: Canvas) {

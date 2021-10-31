@@ -1,5 +1,7 @@
 package ru.s44khin.coursework.ui.chat
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -11,10 +13,15 @@ import ru.s44khin.coursework.R
 import ru.s44khin.coursework.data.model.Message
 import ru.s44khin.coursework.data.repository.MainRepository
 import ru.s44khin.coursework.databinding.ActivityChatBinding
+import ru.s44khin.coursework.ui.adapters.ChatAdapter
 import ru.s44khin.coursework.utils.parse
 import java.util.*
 
 class ChatActivity : AppCompatActivity() {
+
+    companion object {
+        fun createIntent(context: Context) = Intent(context, ChatActivity::class.java)
+    }
 
     private val binding: ActivityChatBinding by lazy {
         ActivityChatBinding.inflate(layoutInflater)
@@ -37,59 +44,41 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        setRecyclerView()
-        setButtons()
+        setSupportActionBar(binding.toolBar)
+        initRecyclerView()
+        initButtons()
     }
 
-    private fun setRecyclerView() = binding.recyclerView.apply {
-        val manager =
-            LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
-        manager.stackFromEnd = true
-
-        layoutManager = manager
+    private fun initRecyclerView() = binding.recyclerView.apply {
+        layoutManager = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
         adapter = ChatAdapter(list)
+        scrollToPosition(list.lastIndex)
     }
 
-    private fun setButtons() = binding.messageInput.message.doOnTextChanged { text, _, _, _ ->
+    private fun initButtons() = binding.messageInput.message.doOnTextChanged { text, _, _, _ ->
         binding.messageInput.send.apply {
             setOnClickListener { addMessage(text) }
-
-            if (text?.length == 0) {
-                backgroundTintList = ColorStateList.valueOf(
-                    ResourcesCompat.getColor(
-                        resources,
-                        R.color.message,
-                        null
-                    )
-                )
-                setImageDrawable(
-                    ResourcesCompat.getDrawable(
-                        resources,
-                        R.drawable.ic_attach_file,
-                        null
-                    )
-                )
-                setColorFilter(Color.GRAY)
-            } else {
-                backgroundTintList = ColorStateList.valueOf(
-                    ResourcesCompat.getColor(
-                        resources,
-                        R.color.primary,
-                        null
-                    )
-                )
-                setImageDrawable(
-                    ResourcesCompat.getDrawable(
-                        resources,
-                        R.drawable.ic_send,
-                        null
-                    )
-                )
-                setColorFilter(Color.WHITE)
-            }
+            backgroundTintList = setButtonsBackground(text?.length ?: 0)
+            setImageDrawable(setButtonsImage(text?.length ?: 0))
+            setColorFilter(setButtonsColor(text?.length ?: 0))
         }
     }
+
+    private fun setButtonsBackground(length: Int) = ColorStateList.valueOf(
+        ResourcesCompat.getColor(
+            resources,
+            if (length == 0) R.color.message else R.color.primary,
+            null
+        )
+    )
+
+    private fun setButtonsImage(length: Int) = ResourcesCompat.getDrawable(
+        resources,
+        if (length == 0) R.drawable.ic_attach_file else R.drawable.ic_send,
+        null
+    )
+
+    private fun setButtonsColor(length: Int) = if (length == 0) Color.GRAY else Color.WHITE
 
     private fun addMessage(text: CharSequence?) {
         if (text?.length != 0) {

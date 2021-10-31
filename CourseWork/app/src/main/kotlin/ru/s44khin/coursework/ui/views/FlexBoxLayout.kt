@@ -63,7 +63,7 @@ class FlexBoxLayout @JvmOverloads constructor(
         setMeasuredDimension(resultWidth, resultHeight)
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) = when(alignment) {
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) = when (alignment) {
         LEFT -> onLayoutLeft()
         RIGHT -> onLayoutRight()
         else -> throw Exception("Expected \"left\" or \"right\", but received $alignment")
