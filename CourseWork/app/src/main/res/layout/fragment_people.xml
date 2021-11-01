@@ -10,9 +10,13 @@
         android:orientation="vertical">
 
         <include layout="@layout/shimmer_people_item" />
+
         <include layout="@layout/shimmer_people_item" />
+
         <include layout="@layout/shimmer_people_item" />
+
         <include layout="@layout/shimmer_people_item" />
+
         <include layout="@layout/shimmer_people_item" />
     </LinearLayout>
 

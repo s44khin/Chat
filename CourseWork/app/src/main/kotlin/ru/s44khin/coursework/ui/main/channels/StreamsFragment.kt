@@ -9,12 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.s44khin.coursework.data.model.Stream
 import ru.s44khin.coursework.databinding.FragmentStreamsBinding
-import ru.s44khin.coursework.ui.adapters.StreamAdapter
 import ru.s44khin.coursework.ui.main.MainViewModel
 
 abstract class StreamsFragment : Fragment() {
 
-    protected var _binding: FragmentStreamsBinding? = null
+    private var _binding: FragmentStreamsBinding? = null
     protected val binding get() = _binding!!
     protected val viewModel: MainViewModel by activityViewModels()
 

@@ -5,68 +5,72 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import ru.s44khin.coursework.R
 import ru.s44khin.coursework.data.model.Message
-import ru.s44khin.coursework.data.repository.MainRepository
 import ru.s44khin.coursework.databinding.ActivityChatBinding
-import ru.s44khin.coursework.ui.adapters.ChatAdapter
 import ru.s44khin.coursework.utils.parse
 import java.util.*
 
 class ChatActivity : AppCompatActivity() {
 
     companion object {
-        fun createIntent(context: Context) = Intent(context, ChatActivity::class.java)
+        const val STREAM = "stream"
+        const val TOPIC = "topic"
+
+        fun createIntent(context: Context, stream: String, topic: String) =
+            Intent(context, ChatActivity::class.java)
+                .putExtra(STREAM, stream)
+                .putExtra(TOPIC, topic)
     }
 
     private val binding: ActivityChatBinding by lazy {
         ActivityChatBinding.inflate(layoutInflater)
     }
 
-    private var list = mutableListOf<Any>()
-
-    private val dispose = MainRepository().getMessages()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-            { messages ->
-                val result = mutableListOf(messages[0].date, messages[0])
-
-                for (i in 0 until messages.lastIndex) {
-                    if (messages[i].date != messages[i + 1].date)
-                        result.add(messages[i + 1].date)
-
-                    result.add(messages[i + 1])
-                }
-
-                list = result
-                initRecyclerView(result)
-            },
-            {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-            }
-        )
+    private var list = mutableListOf<ChatItem>()
+    private val viewModel: ChatViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolBar)
+        initToolbar()
         initButtons()
+        loadMessages()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        dispose.dispose()
+    private fun initToolbar() {
+        binding.streamName.text = intent.getStringExtra(STREAM)
+        binding.topicName.text = intent.getStringExtra(TOPIC)
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 
-    private fun initRecyclerView(list: List<Any>) = binding.recyclerView.apply {
+    private fun loadMessages() = viewModel.messages.observe(this) { messages ->
+        val result = mutableListOf(
+            ChatItem.DateItem(messages[0].date),
+            ChatItem.MessageItem(messages[0])
+        )
+
+        for (i in 0 until messages.lastIndex) {
+            if (messages[i].date != messages[i + 1].date)
+                result.add(ChatItem.DateItem(messages[i + 1].date))
+
+            result.add(ChatItem.MessageItem(messages[i + 1]))
+        }
+
+        list = result
+        initRecyclerView(result)
+        binding.progressBar.visibility = View.GONE
+    }
+
+    private fun initRecyclerView(list: List<ChatItem>) = binding.recyclerView.apply {
         layoutManager = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
         adapter = ChatAdapter(list)
         scrollToPosition(list.lastIndex)
@@ -108,10 +112,10 @@ class ChatActivity : AppCompatActivity() {
                 alignment = 1
             )
 
-            if (parse(message.date) != parse((list[list.lastIndex] as Message).date))
-                list.add(message.date)
+            if (parse(message.date) != parse((list[list.lastIndex] as ChatItem.MessageItem).message.date))
+                list.add(ChatItem.DateItem(message.date))
 
-            list.add(message)
+            list.add(ChatItem.MessageItem(message))
             binding.messageInput.message.setText("")
             binding.recyclerView.adapter?.notifyItemInserted(list.lastIndex)
             binding.recyclerView.scrollToPosition(list.lastIndex)

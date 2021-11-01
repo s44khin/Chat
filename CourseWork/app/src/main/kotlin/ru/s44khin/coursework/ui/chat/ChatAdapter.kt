@@ -1,4 +1,4 @@
-package ru.s44khin.coursework.ui.adapters
+package ru.s44khin.coursework.ui.chat
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.s44khin.coursework.R
 import ru.s44khin.coursework.data.model.Message
-import ru.s44khin.coursework.ui.chat.EmojiBottomSheet
+import ru.s44khin.coursework.ui.chat.bottomSheet.EmojiBottomSheet
 import ru.s44khin.coursework.ui.views.EmojiView
 import ru.s44khin.coursework.ui.views.FlexBoxLayout
 import ru.s44khin.coursework.ui.views.MessageView
 import ru.s44khin.coursework.utils.parse
 
 class ChatAdapter(
-    private val messages: List<Any>
+    private val messages: List<ChatItem>
 ) : RecyclerView.Adapter<ViewHolder>() {
 
     private enum class MessageType(val value: Int) {
@@ -83,14 +83,14 @@ class ChatAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = when (messages[position]) {
-        is Int -> {
+        is ChatItem.DateItem -> {
             holder as DateViewHolder
-            val item = messages[position] as Int
-            holder.date.text = parse(item)
+            val item = messages[position] as ChatItem.DateItem
+            holder.date.text = parse(item.date)
         }
-        is Message -> {
+        is ChatItem.MessageItem -> {
             holder as MessageViewHolder
-            val message = messages[position] as Message
+            val message = (messages[position] as ChatItem.MessageItem).message
             val context = holder.message.context
 
             holder.profile.text = message.profile
@@ -115,18 +115,16 @@ class ChatAdapter(
                 showBottomSheet(context, message, holder.flexBoxLayout)
             }
         }
-        else -> throw Exception("Invalid view type")
     }
 
     override fun getItemCount() = messages.size
 
     override fun getItemViewType(position: Int) = when (messages[position]) {
-        is Int -> MessageType.DATE.value
-        is Message -> {
-            val item = messages[position] as Message
-            if (item.alignment == MessageView.LEFT) MessageType.LEFT.value else MessageType.RIGHT.value
+        is ChatItem.DateItem -> MessageType.DATE.value
+        is ChatItem.MessageItem -> {
+            val item = messages[position] as ChatItem.MessageItem
+            if (item.message.alignment == MessageView.LEFT) MessageType.LEFT.value else MessageType.RIGHT.value
         }
-        else -> throw Exception("Invalid view type")
     }
 
     private fun addEmojiView(

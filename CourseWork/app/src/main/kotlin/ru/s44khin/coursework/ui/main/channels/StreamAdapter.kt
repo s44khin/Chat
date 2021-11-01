@@ -1,4 +1,4 @@
-package ru.s44khin.coursework.ui.adapters
+package ru.s44khin.coursework.ui.main.channels
 
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +27,7 @@ class StreamAdapter(
         viewHolder.recyclerView.apply {
             layoutManager =
                 LinearLayoutManager(parent.context, LinearLayoutManager.VERTICAL, false)
-            adapter = TopicAdapter(listOf())
+            adapter = TopicAdapter("", listOf())
         }
 
         return viewHolder
@@ -38,9 +38,7 @@ class StreamAdapter(
 
         holder.name.text = stream.name
         holder.recyclerView.apply {
-            layoutManager =
-                LinearLayoutManager(holder.itemView.context, LinearLayoutManager.VERTICAL, false)
-            adapter = TopicAdapter(stream.topics)
+            adapter = TopicAdapter(stream.name, stream.topics)
 
             if (position == 0)
                 visibility = View.VISIBLE

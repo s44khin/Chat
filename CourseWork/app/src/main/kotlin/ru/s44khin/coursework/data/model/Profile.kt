@@ -7,4 +7,3 @@ data class Profile(
     val online: Boolean,
     val email: String,
 )
-

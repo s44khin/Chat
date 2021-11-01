@@ -1,4 +1,4 @@
-package ru.s44khin.coursework.ui.chat
+package ru.s44khin.coursework.ui.chat.bottomSheet
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.s44khin.coursework.databinding.FragmentEmojiBottomSheetBinding
-import ru.s44khin.coursework.ui.adapters.EmojiAdapter
 import ru.s44khin.coursework.utils.emojiList
 
 class EmojiBottomSheet : BottomSheetDialogFragment() {

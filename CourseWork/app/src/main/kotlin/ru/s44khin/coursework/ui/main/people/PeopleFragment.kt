@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ru.s44khin.coursework.data.model.Profile
 import ru.s44khin.coursework.databinding.FragmentPeopleBinding
 import ru.s44khin.coursework.ui.main.MainViewModel
-import ru.s44khin.coursework.ui.adapters.PeopleAdapter
 
 class PeopleFragment : Fragment() {
 

@@ -1,4 +1,4 @@
-package ru.s44khin.coursework.ui.adapters
+package ru.s44khin.coursework.ui.chat.bottomSheet
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.s44khin.coursework.R
+import ru.s44khin.coursework.ui.chat.ChatAdapter
 
 class EmojiAdapter(
     private val emojis: List<String>,

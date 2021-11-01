@@ -1,4 +1,4 @@
-package ru.s44khin.coursework.ui.adapters
+package ru.s44khin.coursework.ui.main.channels
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +11,7 @@ import ru.s44khin.coursework.data.model.Topic
 import ru.s44khin.coursework.ui.chat.ChatActivity
 
 class TopicAdapter(
+    private val name: String,
     private val topics: List<Topic>
 ) : RecyclerView.Adapter<TopicAdapter.ViewHolder>() {
 
@@ -34,7 +35,7 @@ class TopicAdapter(
         holder.name.rootView.apply {
             setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.yellow))
             setOnClickListener {
-                context.startActivity(ChatActivity.createIntent(context))
+                context.startActivity(ChatActivity.createIntent(context, name, topic.name))
             }
         }
     }

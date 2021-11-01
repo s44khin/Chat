@@ -164,19 +164,19 @@ class MainRepository {
         email = "tinkov@tinkoff.ru"
     )
 
-    fun getMessages() = Single.create<List<Message>> { subscriber ->
-        Thread.sleep(range.random())
-        subscriber.onSuccess(messages)
+    fun getMessages(): Single<MutableList<Message>> {
+        return Single.fromCallable { messages }
+            .delay(range.random(), TimeUnit.MILLISECONDS)
     }
 
-    fun getProfile() = Single.create<Profile> { subscriber ->
-        Thread.sleep(range.random())
-        subscriber.onSuccess(profile1)
+    fun getProfile(): Single<Profile> {
+        return Single.fromCallable { profile1 }
+            .delay(range.random(), TimeUnit.MILLISECONDS)
     }
 
-    fun getPeople() = Single.create<List<Profile>> { subscriber ->
-        Thread.sleep(range.random())
-        subscriber.onSuccess(listOf(profile1, profile2))
+    fun getPeople(): Single<List<Profile>> {
+        return Single.fromCallable { listOf(profile1, profile2) }
+            .delay(range.random(), TimeUnit.MILLISECONDS)
     }
 
     fun getSubsStreams(text: String = ""): Observable<List<Stream>> {
