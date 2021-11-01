@@ -2,7 +2,6 @@ package ru.s44khin.coursework.ui.main.channels
 
 import android.os.Bundle
 import android.view.View
-import ru.s44khin.coursework.ui.main.channels.StreamsFragment
 
 class SubsStreamsFragment : StreamsFragment() {
 
@@ -10,6 +9,7 @@ class SubsStreamsFragment : StreamsFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.subsStreams.observe(viewLifecycleOwner) {
             initRecyclerView(it)
+            binding.shimmer.visibility = View.GONE
         }
     }
 }

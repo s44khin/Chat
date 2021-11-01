@@ -31,6 +31,7 @@ class PeopleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.people.observe(viewLifecycleOwner) {
             initRecyclerView(it)
+            binding.shimmer.visibility = View.GONE
         }
     }
 

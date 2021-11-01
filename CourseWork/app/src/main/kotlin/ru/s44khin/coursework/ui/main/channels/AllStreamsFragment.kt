@@ -10,6 +10,7 @@ class AllStreamsFragment : StreamsFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.allStreams.observe(viewLifecycleOwner) {
             initRecyclerView(it)
+            binding.shimmer.visibility = View.GONE
         }
     }
 }

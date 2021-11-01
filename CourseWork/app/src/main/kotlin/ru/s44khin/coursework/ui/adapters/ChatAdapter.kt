@@ -23,10 +23,13 @@ class ChatAdapter(
     private val messages: List<Any>
 ) : RecyclerView.Adapter<ViewHolder>() {
 
+    private enum class MessageType(val value: Int) {
+        DATE(0),
+        LEFT(1),
+        RIGHT(2)
+    }
+
     companion object {
-        const val TYPE_DATE = 0
-        const val TYPE_MESSAGE_LEFT = 1
-        const val TYPE_MESSAGE_RIGHT = 2
         const val REQUEST_KEY = "RequestEmoji"
         const val RESULT_KEY = "ResultEmoji"
     }
@@ -59,18 +62,18 @@ class ChatAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
-        TYPE_DATE -> {
+        MessageType.DATE.value -> {
             val itemView =
                 LayoutInflater.from(parent.context).inflate(R.layout.chat_date_item, parent, false)
             DateViewHolder(itemView)
         }
-        TYPE_MESSAGE_LEFT -> {
+        MessageType.LEFT.value -> {
             val itemView =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.chat_message_left, parent, false)
             LeftViewHolder(itemView)
         }
-        TYPE_MESSAGE_RIGHT -> {
+        MessageType.RIGHT.value -> {
             val itemView =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.chat_message_right, parent, false)
@@ -118,10 +121,10 @@ class ChatAdapter(
     override fun getItemCount() = messages.size
 
     override fun getItemViewType(position: Int) = when (messages[position]) {
-        is Int -> TYPE_DATE
+        is Int -> MessageType.DATE.value
         is Message -> {
             val item = messages[position] as Message
-            if (item.alignment == MessageView.LEFT) TYPE_MESSAGE_LEFT else TYPE_MESSAGE_RIGHT
+            if (item.alignment == MessageView.LEFT) MessageType.LEFT.value else MessageType.RIGHT.value
         }
         else -> throw Exception("Invalid view type")
     }
@@ -133,7 +136,7 @@ class ChatAdapter(
         text: Int,
         isSelected: Boolean = false
     ) = EmojiView(flexBoxLayout.context).apply {
-        setPadding(20)
+        setPadding((50 / context.resources.displayMetrics.density).toInt())
         this.emoji = emoji
         this.text = text.toString()
         this.isSelected = isSelected

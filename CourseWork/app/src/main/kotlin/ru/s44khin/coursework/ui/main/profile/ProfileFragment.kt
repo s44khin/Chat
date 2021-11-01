@@ -31,6 +31,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.profile.observe(viewLifecycleOwner) {
             initViews(it)
+            binding.shimmer.visibility = View.GONE
         }
     }
 

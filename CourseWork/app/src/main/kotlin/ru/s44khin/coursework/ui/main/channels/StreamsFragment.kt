@@ -14,8 +14,8 @@ import ru.s44khin.coursework.ui.main.MainViewModel
 
 abstract class StreamsFragment : Fragment() {
 
-    private var _binding: FragmentStreamsBinding? = null
-    private val binding get() = _binding!!
+    protected var _binding: FragmentStreamsBinding? = null
+    protected val binding get() = _binding!!
     protected val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
