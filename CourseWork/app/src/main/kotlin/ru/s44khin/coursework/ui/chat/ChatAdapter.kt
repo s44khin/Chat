@@ -51,6 +51,10 @@ class ChatAdapter(
         override val profile: TextView = messageView.profile
         override val message: TextView = messageView.message
         override val flexBoxLayout: FlexBoxLayout = messageView.flexBoxLayout
+
+        init {
+            flexBoxLayout.alignment = FlexBoxLayout.LEFT
+        }
     }
 
     class RightViewHolder(itemView: View) : MessageViewHolder(itemView) {
@@ -59,6 +63,10 @@ class ChatAdapter(
         override val profile: TextView = messageView.profile
         override val message: TextView = messageView.message
         override val flexBoxLayout: FlexBoxLayout = messageView.flexBoxLayout
+
+        init {
+            flexBoxLayout.alignment = FlexBoxLayout.RIGHT
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
@@ -95,7 +103,6 @@ class ChatAdapter(
 
             holder.profile.text = message.profile
             holder.message.text = message.message
-            holder.flexBoxLayout.alignment = 0
             holder.flexBoxLayout.removeAllViews()
 
             if (message.reactions.size != 0)
