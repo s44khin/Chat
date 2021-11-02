@@ -134,7 +134,7 @@ class ChatAdapter(
         text: Int,
         isSelected: Boolean = false
     ) = EmojiView(flexBoxLayout.context).apply {
-        setPadding((50 / context.resources.displayMetrics.density).toInt())
+        setPadding((85 / context.resources.displayMetrics.density).toInt())
         this.emoji = emoji
         this.text = text.toString()
         this.isSelected = isSelected

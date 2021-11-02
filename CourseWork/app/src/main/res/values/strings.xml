@@ -18,4 +18,5 @@
     <string name="emailSample">darrel@company.com</string>
     <string name="emojis">emojis</string>
     <string name="avatar">avatar</string>
+    <string name="back">back</string>
 </resources>

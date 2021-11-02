@@ -30,11 +30,12 @@ class ChannelFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initTabs()
+        initSearch()
+    }
 
-        binding.toolBar.search.doAfterTextChanged { text ->
-            viewModel.searchSubsStreams(text.toString())
-            viewModel.searchAllStreams(text.toString())
-        }
+    private fun initSearch() = binding.toolBar.search.doAfterTextChanged { text ->
+        viewModel.searchSubsStreams(text.toString())
+        viewModel.searchAllStreams(text.toString())
     }
 
     private fun initTabs() {

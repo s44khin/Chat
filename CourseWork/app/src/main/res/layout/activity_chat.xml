@@ -25,14 +25,16 @@
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/textColor" />
 
             <TextView
                 android:id="@+id/streamName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:textSize="18sp"
+                android:textColor="@color/textColor"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/backButton"
                 app:layout_constraintTop_toTopOf="parent"
@@ -43,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:textColor="@color/textColor"
                 app:layout_constraintStart_toEndOf="@id/backButton"
                 app:layout_constraintTop_toBottomOf="@id/streamName"
                 tools:text="asdasdasd" />
