@@ -118,9 +118,15 @@ class ChatAdapter(
                         }
                     }
 
-            for ((emoji, text) in message.reactions)
+            for (i in message.reactions.indices)
                 holder.flexBoxLayout.addView(
-                    addEmojiView(message, holder.flexBoxLayout, emoji, text)
+                    addEmojiView(
+                        message,
+                        holder.flexBoxLayout,
+                        message.reactions[i].emoji,
+                        message.reactions[i].count,
+                        message.reactions[i].iLiked
+                    )
                 )
 
             holder.message.setOnLongClickListener {

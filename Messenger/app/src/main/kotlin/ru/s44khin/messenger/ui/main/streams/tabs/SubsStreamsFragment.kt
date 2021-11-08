@@ -12,5 +12,8 @@ class SubsStreamsFragment : TabStreamFragment() {
             initRecyclerView(it)
             binding.shimmer.visibility = View.GONE
         }
+        viewModel.searchSubsStreams.observe(viewLifecycleOwner) {
+            initRecyclerView(it)
+        }
     }
 }

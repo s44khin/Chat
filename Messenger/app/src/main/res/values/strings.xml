@@ -7,4 +7,6 @@
     <string name="subscribed">Subscribed</string>
     <string name="allStreams">All streams</string>
     <string name="write">Write</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
 </resources>

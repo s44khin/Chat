@@ -24,18 +24,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Testing" />
-
-        <TextView
-            android:id="@+id/topicMessages"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/badge"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp"
-            android:textColor="@color/white"
-            app:layout_constraintBaseline_toBaselineOf="@id/topicName"
-            app:layout_constraintStart_toEndOf="@id/topicName"
-            tools:text="42" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

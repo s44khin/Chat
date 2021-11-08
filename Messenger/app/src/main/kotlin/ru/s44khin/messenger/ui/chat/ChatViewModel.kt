@@ -94,12 +94,16 @@ class ChatViewModel : ViewModel() {
     private fun List<Reaction>.toAdapterReactions(): MutableList<AdapterReaction> {
         val result = mutableListOf<AdapterReaction>()
         val map = mutableMapOf<String, Int>()
+        val reactionsILiked = mutableListOf<String>()
 
         for (reaction in this) {
             if (reaction.emojiCode in map.keys)
                 map[reaction.emojiCode] = map[reaction.emojiCode]!! + 1
             else
                 map[reaction.emojiCode] = 1
+
+            if (reaction.user.id == MY_ID)
+                reactionsILiked.add(reaction.emojiCode)
         }
 
         for ((emoji, count) in map)
@@ -107,7 +111,7 @@ class ChatViewModel : ViewModel() {
                 AdapterReaction(
                     emoji = emoji,
                     count = count,
-                    iLiked = false
+                    iLiked = emoji in reactionsILiked
                 )
             )
 

@@ -17,7 +17,6 @@ class TopicAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.topicName)
-        val messages: TextView = itemView.findViewById(R.id.topicMessages)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,7 +30,6 @@ class TopicAdapter(
 
         holder.apply {
             name.text = topic.name
-//            messages.text = topic.messages.size.toString()
             itemView.setOnClickListener {
                 itemView.context.startActivity(
                     ChatActivity.createIntent(itemView.context, streamId, streamName, topic.name)

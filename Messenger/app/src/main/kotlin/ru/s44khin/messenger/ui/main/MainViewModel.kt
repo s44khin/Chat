@@ -28,6 +28,12 @@ class MainViewModel : ViewModel() {
     private val _allStreams = MutableLiveData<List<ResultStream>>()
     val allStreams: LiveData<List<ResultStream>> = _allStreams
 
+    private val _searchSubsStreams = MutableLiveData<List<ResultStream>>()
+    val searchSubsStreams: LiveData<List<ResultStream>> = _searchSubsStreams
+
+    private val _searchAllStreams = MutableLiveData<List<ResultStream>>()
+    val searchAllStreams: LiveData<List<ResultStream>> = _searchAllStreams
+
     private val disposeBag = CompositeDisposable()
     private val repository = MainRepository()
 
@@ -81,6 +87,24 @@ class MainViewModel : ViewModel() {
             onError = { Log.e("Error", it.message.toString()) }
         )
         .addTo(disposeBag)
+
+    fun searchSubsStreams(text: String) = Observable.fromCallable { _subsStreams.value }
+        .map { streams -> streams.filter { it.name.contains(text, true) } }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onNext = { _searchSubsStreams.value = it },
+            onError = { Log.e("Error", it.message.toString()) }
+        )
+
+    fun searchAllStreams(text: String) = Observable.fromCallable { _allStreams.value }
+        .map { streams -> streams.filter { it.name.contains(text, true) } }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onNext = { _searchAllStreams.value = it },
+            onError = { Log.e("Error", it.message.toString()) }
+        )
 
     private fun getMembers() = repository.getMembers()
         .subscribeOn(Schedulers.io())

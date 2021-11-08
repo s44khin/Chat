@@ -33,10 +33,10 @@ class StreamsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initTabs()
-//        binding.titleBar.search.doAfterTextChanged {
-//            viewModel.downloadSubsStreams(it.toString())
-//            viewModel.downloadAllStreams(it.toString())
-//        }
+        binding.titleBar.search.doAfterTextChanged {
+            viewModel.searchAllStreams(it.toString())
+            viewModel.searchSubsStreams(it.toString())
+        }
     }
 
     private fun initTabs() {
