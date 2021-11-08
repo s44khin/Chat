@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navChannels"
-        android:icon="@drawable/ic_channels"
-        android:title="@string/channels" />
+        android:id="@+id/navStreams"
+        android:icon="@drawable/selector_streams"
+        android:title="@string/streams" />
 
     <item
         android:id="@+id/navPeople"
-        android:icon="@drawable/ic_people"
+        android:icon="@drawable/selector_people"
         android:title="@string/people" />
 
     <item
         android:id="@+id/navProfile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/selector_profile"
         android:title="@string/profile" />
-
-    <item
-        android:id="@+id/navSettings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings" />
 </menu>

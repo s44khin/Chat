@@ -8,6 +8,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
+        android:background="@color/primary"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -20,21 +21,20 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/back"
                 android:foreground="?android:selectableItemBackground"
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/textColor" />
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/streamName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:textColor="@color/textColor"
-                android:textSize="22sp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/backButton"
                 app:layout_constraintTop_toTopOf="parent"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:textColor="@color/textColor"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@id/backButton"
                 app:layout_constraintTop_toBottomOf="@id/streamName"
                 tools:text="asdasdasd" />

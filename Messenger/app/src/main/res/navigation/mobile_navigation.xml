@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navChannels">
+    app:startDestination="@+id/navStreams">
 
     <fragment
-        android:id="@+id/navChannels"
-        android:name="ru.s44khin.coursework.ui.main.channels.ChannelFragment"
-        android:label="@string/channels"
-        tools:layout="@layout/fragment_channels" />
+        android:id="@+id/navStreams"
+        android:name="ru.s44khin.messenger.ui.main.streams.StreamsFragment"
+        android:label="@string/streams"
+        tools:layout="@layout/fragment_streams" />
 
     <fragment
         android:id="@+id/navPeople"
-        android:name="ru.s44khin.coursework.ui.main.people.PeopleFragment"
+        android:name="ru.s44khin.messenger.ui.main.people.PeopleFragment"
         android:label="@string/people"
         tools:layout="@layout/fragment_people" />
 
     <fragment
         android:id="@+id/navProfile"
-        android:name="ru.s44khin.coursework.ui.main.profile.ProfileFragment"
+        android:name="ru.s44khin.messenger.ui.main.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>
