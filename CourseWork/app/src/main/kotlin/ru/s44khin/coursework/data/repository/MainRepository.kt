@@ -1,13 +1,17 @@
 package ru.s44khin.coursework.data.repository
 
+import io.reactivex.Observable
+import io.reactivex.Single
 import ru.s44khin.coursework.data.model.Message
 import ru.s44khin.coursework.data.model.Profile
 import ru.s44khin.coursework.data.model.Stream
 import ru.s44khin.coursework.data.model.Topic
+import java.util.concurrent.TimeUnit
 
 class MainRepository {
 
-    fun getMessages() = mutableListOf<Message>().apply {
+    private val range = 1000L..5000L
+    private val messages = mutableListOf<Message>().apply {
         add(
             Message(
                 date = 1609372800,
@@ -63,44 +67,17 @@ class MainRepository {
             )
         )
     }
-
-    fun getProfile() = Profile(
-        "Vasya Pypkin",
-        "Im a meeting",
-        "https://www.meme-arsenal.com/memes/a5dd2f55b36488a10172f4f84352846b.jpg",
-        false,
-        "vasyaPypkin@tinkoff.ru"
-    )
-
-    fun getPeoples() = mutableListOf(
-        Profile(
-            name = "Petya Petkin",
-            status = "Im a meeting",
-            online = true,
-            avatar = "https://i.ytimg.com/vi/g74YJykOH7U/hqdefault.jpg",
-            email = "petka1337@tinkoff.ru"
-        ),
-
-        Profile(
-            name = "Oleg Tinkov",
-            status = "Sleep",
-            online = false,
-            avatar = "https://gazetabiznes.ru/wp-content/uploads/2020/04/%D1%82%D0%B8%D0%BD%D1%8C%D0%BA%D0%BE%D1%84-%D0%BB%D0%B5%D0%B8%CC%86%D0%BA%D0%B5%D0%BC%D0%B8%D1%8F.jpg?v=1585934334",
-            email = "tinkov@tinkoff.ru"
-        )
-    )
-
-    fun getSubsStreams() = mutableListOf(
+    private val subsStreams = mutableListOf(
         Stream(
             name = "#general",
             topics = listOf(
                 Topic(
                     name = "Testing",
-                    messages = getMessages()
+                    messages = messages
                 ),
                 Topic(
                     name = "Bruh",
-                    messages = getMessages()
+                    messages = messages
                 )
             )
         ),
@@ -109,27 +86,26 @@ class MainRepository {
             topics = listOf(
                 Topic(
                     name = "Testing",
-                    messages = getMessages()
+                    messages = messages
                 ),
                 Topic(
                     name = "Bruh",
-                    messages = getMessages()
+                    messages = messages
                 )
             )
         )
     )
-
-    fun getAllStreams() = mutableListOf(
+    private val allStreams = mutableListOf(
         Stream(
             name = "#general",
             topics = listOf(
                 Topic(
                     name = "Testing",
-                    messages = getMessages()
+                    messages = messages
                 ),
                 Topic(
                     name = "Bruh",
-                    messages = getMessages()
+                    messages = messages
                 )
             )
         ),
@@ -138,11 +114,11 @@ class MainRepository {
             topics = listOf(
                 Topic(
                     name = "Testing",
-                    messages = getMessages()
+                    messages = messages
                 ),
                 Topic(
                     name = "Bruh",
-                    messages = getMessages()
+                    messages = messages
                 )
             )
         ),
@@ -151,11 +127,11 @@ class MainRepository {
             topics = listOf(
                 Topic(
                     name = "Testing",
-                    messages = getMessages()
+                    messages = messages
                 ),
                 Topic(
                     name = "Bruh",
-                    messages = getMessages()
+                    messages = messages
                 )
             )
         ),
@@ -164,13 +140,54 @@ class MainRepository {
             topics = listOf(
                 Topic(
                     name = "Testing",
-                    messages = getMessages()
+                    messages = messages
                 ),
                 Topic(
                     name = "Bruh",
-                    messages = getMessages()
+                    messages = messages
                 )
             )
         ),
     )
+    private val profile1 = Profile(
+        "Vasya Pypkin",
+        "Im a meeting",
+        "https://www.meme-arsenal.com/memes/a5dd2f55b36488a10172f4f84352846b.jpg",
+        false,
+        "vasyaPypkin@tinkoff.ru"
+    )
+    private val profile2 = Profile(
+        name = "Oleg Tinkov",
+        status = "Sleep",
+        online = false,
+        avatar = "https://gazetabiznes.ru/wp-content/uploads/2020/04/%D1%82%D0%B8%D0%BD%D1%8C%D0%BA%D0%BE%D1%84-%D0%BB%D0%B5%D0%B8%CC%86%D0%BA%D0%B5%D0%BC%D0%B8%D1%8F.jpg?v=1585934334",
+        email = "tinkov@tinkoff.ru"
+    )
+
+    fun getMessages(): Single<MutableList<Message>> {
+        return Single.fromCallable { messages }
+            .delay(range.random(), TimeUnit.MILLISECONDS)
+    }
+
+    fun getProfile(): Single<Profile> {
+        return Single.fromCallable { profile1 }
+            .delay(range.random(), TimeUnit.MILLISECONDS)
+    }
+
+    fun getPeople(): Single<List<Profile>> {
+        return Single.fromCallable { listOf(profile1, profile2) }
+            .delay(range.random(), TimeUnit.MILLISECONDS)
+    }
+
+    fun getSubsStreams(text: String = ""): Observable<List<Stream>> {
+        return Observable.fromCallable() { subsStreams }
+            .delay(range.random(), TimeUnit.MILLISECONDS)
+            .map { streams -> streams.filter { it.name.contains(text, true) } }
+    }
+
+    fun getAllStreams(text: String = ""): Observable<List<Stream>> {
+        return Observable.fromCallable() { allStreams }
+            .delay(range.random(), TimeUnit.MILLISECONDS)
+            .map { streams -> streams.filter { it.name.contains(text, true) } }
+    }
 }

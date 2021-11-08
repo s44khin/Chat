@@ -1,4 +1,4 @@
-package ru.s44khin.coursework.ui.adapters
+package ru.s44khin.coursework.ui.main.people
 
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +36,7 @@ class PeopleAdapter(
             email.text = profile.email
             Glide.with(avatar)
                 .load(profile.avatar)
-                .centerCrop()
+                .circleCrop()
                 .into(avatar)
         }
 

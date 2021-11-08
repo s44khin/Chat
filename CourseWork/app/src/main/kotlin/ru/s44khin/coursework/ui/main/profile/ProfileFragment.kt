@@ -1,4 +1,4 @@
-package ru.s44khin.coursework.ui.profile
+package ru.s44khin.coursework.ui.main.profile
 
 import android.graphics.Color
 import android.os.Bundle
@@ -6,18 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import ru.s44khin.coursework.data.model.Profile
-import ru.s44khin.coursework.data.repository.MainRepository
 import ru.s44khin.coursework.databinding.FragmentProfileBinding
+import ru.s44khin.coursework.ui.main.MainViewModel
 
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    private val profile: Profile by lazy {
-        MainRepository().getProfile()
-    }
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,11 +29,13 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
+        viewModel.profile.observe(viewLifecycleOwner) {
+            initViews(it)
+            binding.shimmer.visibility = View.GONE
+        }
     }
 
-    private fun initViews() = binding.apply {
-        val item = this@ProfileFragment.profile
+    private fun initViews(item: Profile) = binding.apply {
         profile.text = item.name
         status.text = item.status
         online.apply {
@@ -43,7 +44,7 @@ class ProfileFragment : Fragment() {
         }
         Glide.with(avatar)
             .load(item.avatar)
-            .centerCrop()
+            .circleCrop()
             .into(avatar)
     }
 

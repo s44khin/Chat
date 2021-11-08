@@ -3,6 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/shimmer_people_item" />
+
+        <include layout="@layout/shimmer_people_item" />
+
+        <include layout="@layout/shimmer_people_item" />
+
+        <include layout="@layout/shimmer_people_item" />
+
+        <include layout="@layout/shimmer_people_item" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
