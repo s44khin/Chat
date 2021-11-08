@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/shimmerAvatar"
+            app:cardBackgroundColor="@color/gray"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:cardCornerRadius="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            app:constraint_referenced_ids="view, view2"
+            app:flow_horizontalAlign="start"
+            app:flow_verticalGap="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/shimmerAvatar"
+            app:layout_constraintStart_toEndOf="@id/shimmerAvatar"
+            app:layout_constraintTop_toTopOf="@id/shimmerAvatar" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="240dp"
+            android:background="@color/gray"
+            android:layout_height="20sp" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="200dp"
+            android:background="@color/gray"
+            android:layout_height="16sp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.facebook.shimmer.ShimmerFrameLayout>

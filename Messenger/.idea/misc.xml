@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/baseline_account_circle_24.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/baseline_campaign_24.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/baseline_people_alt_24.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/ic_people_selected.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/ic_streams.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/outline_account_circle_24.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/outline_arrow_back_24.xml" value="0.26666666666666666" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/outline_attach_file_24.xml" value="0.26666666666666666" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/outline_campaign_24.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/outline_emoji_emotions_24.xml" value="0.26666666666666666" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/outline_people_24.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/outline_people_alt_24.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/outline_search_24.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable-v24/outline_send_24.xml" value="0.26666666666666666" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable/badge.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable/emoji_view_background.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable/ic_streams_selector.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable/outline_expand_more_24.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable/people_selector.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable/search_background.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable/selector_profile.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/drawable/selector_streams.xml" value="0.4041666666666667" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_chat.xml" value="0.4" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/activity_main.xml" value="0.3145299145299145" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/chat_bottom.xml" value="0.4" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/emoji_bottom_item.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/fragment_emoji_bottom_sheet.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/fragment_people.xml" value="0.3880208333333333" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/fragment_streams.xml" value="0.25" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/fragment_tab_streams.xml" value="0.3880208333333333" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/fragment_test.xml" value="0.35555555555555557" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/item_add_button.xml" value="1.1" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/item_date.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/item_emoji.xml" value="0.5" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/item_message.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/item_message_left.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/item_message_right.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/item_people.xml" value="0.3880208333333333" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/item_reaction.xml" value="0.75" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/item_stream.xml" value="0.3880208333333333" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/item_topic.xml" value="0.29277331686226066" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/message_view.xml" value="0.152" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/shimmer_people.xml" value="0.3880208333333333" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/layout/tool_bar_search.xml" value="0.33" />
+        <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3880208333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
