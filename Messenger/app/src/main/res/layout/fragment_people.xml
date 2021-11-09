@@ -8,17 +8,22 @@
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/people"
-        app:titleTextColor="@color/white" />
+        app:title="@string/people" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/tabBottom"
+        app:layout_constraintTop_toBottomOf="@id/toolBar" />
 
     <LinearLayout
         android:id="@+id/shimmer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/toolBar">
+        app:layout_constraintTop_toBottomOf="@id/view">
 
         <include
             layout="@layout/shimmer_people"
@@ -46,5 +51,5 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolBar" />
+        app:layout_constraintTop_toBottomOf="@id/view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

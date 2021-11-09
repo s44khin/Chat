@@ -9,15 +9,11 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.s44khin.messenger.R
-import ru.s44khin.messenger.data.model.Message
 import ru.s44khin.messenger.databinding.ActivityChatBinding
-import ru.s44khin.messenger.utils.MY_ID
-import ru.s44khin.messenger.utils.parse
 
 class ChatActivity : AppCompatActivity() {
 

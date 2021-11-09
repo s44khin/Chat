@@ -1,9 +1,7 @@
 package ru.s44khin.messenger.ui.main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController

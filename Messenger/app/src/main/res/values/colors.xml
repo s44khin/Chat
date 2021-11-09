@@ -10,4 +10,5 @@
     <color name="gray">#888888</color>
     <color name="message">#F6F6F6</color>
     <color name="messageSelected">#D6D6D6</color>
+    <color name="tabBottom">#E3E3E3</color>
 </resources>

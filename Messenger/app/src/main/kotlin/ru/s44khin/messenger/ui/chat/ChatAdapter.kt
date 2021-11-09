@@ -1,6 +1,7 @@
 package ru.s44khin.messenger.ui.chat
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -193,7 +194,7 @@ class ChatAdapter(
         val emojiBottomSheet = EmojiBottomSheet()
 
         fragmentManager.setFragmentResultListener(REQUEST_KEY, context) { _, bundle ->
-            val emoji = bundle.getString(RESULT_KEY) ?: return@setFragmentResultListener
+            val emoji = bundle.getInt(RESULT_KEY).toString()
             fragmentManager.beginTransaction().remove(emojiBottomSheet).commit()
 
             var check = true

@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.databinding.FragmentTabStreamsBinding
-import ru.s44khin.messenger.data.model.Stream
 import ru.s44khin.messenger.ui.main.MainViewModel
 
 abstract class TabStreamFragment : Fragment() {

@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
-import ru.s44khin.messenger.databinding.FragmentProfileBinding
 import ru.s44khin.messenger.data.model.Profile
+import ru.s44khin.messenger.databinding.FragmentProfileBinding
 import ru.s44khin.messenger.ui.main.MainViewModel
 
 class ProfileFragment : Fragment() {

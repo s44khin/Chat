@@ -1,5 +1,6 @@
 package ru.s44khin.messenger.ui.chat.bottomSheet
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import ru.s44khin.messenger.R
 import ru.s44khin.messenger.ui.chat.ChatAdapter
 
 class EmojiAdapter(
-    private val emojis: List<String>,
+    private val emojis: List<Int>,
     private val fragment: BottomSheetDialogFragment
 ) : RecyclerView.Adapter<EmojiAdapter.ViewHolder>() {
 
@@ -25,11 +26,11 @@ class EmojiAdapter(
     )
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.emoji.text = emojis[position]
+        holder.emoji.text = String(Character.toChars(emojis[position]))
         holder.emoji.setOnClickListener {
             fragment.setFragmentResult(
                 ChatAdapter.REQUEST_KEY,
-                bundleOf(ChatAdapter.RESULT_KEY to emojis[position])
+                bundleOf(ChatAdapter.RESULT_KEY to emojis[position].toString().drop(2))
             )
         }
     }

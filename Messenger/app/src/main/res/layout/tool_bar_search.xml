@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/primary"
+    android:clipToPadding="false"
     android:paddingStart="@dimen/defaultPadding"
-    android:paddingTop="8dp"
-    android:paddingEnd="@dimen/defaultPadding">
+    android:paddingTop="4dp"
+    android:paddingEnd="@dimen/defaultPadding"
+    android:paddingBottom="4dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardBackgroundColor="@color/background"
+        app:cardElevation="4dp"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,9 +21,10 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/view"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="16dp"
                 android:src="@drawable/ic_search"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -30,15 +32,27 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="@null"
                 android:hint="@string/search"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:maxLines="1"
-                android:paddingStart="40dp"
-                tools:ignore="RtlSymmetry" />
+                app:layout_constraintEnd_toStartOf="@id/avatar"
+                app:layout_constraintStart_toEndOf="@id/view" />
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_profile"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

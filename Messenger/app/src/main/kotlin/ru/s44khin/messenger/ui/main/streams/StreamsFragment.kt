@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentStreamsBinding
@@ -33,6 +34,12 @@ class StreamsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initTabs()
+        viewModel.profile.observe(viewLifecycleOwner) {
+            Glide.with(binding.titleBar.avatar)
+                .load(it.avatar)
+                .circleCrop()
+                .into(binding.titleBar.avatar)
+        }
         binding.titleBar.search.doAfterTextChanged {
             viewModel.searchAllStreams(it.toString())
             viewModel.searchSubsStreams(it.toString())

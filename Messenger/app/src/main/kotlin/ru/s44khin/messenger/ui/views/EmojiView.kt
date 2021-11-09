@@ -39,7 +39,7 @@ class EmojiView @JvmOverloads constructor(
 
         emoji = attrsArray.getString(R.styleable.EmojiView_emoji) ?: "❌"
         text = attrsArray.getString(R.styleable.EmojiView_text) ?: "0"
-        textColor = attrsArray.getColor(R.styleable.EmojiView_textColor, Color.BLACK)
+        textColor = context.getColor(R.color.textColor)
 
         textSize = attrsArray.getDimension(
             R.styleable.EmojiView_textSize,

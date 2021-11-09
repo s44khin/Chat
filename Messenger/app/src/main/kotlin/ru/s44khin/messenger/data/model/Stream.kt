@@ -1,6 +1,5 @@
 package ru.s44khin.messenger.data.model
 
-import android.graphics.Color
 import com.squareup.moshi.Json
 
 data class Stream(

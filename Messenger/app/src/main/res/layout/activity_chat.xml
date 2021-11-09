@@ -8,7 +8,6 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
-        android:background="@color/primary"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -25,15 +24,13 @@
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/white" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/streamName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/backButton"
@@ -45,12 +42,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@id/backButton"
                 app:layout_constraintTop_toBottomOf="@id/streamName"
                 tools:text="asdasdasd" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/tabBottom"
+        app:layout_constraintTop_toBottomOf="@id/toolBar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -62,7 +65,7 @@
         android:paddingEnd="10dp"
         android:paddingBottom="16dp"
         app:layout_constraintBottom_toTopOf="@id/messageInput"
-        app:layout_constraintTop_toBottomOf="@id/toolBar"
+        app:layout_constraintTop_toBottomOf="@id/view"
         app:reverseLayout="true"
         app:stackFromEnd="true" />
 

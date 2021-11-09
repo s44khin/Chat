@@ -1,7 +1,10 @@
 package ru.s44khin.messenger.data.api
 
 import io.reactivex.Single
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 import ru.s44khin.messenger.data.model.*
 
 interface ApiService {
@@ -29,5 +32,5 @@ interface ApiService {
         @Query("to") streamName: String,
         @Query("topic") topicName: String,
         @Query("content") content: String
-    ) : Single<ResultMessage>
+    ): Single<ResultMessage>
 }
