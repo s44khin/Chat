@@ -32,7 +32,12 @@ class TopicAdapter(
             name.text = topic.name
             itemView.setOnClickListener {
                 itemView.context.startActivity(
-                    ChatActivity.createIntent(itemView.context, streamId, streamName, topic.name)
+                    ChatActivity.createIntent(
+                        holder.itemView.context,
+                        streamId,
+                        streamName,
+                        topic.name
+                    )
                 )
             }
         }

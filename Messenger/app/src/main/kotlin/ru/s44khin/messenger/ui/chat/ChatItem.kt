@@ -1,8 +1,17 @@
 package ru.s44khin.messenger.ui.chat
 
-import ru.s44khin.messenger.data.model.AdapterMessage
+import ru.s44khin.messenger.data.model.AdapterReaction
 
 sealed class ChatItem {
-    class MessageItem(val message: AdapterMessage) : ChatItem()
-    class DateItem(val date: String) : ChatItem()
+    data class Message(
+        val id: Int,
+        val time: String,
+        val avatar: String,
+        val profile: String,
+        val content: String,
+        val isMyMessage: Boolean,
+        val reactions: MutableList<AdapterReaction>
+    ) : ChatItem()
+
+    class Date(val date: String) : ChatItem()
 }

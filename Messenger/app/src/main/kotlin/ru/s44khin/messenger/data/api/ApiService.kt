@@ -1,10 +1,7 @@
 package ru.s44khin.messenger.data.api
 
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 import ru.s44khin.messenger.data.model.*
 
 interface ApiService {
@@ -33,4 +30,16 @@ interface ApiService {
         @Query("topic") topicName: String,
         @Query("content") content: String
     ): Single<ResultMessage>
+
+    @POST("/api/v1/messages/{message_id}/reactions")
+    fun addReaction(
+        @Path("message_id") messageId: Int,
+        @Query("emoji_name") emojiName: String,
+    ): Single<ResultReaction>
+
+    @DELETE("/api/v1/messages/{message_id}/reactions")
+    fun deleteReaction(
+        @Path("message_id") messageId: Int,
+        @Query("emoji_name") emojiName: String,
+    ): Single<ResultReaction>
 }

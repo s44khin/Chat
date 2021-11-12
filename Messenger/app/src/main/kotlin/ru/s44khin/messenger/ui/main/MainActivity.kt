@@ -7,6 +7,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityMainBinding
+import ru.s44khin.messenger.utils.emojiList
+import ru.s44khin.messenger.utils.getEmojis
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        emojiList = getEmojis(resources)
         setContentView(binding.root)
         initFragments()
     }

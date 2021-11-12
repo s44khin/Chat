@@ -1,27 +1,24 @@
 package ru.s44khin.messenger.ui.chat
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import ru.s44khin.messenger.data.model.AdapterMessage
 import ru.s44khin.messenger.data.model.AdapterReaction
 import ru.s44khin.messenger.data.model.Message
 import ru.s44khin.messenger.data.model.Reaction
 import ru.s44khin.messenger.data.repository.MainRepository
-import ru.s44khin.messenger.utils.MY_AVATAR
 import ru.s44khin.messenger.utils.MY_ID
-import ru.s44khin.messenger.utils.MY_NAME
 import ru.s44khin.messenger.utils.parse
 
 class ChatViewModel : ViewModel() {
 
-    private val _messages = MutableLiveData<MutableList<ChatItem>>()
-    val messages: LiveData<MutableList<ChatItem>> = _messages
+    private val _messages = MutableLiveData<List<ChatItem>>()
+    val messages: LiveData<List<ChatItem>> = _messages
 
     private val disposeBag = CompositeDisposable()
     private val repository = MainRepository()
@@ -30,77 +27,52 @@ class ChatViewModel : ViewModel() {
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeBy(
-            onSuccess = {
-                val newMessages = it.messages
+            onSuccess = { baseMessages ->
+                val messages = baseMessages.messages
                 val result = mutableListOf(
-                    ChatItem.DateItem(parse(newMessages[0].timestamp)),
-                    ChatItem.MessageItem(newMessages[0].toAdapterMessage())
+                    ChatItem.Date(parse(messages[0].timestamp)),
+                    messages[0].toMessageItem()
                 )
-                for (i in 0 until newMessages.lastIndex) {
-                    if (parse(newMessages[i].timestamp) != parse(newMessages[i + 1].timestamp))
-                        result.add(ChatItem.DateItem(parse(newMessages[i + 1].timestamp)))
 
-                    result.add(ChatItem.MessageItem(newMessages[i + 1].toAdapterMessage()))
+                for (i in 0 until messages.lastIndex) {
+                    if (parse(messages[i].timestamp) != parse(messages[i + 1].timestamp))
+                        result.add(ChatItem.Date(parse(messages[i + 1].timestamp)))
+
+                    result.add(messages[i + 1].toMessageItem())
                 }
 
                 _messages.value = result
             },
-            onError = { Log.e("Error", it.message.toString()) }
+            onError = { }
         )
+        .addTo(disposeBag)
 
-    fun sendMessage(
-        streamName: String,
-        topicName: String,
-        content: String
-    ) = repository.sendMessage(streamName, topicName, content)
+    fun addReaction(messageId: Int, emojiName: String) = repository.addReaction(messageId, emojiName)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeBy(
-            onSuccess = {
-                val result = _messages.value!!
-                val lastMessage = result[result.lastIndex] as ChatItem.MessageItem
-                val currentTime = parse((System.currentTimeMillis() / 1000).toInt())
-
-                if (currentTime != lastMessage.message.time)
-                    result.add(ChatItem.DateItem(currentTime))
-
-                result.add(
-                    ChatItem.MessageItem(
-                        AdapterMessage(
-                            time = currentTime,
-                            avatar = MY_AVATAR,
-                            profile = MY_NAME,
-                            content = content,
-                            isMyMessage = true,
-                            reactions = mutableListOf()
-                        )
-                    )
-                )
-
-                _messages.value = result
-            },
-            onError = { Log.e("Error", it.message.toString()) }
+            onSuccess = {  },
+            onError = {  }
         )
 
-    private fun Message.toAdapterMessage() = AdapterMessage(
-        time = parse(this.timestamp),
-        avatar = this.avatar,
-        profile = this.profile,
-        content = this.content,
-        isMyMessage = this.senderId == MY_ID,
-        reactions = this.reactions.toAdapterReactions()
-    )
+    fun deleteReaction(messageId: Int, emojiName: String) = repository.deleteReaction(messageId, emojiName)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onSuccess = {  },
+            onError = {  }
+        )
 
     private fun List<Reaction>.toAdapterReactions(): MutableList<AdapterReaction> {
         val result = mutableListOf<AdapterReaction>()
-        val map = mutableMapOf<String, Int>()
+        val map = mutableMapOf<Pair<String, String>, Int>()
         val reactionsILiked = mutableListOf<String>()
 
         for (reaction in this) {
-            if (reaction.emojiCode in map.keys)
-                map[reaction.emojiCode] = map[reaction.emojiCode]!! + 1
+            if (reaction.emojiCode to reaction.emojiName in map.keys)
+                map[reaction.emojiCode to reaction.emojiName]?.plus(1)
             else
-                map[reaction.emojiCode] = 1
+                map[reaction.emojiCode to reaction.emojiName] = 1
 
             if (reaction.user.id == MY_ID)
                 reactionsILiked.add(reaction.emojiCode)
@@ -109,17 +81,23 @@ class ChatViewModel : ViewModel() {
         for ((emoji, count) in map)
             result.add(
                 AdapterReaction(
-                    emoji = emoji,
+                    emojiCode = emoji.first,
+                    emojiName = emoji.second,
                     count = count,
-                    iLiked = emoji in reactionsILiked
+                    iLiked = emoji.first in reactionsILiked
                 )
             )
 
         return result
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposeBag.dispose()
-    }
+    private fun Message.toMessageItem() = ChatItem.Message(
+        id = this.id,
+        time = parse(this.timestamp),
+        avatar = this.avatar,
+        profile = this.profile,
+        content = this.content,
+        reactions = this.reactions.toAdapterReactions(),
+        isMyMessage = MY_ID == this.senderId
+    )
 }

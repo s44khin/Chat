@@ -29,4 +29,14 @@ class MainRepository {
         topicName: String,
         content: String
     ): Single<ResultMessage> = RetrofitClient.apiService.sendMessage(streamName, topicName, content)
+
+    fun addReaction(
+        messageId: Int,
+        emojiName: String
+    ) = RetrofitClient.apiService.addReaction(messageId, emojiName)
+
+    fun deleteReaction(
+        messageId: Int,
+        emojiName: String
+    ) = RetrofitClient.apiService.deleteReaction(messageId, emojiName)
 }
