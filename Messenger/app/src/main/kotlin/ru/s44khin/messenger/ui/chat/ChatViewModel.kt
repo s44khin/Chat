@@ -47,21 +47,23 @@ class ChatViewModel : ViewModel() {
         )
         .addTo(disposeBag)
 
-    fun addReaction(messageId: Int, emojiName: String) = repository.addReaction(messageId, emojiName)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeBy(
-            onSuccess = {  },
-            onError = {  }
-        )
+    fun addReaction(messageId: Int, emojiName: String) =
+        repository.addReaction(messageId, emojiName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onSuccess = { },
+                onError = { }
+            )
 
-    fun deleteReaction(messageId: Int, emojiName: String) = repository.deleteReaction(messageId, emojiName)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeBy(
-            onSuccess = {  },
-            onError = {  }
-        )
+    fun deleteReaction(messageId: Int, emojiName: String) =
+        repository.deleteReaction(messageId, emojiName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onSuccess = { },
+                onError = { }
+            )
 
     private fun List<Reaction>.toAdapterReactions(): MutableList<AdapterReaction> {
         val result = mutableListOf<AdapterReaction>()
@@ -70,7 +72,8 @@ class ChatViewModel : ViewModel() {
 
         for (reaction in this) {
             if (reaction.emojiCode to reaction.emojiName in map.keys)
-                map[reaction.emojiCode to reaction.emojiName]?.plus(1)
+                map[reaction.emojiCode to reaction.emojiName] =
+                    map[reaction.emojiCode to reaction.emojiName]!! + 1
             else
                 map[reaction.emojiCode to reaction.emojiName] = 1
 

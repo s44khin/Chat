@@ -21,7 +21,7 @@ interface ApiService {
     @GET("/api/v1/users/me")
     fun getSelfProfile(): Single<Profile>
 
-    @GET("/api/v1/messages?&anchor=newest&num_before=100&num_after=0&apply_markdown=false")
+    @GET("/api/v1/messages?&anchor=newest&num_before=150&num_after=0&apply_markdown=false")
     fun getMessages(@Query("narrow") narrow: String): Single<BaseMessages>
 
     @POST("/api/v1/messages?&type=stream")

@@ -148,6 +148,7 @@ class ChatAdapter(
             )
             setOnClickListener { emojiView ->
                 emojiView as EmojiView
+                val flexBoxLayout = parent as FlexBoxLayout
 
                 if (emojiView.isSelected) {
                     emojiView.text = (Integer.parseInt(emojiView.text) - 1).toString()
@@ -160,12 +161,12 @@ class ChatAdapter(
                 }
 
                 if (emojiView.text == "0") {
-                    for (i in childCount - 1 downTo 0)
-                        if ((getChildAt(i + 1) as EmojiView).emoji == emojiView.emoji) {
-                            removeViewAt(i + 1)
+                    for (i in 1 until flexBoxLayout.childCount - 1)
+                        if ((flexBoxLayout.getChildAt(i) as EmojiView).emoji == emojiView.emoji) {
+                            flexBoxLayout.removeViewAt(i)
 
-                            if (childCount == 1)
-                                removeAllViews()
+                            if (flexBoxLayout.childCount == 1)
+                                flexBoxLayout.removeAllViews()
                         }
                 }
             }
