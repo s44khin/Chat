@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.s44khin.messenger.R
@@ -13,6 +15,12 @@ class EmojiAdapter(
     private val emojis: List<Pair<String, String>>,
     private val fragment: BottomSheetDialogFragment
 ) : RecyclerView.Adapter<EmojiAdapter.ViewHolder>() {
+
+    companion object {
+        const val REQUEST_KEY = "RequestEmoji"
+        const val RESULT_KEY = "ResultEmoji"
+    }
+
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val emoji: TextView = itemView.findViewById(R.id.emoji_bottom_item)
@@ -27,10 +35,10 @@ class EmojiAdapter(
 
         holder.emoji.text = hexToEmoji(emoji.first)
         holder.emoji.setOnClickListener {
-//            fragment.setFragmentResult(
-//                ChatAdapter.REQUEST_KEY,
-//                bundleOf(ChatAdapter.RESULT_KEY to position)
-//            )
+            fragment.setFragmentResult(
+                REQUEST_KEY,
+                bundleOf(RESULT_KEY to position)
+            )
         }
     }
 
