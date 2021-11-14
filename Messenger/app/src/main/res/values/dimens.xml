@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="statusBarHeight">25dp</dimen>
+    <dimen name="marginBetween">10dp</dimen>
+    <dimen name="defaultPadding">16dp</dimen>
+    <dimen name="defaultMarginBetween">5dp</dimen>
+    <dimen name="defaultTextSize">16sp</dimen>
+    <dimen name="defaultEmojiSize">18sp</dimen>
+    <dimen name="cornerRadius">20dp</dimen>
+    <dimen name="defaultAvatarSize">35dp</dimen>
+</resources>
