@@ -67,9 +67,7 @@
         android:paddingEnd="10dp"
         android:paddingBottom="16dp"
         app:layout_constraintBottom_toTopOf="@id/messageInput"
-        app:layout_constraintTop_toBottomOf="@id/view"
-        app:reverseLayout="true"
-        app:stackFromEnd="true" />
+        app:layout_constraintTop_toBottomOf="@id/view" />
 
     <ProgressBar
         android:id="@+id/progressBar"

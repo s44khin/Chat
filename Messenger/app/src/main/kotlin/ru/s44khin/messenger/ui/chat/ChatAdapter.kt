@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import androidx.fragment.app.FragmentActivity
@@ -139,9 +138,7 @@ class ChatAdapter(
 
     private fun FlexBoxLayout.addPlusButton(message: ChatItem.Message) {
         LayoutInflater.from(context).inflate(R.layout.item_add_button, this).apply {
-            setOnClickListener {
-                showBottomSheet(context, message, this@addPlusButton)
-            }
+            setOnClickListener { showBottomSheet(context, message, this@addPlusButton) }
         }
     }
 
@@ -233,5 +230,4 @@ class ChatAdapter(
         emojiBottomSheet.show(fragmentManager, EmojiBottomSheet.TAG)
         return true
     }
-
 }

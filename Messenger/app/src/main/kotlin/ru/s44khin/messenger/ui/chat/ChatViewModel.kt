@@ -1,5 +1,6 @@
 package ru.s44khin.messenger.ui.chat
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,13 +13,15 @@ import ru.s44khin.messenger.data.model.AdapterReaction
 import ru.s44khin.messenger.data.model.Message
 import ru.s44khin.messenger.data.model.Reaction
 import ru.s44khin.messenger.data.repository.MainRepository
+import ru.s44khin.messenger.utils.MY_AVATAR
 import ru.s44khin.messenger.utils.MY_ID
+import ru.s44khin.messenger.utils.MY_NAME
 import ru.s44khin.messenger.utils.parse
 
 class ChatViewModel : ViewModel() {
 
-    private val _messages = MutableLiveData<List<ChatItem>>()
-    val messages: LiveData<List<ChatItem>> = _messages
+    private val _messages = MutableLiveData<MutableList<ChatItem>>()
+    val messages: LiveData<MutableList<ChatItem>> = _messages
 
     private val disposeBag = CompositeDisposable()
     private val repository = MainRepository()
@@ -43,9 +46,40 @@ class ChatViewModel : ViewModel() {
 
                 _messages.value = result
             },
-            onError = { }
+            onError = { Log.e("Error", it.message.toString()) }
         )
         .addTo(disposeBag)
+
+    fun sendMessage(streamName: String, topicName: String, content: String) =
+        repository.sendMessage(streamName, topicName, content)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onSuccess = {
+                    val newMessages = _messages.value
+
+                    if (!newMessages.isNullOrEmpty()) {
+                        val time = parse((System.currentTimeMillis() / 1000).toInt())
+
+                        if (time != (newMessages.last() as ChatItem.Message).time)
+                            newMessages.add(ChatItem.Date(time))
+
+                        newMessages.add(
+                            ChatItem.Message(
+                                id = MY_ID,
+                                time = time,
+                                avatar = MY_AVATAR,
+                                profile = MY_NAME,
+                                content = content,
+                                isMyMessage = true
+                            )
+                        )
+                    }
+
+                    _messages.value = newMessages!!
+                },
+                onError = { Log.e("Error", it.message.toString()) }
+            )
 
     fun addReaction(messageId: Int, emojiName: String) =
         repository.addReaction(messageId, emojiName)
@@ -53,7 +87,7 @@ class ChatViewModel : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = { },
-                onError = { }
+                onError = { Log.e("Error", it.message.toString()) }
             )
 
     fun deleteReaction(messageId: Int, emojiName: String) =
@@ -62,7 +96,7 @@ class ChatViewModel : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = { },
-                onError = { }
+                onError = { Log.e("Error", it.message.toString()) }
             )
 
     private fun List<Reaction>.toAdapterReactions(): MutableList<AdapterReaction> {
