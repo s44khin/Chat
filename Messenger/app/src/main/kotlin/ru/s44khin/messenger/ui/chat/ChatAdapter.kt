@@ -147,7 +147,12 @@ class ChatAdapter(
 
     private fun FlexBoxLayout.addReaction(messageId: Int, reaction: AdapterReaction) = addView(
         EmojiView(context).apply {
-            this.emoji = String(Character.toChars(reaction.emojiCode.toInt(16)))
+            this.emoji = try {
+                String(Character.toChars(reaction.emojiCode.toInt(16)))
+            } catch (error: Exception) {
+                reaction.emojiCode
+            }
+
             this.text = reaction.count.toString()
             this.isSelected = reaction.iLiked
             setPadding((7 * context.resources.displayMetrics.density).toInt())
