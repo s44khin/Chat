@@ -39,6 +39,8 @@ class StreamAdapter(
         holder.apply {
             name.text = stream.name
             description.text = stream.description
+            if (description.text == "")
+                description.visibility = View.GONE
             topics.adapter = TopicAdapter(stream.streamId, stream.name, stream.topics)
 
             itemView.setOnClickListener {
