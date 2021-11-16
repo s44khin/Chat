@@ -33,6 +33,7 @@ class ProfileFragment : Fragment() {
         }
         viewModel.newProfile.observe(viewLifecycleOwner) {
             initViews(it)
+            binding.shimmer.visibility = View.GONE
             binding.progressIndicator.visibility = View.GONE
         }
     }

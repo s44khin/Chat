@@ -5,9 +5,16 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
-data class ResultStream(
+@Entity(tableName = "AllStream")
+data class AllStream (
+
+    @ColumnInfo(name = "streamId")
+    @PrimaryKey
     val streamId: Int,
+
+    @ColumnInfo(name = "description")
     val description: String,
+
+    @ColumnInfo(name = "name")
     val name: String,
-    val topics: List<Topic>
 )

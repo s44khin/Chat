@@ -39,8 +39,12 @@ class MainActivity : AppCompatActivity() {
             getOldProfile()
             getNewProfile()
         }
-        streamsViewModel.getAllStreams()
-        streamsViewModel.getSubsStreams()
+        streamsViewModel.apply {
+            getOldAllStreams()
+            getOldSubsStreams()
+            getNewAllStreams()
+            getNewSubsStreams()
+        }
     }
 
     private fun initFragments() {

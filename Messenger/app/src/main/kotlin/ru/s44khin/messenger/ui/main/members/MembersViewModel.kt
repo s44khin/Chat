@@ -17,7 +17,6 @@ class MembersViewModel : ViewModel() {
 
     private val _oldMembers = MutableLiveData<List<Profile>>()
     val oldMembers: LiveData<List<Profile>> = _oldMembers
-
     private val _newMembers = MutableLiveData<List<Profile>>()
     val newMembers: LiveData<List<Profile>> = _newMembers
 

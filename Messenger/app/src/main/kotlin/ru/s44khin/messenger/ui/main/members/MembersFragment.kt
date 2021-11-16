@@ -36,6 +36,7 @@ class MembersFragment : Fragment() {
 
         viewModel.newMembers.observe(viewLifecycleOwner) {
             binding.recyclerView.adapter = MembersAdapter(it)
+            binding.shimmer.visibility = View.GONE
             binding.progressIndicator.visibility = View.GONE
         }
     }

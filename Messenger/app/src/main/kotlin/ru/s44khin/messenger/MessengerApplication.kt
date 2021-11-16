@@ -21,9 +21,7 @@ class MessengerApplication: Application() {
         ).build()
     }
 
-    val repository by lazy {
-        MainRepository()
-    }
+    val repository by lazy { MainRepository() }
 
     val emojiList: List<Pair<String, String>> by lazy {
         val result = mutableListOf<Pair<String, String>>()

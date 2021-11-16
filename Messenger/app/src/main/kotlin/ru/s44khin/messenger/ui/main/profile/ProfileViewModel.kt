@@ -17,7 +17,6 @@ class ProfileViewModel : ViewModel() {
 
     private val _oldProfile = MutableLiveData<Profile>()
     val oldProfile: LiveData<Profile> = _oldProfile
-
     private val _newProfile = MutableLiveData<Profile>()
     val newProfile: LiveData<Profile> = _newProfile
 
