@@ -28,9 +28,15 @@ class MembersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        viewModel.members.observe(viewLifecycleOwner) {
+
+        viewModel.oldMembers.observe(viewLifecycleOwner) {
             binding.recyclerView.adapter = MembersAdapter(it)
             binding.shimmer.visibility = View.GONE
+        }
+
+        viewModel.newMembers.observe(viewLifecycleOwner) {
+            binding.recyclerView.adapter = MembersAdapter(it)
+            binding.progressIndicator.visibility = View.GONE
         }
     }
 

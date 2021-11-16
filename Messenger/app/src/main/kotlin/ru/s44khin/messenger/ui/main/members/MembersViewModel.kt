@@ -15,44 +15,45 @@ import ru.s44khin.messenger.data.model.Profile
 
 class MembersViewModel : ViewModel() {
 
-    private var _members = MutableLiveData<List<Profile>>()
-    val members: LiveData<List<Profile>> = _members
+    private val _oldMembers = MutableLiveData<List<Profile>>()
+    val oldMembers: LiveData<List<Profile>> = _oldMembers
+
+    private val _newMembers = MutableLiveData<List<Profile>>()
+    val newMembers: LiveData<List<Profile>> = _newMembers
 
     private val disposeBag = CompositeDisposable()
     private val repository = MessengerApplication.instance.repository
     private val dataBase = MessengerApplication.instance.dataBase
 
-    fun getMembers() {
-        dataBase.profileDao().getAll()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = {
-                    if (it != null)
-                        _members.value = it
-                },
-                onError = { Log.e("Error", it.message.toString()) }
-            )
-            .addTo(disposeBag)
+    fun getOldMembers() = dataBase.profileDao().getAll()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onSuccess = {
+                if (it != null)
+                    _oldMembers.value = it
+            },
+            onError = { Log.e("Error", it.message.toString()) }
+        )
+        .addTo(disposeBag)
 
-        repository.getMembers()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = { newMembers ->
-                    _members.value = newMembers.members
-                    Single.fromCallable { dataBase.profileDao().insertAll(newMembers.members) }
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeBy(
-                            onError = { Log.e("Error", it.message.toString()) }
-                        )
-                        .addTo(disposeBag)
-                },
-                onError = { Log.e("Error", it.message.toString()) }
-            )
-            .addTo(disposeBag)
-    }
+    fun getNewMembers() = repository.getMembers()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onSuccess = { newMembers ->
+                _newMembers.value = newMembers.members
+                Single.fromCallable { dataBase.profileDao().insertAll(newMembers.members) }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                        onError = { Log.e("Error", it.message.toString()) }
+                    )
+                    .addTo(disposeBag)
+            },
+            onError = { Log.e("Error", it.message.toString()) }
+        )
+        .addTo(disposeBag)
 
     override fun onCleared() {
         super.onCleared()

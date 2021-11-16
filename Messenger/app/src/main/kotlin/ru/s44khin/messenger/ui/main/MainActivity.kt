@@ -31,7 +31,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun downloadData() {
-        membersViewModel.getMembers()
+        membersViewModel.apply {
+            getOldMembers()
+            getNewMembers()
+        }
         profileViewModel.getSelfProfile()
         streamsViewModel.getAllStreams()
         streamsViewModel.getSubsStreams()
