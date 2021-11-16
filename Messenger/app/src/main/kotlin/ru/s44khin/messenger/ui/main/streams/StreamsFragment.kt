@@ -35,7 +35,13 @@ class StreamsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initTabs()
-        profileViewModel.profile.observe(viewLifecycleOwner) {
+        profileViewModel.oldProfile.observe(viewLifecycleOwner) {
+            Glide.with(binding.titleBar.avatar)
+                .load(it.avatar)
+                .circleCrop()
+                .into(binding.titleBar.avatar)
+        }
+        profileViewModel.newProfile.observe(viewLifecycleOwner) {
             Glide.with(binding.titleBar.avatar)
                 .load(it.avatar)
                 .circleCrop()

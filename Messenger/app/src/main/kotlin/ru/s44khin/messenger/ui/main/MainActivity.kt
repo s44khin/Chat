@@ -35,7 +35,10 @@ class MainActivity : AppCompatActivity() {
             getOldMembers()
             getNewMembers()
         }
-        profileViewModel.getSelfProfile()
+        profileViewModel.apply {
+            getOldProfile()
+            getNewProfile()
+        }
         streamsViewModel.getAllStreams()
         streamsViewModel.getSubsStreams()
     }

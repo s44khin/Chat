@@ -67,6 +67,8 @@
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.24547101449275363" />
         <entry key="app/src/main/res/layout/chat_bottom.xml" value="0.34692028985507245" />
         <entry key="app/src/main/res/layout/fragment_people.xml" value="0.24954710144927536" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3605072463768116" />
+        <entry key="app/src/main/res/layout/fragment_streams.xml" value="0.3605072463768116" />
       </map>
     </option>
   </component>

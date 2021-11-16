@@ -27,9 +27,13 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.profile.observe(viewLifecycleOwner) {
+        viewModel.oldProfile.observe(viewLifecycleOwner) {
             initViews(it)
             binding.shimmer.visibility = View.GONE
+        }
+        viewModel.newProfile.observe(viewLifecycleOwner) {
+            initViews(it)
+            binding.progressIndicator.visibility = View.GONE
         }
     }
 
