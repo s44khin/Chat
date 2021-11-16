@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.s44khin.messenger.databinding.FragmentEmojiBottomSheetBinding
-import ru.s44khin.messenger.utils.emojiList
 
 class EmojiBottomSheet : BottomSheetDialogFragment() {
 
@@ -30,7 +29,7 @@ class EmojiBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, 5)
-            adapter = EmojiAdapter(emojiList, this@EmojiBottomSheet)
+            adapter = EmojiAdapter(this@EmojiBottomSheet)
         }
     }
 

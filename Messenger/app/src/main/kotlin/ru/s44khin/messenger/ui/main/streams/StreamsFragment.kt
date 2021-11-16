@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentStreamsBinding
-import ru.s44khin.messenger.ui.main.MainViewModel
+import ru.s44khin.messenger.ui.main.profile.ProfileViewModel
 import ru.s44khin.messenger.ui.main.streams.tabs.AllStreamsFragment
 import ru.s44khin.messenger.ui.main.streams.tabs.PagerAdapter
 import ru.s44khin.messenger.ui.main.streams.tabs.SubsStreamsFragment
@@ -20,7 +20,8 @@ class StreamsFragment : Fragment() {
 
     private var _binding: FragmentStreamsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by activityViewModels()
+    private val streamsViewModel: StreamsViewModel by activityViewModels()
+    private val profileViewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,15 +35,15 @@ class StreamsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initTabs()
-        viewModel.profile.observe(viewLifecycleOwner) {
+        profileViewModel.profile.observe(viewLifecycleOwner) {
             Glide.with(binding.titleBar.avatar)
                 .load(it.avatar)
                 .circleCrop()
                 .into(binding.titleBar.avatar)
         }
         binding.titleBar.search.doAfterTextChanged {
-            viewModel.searchAllStreams(it.toString())
-            viewModel.searchSubsStreams(it.toString())
+            streamsViewModel.searchAllStreams(it.toString())
+            streamsViewModel.searchSubsStreams(it.toString())
         }
     }
 

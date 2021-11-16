@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -58,6 +59,11 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitRXJava"
     implementation "com.squareup.okhttp3:okhttp:$okhttp"
     implementation "com.squareup.okhttp3:logging-interceptor:$loggingInterceptor"
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // Shimmer
     implementation "com.facebook.shimmer:shimmer:$shimmer"

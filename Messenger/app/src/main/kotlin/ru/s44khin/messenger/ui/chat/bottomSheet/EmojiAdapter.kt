@@ -8,19 +8,20 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.utils.hexToEmoji
 
 class EmojiAdapter(
-    private val emojis: List<Pair<String, String>>,
     private val fragment: BottomSheetDialogFragment
 ) : RecyclerView.Adapter<EmojiAdapter.ViewHolder>() {
+
+    private val emojis = MessengerApplication.instance.emojiList
 
     companion object {
         const val REQUEST_KEY = "RequestEmoji"
         const val RESULT_KEY = "ResultEmoji"
     }
-
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val emoji: TextView = itemView.findViewById(R.id.emoji_bottom_item)

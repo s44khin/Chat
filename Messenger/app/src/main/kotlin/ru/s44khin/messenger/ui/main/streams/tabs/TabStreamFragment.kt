@@ -9,13 +9,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.databinding.FragmentTabStreamsBinding
-import ru.s44khin.messenger.ui.main.MainViewModel
+import ru.s44khin.messenger.ui.main.streams.StreamsViewModel
 
 abstract class TabStreamFragment : Fragment() {
 
     private var _binding: FragmentTabStreamsBinding? = null
     protected val binding get() = _binding!!
-    protected val viewModel: MainViewModel by activityViewModels()
+    protected val viewModel: StreamsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

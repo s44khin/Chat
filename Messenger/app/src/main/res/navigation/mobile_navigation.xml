@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navPeople"
-        android:name="ru.s44khin.messenger.ui.main.people.PeopleFragment"
+        android:name="ru.s44khin.messenger.ui.main.members.MembersFragment"
         android:label="@string/people"
         tools:layout="@layout/fragment_people" />
 

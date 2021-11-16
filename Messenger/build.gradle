@@ -28,6 +28,7 @@ ext {
     retrofitRXJava = '2.9.0'
     okhttp = '4.9.1'
     loggingInterceptor = '4.8.0'
+    room_version = '2.3.0'
 }
 
 task clean(type: Delete) {

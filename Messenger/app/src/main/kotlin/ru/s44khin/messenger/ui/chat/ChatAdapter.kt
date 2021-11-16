@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.AdapterReaction
 import ru.s44khin.messenger.ui.chat.bottomSheet.EmojiAdapter.Companion.REQUEST_KEY
@@ -20,7 +21,6 @@ import ru.s44khin.messenger.ui.chat.bottomSheet.EmojiBottomSheet
 import ru.s44khin.messenger.ui.views.EmojiView
 import ru.s44khin.messenger.ui.views.FlexBoxLayout
 import ru.s44khin.messenger.ui.views.MessageView
-import ru.s44khin.messenger.utils.emojiList
 import ru.s44khin.messenger.utils.hexToEmoji
 
 class ChatAdapter(
@@ -194,7 +194,7 @@ class ChatAdapter(
 
         fragmentManager.setFragmentResultListener(REQUEST_KEY, context) { _, bundle ->
             val position = bundle.getInt(RESULT_KEY)
-            val emoji = emojiList[position]
+            val emoji = MessengerApplication.instance.emojiList[position]
             fragmentManager.beginTransaction().remove(emojiBottomSheet).commit()
 
             var check = false

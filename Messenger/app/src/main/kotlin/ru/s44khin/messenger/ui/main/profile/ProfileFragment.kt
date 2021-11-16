@@ -9,13 +9,12 @@ import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import ru.s44khin.messenger.data.model.Profile
 import ru.s44khin.messenger.databinding.FragmentProfileBinding
-import ru.s44khin.messenger.ui.main.MainViewModel
 
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +33,8 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    fun initViews(newProfile: Profile) = binding.apply {
+    private fun initViews(newProfile: Profile) = binding.apply {
         toolBar.title = newProfile.name
-        online.text = if (newProfile.isActive) "online" else "offline"
         Glide.with(avatar)
             .load(newProfile.avatar)
             .circleCrop()

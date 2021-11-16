@@ -1,14 +1,16 @@
 package ru.s44khin.messenger.ui.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityMainBinding
-import ru.s44khin.messenger.utils.emojiList
-import ru.s44khin.messenger.utils.getEmojis
+import ru.s44khin.messenger.ui.main.members.MembersViewModel
+import ru.s44khin.messenger.ui.main.profile.ProfileViewModel
+import ru.s44khin.messenger.ui.main.streams.StreamsViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,12 +18,23 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    private val membersViewModel: MembersViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
+    private val streamsViewModel: StreamsViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        emojiList = getEmojis(resources)
         setContentView(binding.root)
+        downloadData()
         initFragments()
+    }
+
+    private fun downloadData() {
+        membersViewModel.getMembers()
+        profileViewModel.getSelfProfile()
+        streamsViewModel.getAllStreams()
+        streamsViewModel.getSubsStreams()
     }
 
     private fun initFragments() {
