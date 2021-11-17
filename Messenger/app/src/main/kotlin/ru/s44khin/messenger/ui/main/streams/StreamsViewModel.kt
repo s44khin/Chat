@@ -32,6 +32,9 @@ class StreamsViewModel : ViewModel() {
     private val _searchAllStreams = MutableLiveData<List<ResultStream>>()
     val searchAllStreams: LiveData<List<ResultStream>> = _searchAllStreams
 
+    private val _error = MutableLiveData<Throwable>()
+    val error: LiveData<Throwable> = _error
+
     private val disposeBag = CompositeDisposable()
     private val repository = MessengerApplication.instance.repository
     private val dataBase = MessengerApplication.instance.dataBase
@@ -45,7 +48,7 @@ class StreamsViewModel : ViewModel() {
         )
         .addTo(disposeBag)
 
-    fun getNewAllStreams() = repository.getAllStreams()
+    fun getAllStreams() = repository.getAllStreams()
         .flattenAsObservable { it.streams }
         .flatMap {
             Observable.zip(
@@ -65,11 +68,14 @@ class StreamsViewModel : ViewModel() {
                     )
                     .addTo(disposeBag)
             },
-            onError = { Log.e("Error", it.message.toString()) }
+            onError = {
+                Log.e("Error", it.message.toString())
+                _error.postValue(it)
+            }
         )
         .addTo(disposeBag)
 
-    fun getNewSubsStreams() = repository.getSubsStreams()
+    fun getSubsStreams() = repository.getSubsStreams()
         .flattenAsObservable { it.subscriptions }
         .flatMap {
             Observable.zip(

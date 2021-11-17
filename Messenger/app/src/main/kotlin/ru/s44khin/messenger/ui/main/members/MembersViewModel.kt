@@ -20,6 +20,10 @@ class MembersViewModel : ViewModel() {
     private val _newMembers = MutableLiveData<List<Profile>>()
     val newMembers: LiveData<List<Profile>> = _newMembers
 
+    private val _error = MutableLiveData<Throwable>()
+    val error: LiveData<Throwable> = _error
+
+
     private val disposeBag = CompositeDisposable()
     private val repository = MessengerApplication.instance.repository
     private val dataBase = MessengerApplication.instance.dataBase
@@ -50,7 +54,10 @@ class MembersViewModel : ViewModel() {
                     )
                     .addTo(disposeBag)
             },
-            onError = { Log.e("Error", it.message.toString()) }
+            onError = {
+                Log.e("Error", it.message.toString())
+                _error.postValue(it)
+            }
         )
         .addTo(disposeBag)
 

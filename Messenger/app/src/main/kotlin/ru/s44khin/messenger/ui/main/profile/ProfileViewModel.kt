@@ -20,6 +20,9 @@ class ProfileViewModel : ViewModel() {
     private val _newProfile = MutableLiveData<Profile>()
     val newProfile: LiveData<Profile> = _newProfile
 
+    private val _error = MutableLiveData<Throwable>()
+    val error: LiveData<Throwable> = _error
+
     private val disposeBag = CompositeDisposable()
     private val repository = MessengerApplication.instance.repository
     private val dataBase = MessengerApplication.instance.dataBase
@@ -43,7 +46,10 @@ class ProfileViewModel : ViewModel() {
             onSuccess = {
                 _newProfile.value = it
             },
-            onError = { Log.e("Error", it.message.toString()) }
+            onError = {
+                Log.e("Error", it.message.toString())
+                _error.postValue(it)
+            }
         )
         .addTo(disposeBag)
 

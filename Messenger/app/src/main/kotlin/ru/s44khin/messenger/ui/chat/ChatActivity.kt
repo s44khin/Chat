@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityChatBinding
 
@@ -48,6 +49,9 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.error.observe(this) {
+            showSnackbar()
+        }
         setContentView(binding.root)
         initToolBar()
         initMessages()
@@ -120,4 +124,19 @@ class ChatActivity : AppCompatActivity() {
     )
 
     private fun setButtonsColor(length: Int) = if (length == 0) Color.GRAY else Color.WHITE
+
+    private fun showSnackbar() {
+        binding.progressIndicator.visibility = View.GONE
+
+        val snackbar = Snackbar.make(
+            binding.root,
+            getString(R.string.internetError),
+            Snackbar.LENGTH_SHORT
+        )
+
+        val view = snackbar.view
+        view.translationY = -(58 * resources.displayMetrics.density)
+
+        snackbar.show()
+    }
 }

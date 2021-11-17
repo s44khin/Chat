@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
         }
         streamsViewModel.apply {
             getStreamsFromDB()
-            getNewAllStreams()
-            getNewSubsStreams()
+            getAllStreams()
+            getSubsStreams()
         }
     }
 

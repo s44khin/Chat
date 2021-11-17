@@ -9,4 +9,5 @@
     <string name="write">Write</string>
     <string name="online">Online</string>
     <string name="offline">Offline</string>
+    <string name="internetError">Check your internet connection</string>
 </resources>

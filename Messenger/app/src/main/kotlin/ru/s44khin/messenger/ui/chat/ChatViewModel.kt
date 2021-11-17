@@ -32,6 +32,9 @@ class ChatViewModel : ViewModel() {
     private val repository = MainRepository()
     private val dataBase = MessengerApplication.instance.dataBase
 
+    private val _error = MutableLiveData<Throwable>()
+    val error: LiveData<Throwable> = _error
+
     fun getOldMessages(topicName: String) = dataBase.messagesDao().getAll(topicName)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -89,7 +92,10 @@ class ChatViewModel : ViewModel() {
                     )
                     .addTo(disposeBag)
             },
-            onError = { Log.e("Error", it.message.toString()) }
+            onError = {
+                Log.e("Error", it.message.toString())
+                _error.postValue(it)
+            }
         )
         .addTo(disposeBag)
 
@@ -123,7 +129,10 @@ class ChatViewModel : ViewModel() {
 
                     _messages.value = newMessages!!
                 },
-                onError = { Log.e("Error", it.message.toString()) }
+                onError = {
+                    Log.e("Error", it.message.toString())
+                    _error.postValue(it)
+                }
             )
 
     fun addReaction(messageId: Int, emojiName: String) =
