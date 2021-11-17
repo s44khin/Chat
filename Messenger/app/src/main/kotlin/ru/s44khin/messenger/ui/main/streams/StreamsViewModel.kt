@@ -12,19 +12,20 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import ru.s44khin.messenger.MessengerApplication
-import ru.s44khin.messenger.data.model.*
+import ru.s44khin.messenger.data.model.ResultStream
+import ru.s44khin.messenger.data.model.Stream
+import ru.s44khin.messenger.data.model.Topic
 
 class StreamsViewModel : ViewModel() {
 
-    private val _oldAllStreams = MutableLiveData<List<ResultStream>>()
-    val oldAllStreams: LiveData<List<ResultStream>> = _oldAllStreams
-    private val _newAllStreams = MutableLiveData<List<ResultStream>>()
-    val newAllStreams: LiveData<List<ResultStream>> = _newAllStreams
+    private val _oldStreams = MutableLiveData<List<ResultStream>>()
+    val oldStreams: LiveData<List<ResultStream>> = _oldStreams
 
-    private val _oldSubsStreams = MutableLiveData<List<ResultStream>>()
-    val oldSubsStreams: LiveData<List<ResultStream>> = _oldSubsStreams
-    private val _newSubsStreams = MutableLiveData<List<ResultStream>>()
-    val newSubsStreams: LiveData<List<ResultStream>> = _newSubsStreams
+    private val _allStreams = MutableLiveData<List<ResultStream>>()
+    val allStreams: LiveData<List<ResultStream>> = _allStreams
+
+    private val _subsStreams = MutableLiveData<List<ResultStream>>()
+    val subsStreams: LiveData<List<ResultStream>> = _subsStreams
 
     private val _searchSubsStreams = MutableLiveData<List<ResultStream>>()
     val searchSubsStreams: LiveData<List<ResultStream>> = _searchSubsStreams
@@ -35,18 +36,14 @@ class StreamsViewModel : ViewModel() {
     private val repository = MessengerApplication.instance.repository
     private val dataBase = MessengerApplication.instance.dataBase
 
-    fun getOldAllStreams() = dataBase.allStreamsDao().getAll()
+    fun getStreamsFromDB() = dataBase.streamsDao().getAll()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribeBy(
-            onSuccess = {
-                if (it != null)
-                    _oldAllStreams.value = it.toResultStreamList()
-                else
-                    _oldAllStreams.value = emptyList()
-            },
+            onSuccess = { _oldStreams.value = it },
             onError = { Log.e("Error", it.message.toString()) }
         )
+        .addTo(disposeBag)
 
     fun getNewAllStreams() = repository.getAllStreams()
         .flattenAsObservable { it.streams }
@@ -59,32 +56,18 @@ class StreamsViewModel : ViewModel() {
         .toList()
         .subscribeBy(
             onSuccess = {
-                _newAllStreams.postValue(it)
-                Single.fromCallable { dataBase.allStreamsDao().insertAll(it.toAllStreamList()) }
+                _allStreams.postValue(it)
+                Single.fromCallable { dataBase.streamsDao().insertAll(it) }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeBy(
-                        onError = { Log.e("Error", it.message.toString()) }
+                        onError = { error -> Log.e("Error", error.message.toString()) }
                     )
                     .addTo(disposeBag)
             },
             onError = { Log.e("Error", it.message.toString()) }
         )
         .addTo(disposeBag)
-
-    fun getOldSubsStreams() = dataBase.subsStreamsDao().getAll()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribeBy(
-            onSuccess = {
-                if (it != null) {
-                    _oldSubsStreams.value = it.toResultStreamList()
-                }
-                else
-                    _oldSubsStreams.value = emptyList()
-            },
-            onError = { Log.e("Error", it.message.toString()) }
-        )
 
     fun getNewSubsStreams() = repository.getSubsStreams()
         .flattenAsObservable { it.subscriptions }
@@ -96,21 +79,12 @@ class StreamsViewModel : ViewModel() {
         }
         .toList()
         .subscribeBy(
-            onSuccess = {
-                _newSubsStreams.postValue(it)
-                Single.fromCallable { dataBase.subsStreamsDao().insertAll(it.toSubsStreamList()) }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeBy(
-                        onError = { Log.e("Error", it.message.toString()) }
-                    )
-                    .addTo(disposeBag)
-            },
+            onSuccess = { _subsStreams.postValue(it) },
             onError = { Log.e("Error", it.message.toString()) }
         )
         .addTo(disposeBag)
 
-    fun searchSubsStreams(text: String) = Observable.fromCallable { _newSubsStreams.value }
+    fun searchSubsStreams(text: String) = Observable.fromCallable { _subsStreams.value }
         .map { streams -> streams.filter { it.name.contains(text, true) } }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -120,7 +94,7 @@ class StreamsViewModel : ViewModel() {
         )
         .addTo(disposeBag)
 
-    fun searchAllStreams(text: String) = Observable.fromCallable { _newAllStreams.value }
+    fun searchAllStreams(text: String) = Observable.fromCallable { _allStreams.value }
         .map { streams -> streams.filter { it.name.contains(text, true) } }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -130,73 +104,7 @@ class StreamsViewModel : ViewModel() {
         )
         .addTo(disposeBag)
 
-    private fun List<AllStream>.toResultStreamList(): List<ResultStream> {
-        val result = mutableListOf<ResultStream>()
-
-        for (stream in this)
-            result.add(
-                ResultStream(
-                    streamId = stream.streamId,
-                    description = stream.description,
-                    name = stream.name,
-                    topics = emptyList()
-                )
-            )
-
-        return result
-    }
-
-    @JvmName("toResultStreamListSubsStream")
-    private fun List<SubsStream>.toResultStreamList(): List<ResultStream> {
-        val result = mutableListOf<ResultStream>()
-
-        for (stream in this)
-            result.add(
-                ResultStream(
-                    streamId = stream.streamId,
-                    description = stream.description,
-                    name = stream.name,
-                    topics = emptyList()
-                )
-            )
-
-        return result
-    }
-
-    private fun List<ResultStream>.toAllStreamList(): List<AllStream> {
-        val result = mutableListOf<AllStream>()
-
-        for (stream in this)
-            result.add(
-                AllStream(
-                    streamId = stream.streamId,
-                    description = stream.description,
-                    name = stream.name
-                )
-            )
-
-        return result
-    }
-
-    private fun List<ResultStream>.toSubsStreamList(): List<SubsStream> {
-        val result = mutableListOf<SubsStream>()
-
-        for (stream in this)
-            result.add(
-                SubsStream(
-                    streamId = stream.streamId,
-                    description = stream.description,
-                    name = stream.name
-                )
-            )
-
-        return result
-    }
-
-    private fun resultStreamFromStreamAndTopics(
-        stream: Stream,
-        topics: List<Topic>
-    ) = ResultStream(
+    private fun resultStreamFromStreamAndTopics(stream: Stream, topics: List<Topic>) = ResultStream(
         streamId = stream.streamId,
         description = stream.description,
         name = stream.name,

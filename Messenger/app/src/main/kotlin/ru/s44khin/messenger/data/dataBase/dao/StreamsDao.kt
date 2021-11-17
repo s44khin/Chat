@@ -1,0 +1,17 @@
+package ru.s44khin.messenger.data.dataBase.dao
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import io.reactivex.Single
+import ru.s44khin.messenger.data.model.ResultStream
+
+@Dao
+interface StreamsDao {
+
+    @Query("SELECT * FROM stream")
+    fun getAll(): Single<List<ResultStream>>
+
+    @Insert
+    fun insertAll(streams: List<ResultStream>)
+}

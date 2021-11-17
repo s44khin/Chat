@@ -1,4 +1,4 @@
-package ru.s44khin.messenger.data.dataBase
+package ru.s44khin.messenger.data.dataBase.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

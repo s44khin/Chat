@@ -8,14 +8,14 @@ class SubsStreamsFragment : TabStreamFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.oldSubsStreams.observe(viewLifecycleOwner) {
+        viewModel.oldStreams.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 initRecyclerView(it)
                 binding.shimmer.root.visibility = View.GONE
             }
         }
 
-        viewModel.newSubsStreams.observe(viewLifecycleOwner) {
+        viewModel.subsStreams.observe(viewLifecycleOwner) {
             initRecyclerView(it)
             binding.shimmer.root.visibility = View.GONE
             binding.progressIndicator.visibility = View.GONE

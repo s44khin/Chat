@@ -2,24 +2,24 @@ package ru.s44khin.messenger.data.dataBase
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import ru.s44khin.messenger.data.model.AllStream
+import androidx.room.TypeConverters
+import ru.s44khin.messenger.data.dataBase.converters.TopicConverter
+import ru.s44khin.messenger.data.dataBase.dao.ProfileDao
+import ru.s44khin.messenger.data.dataBase.dao.StreamsDao
 import ru.s44khin.messenger.data.model.Profile
 import ru.s44khin.messenger.data.model.ResultStream
-import ru.s44khin.messenger.data.model.SubsStream
 
 @Database(
     entities = [
         Profile::class,
-        AllStream::class,
-        SubsStream::class
+        ResultStream::class
     ],
     version = 1
 )
+@TypeConverters(TopicConverter::class)
 abstract class MessengerDataBase : RoomDatabase() {
 
     abstract fun profileDao(): ProfileDao
 
-    abstract fun allStreamsDao(): AllStreamsDao
-
-    abstract fun subsStreamsDao(): SubsStreamsDao
+    abstract fun streamsDao(): StreamsDao
 }

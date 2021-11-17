@@ -40,8 +40,7 @@ class MainActivity : AppCompatActivity() {
             getNewProfile()
         }
         streamsViewModel.apply {
-            getOldAllStreams()
-            getOldSubsStreams()
+            getStreamsFromDB()
             getNewAllStreams()
             getNewSubsStreams()
         }
