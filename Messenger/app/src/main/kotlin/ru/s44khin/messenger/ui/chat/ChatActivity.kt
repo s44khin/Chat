@@ -61,6 +61,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun initMessages() = viewModel.apply {
+        getOldMessages(topicName)
         getMessages(streamId, topicName)
 
         val layoutManager =
@@ -68,6 +69,13 @@ class ChatActivity : AppCompatActivity() {
         layoutManager.stackFromEnd = true
         layoutManager.reverseLayout = false
         binding.recyclerView.layoutManager = layoutManager
+
+        oldMessages.observe(this@ChatActivity) {
+            binding.recyclerView.apply {
+                adapter = ChatAdapter(it, viewModel)
+                binding.progressBar.visibility = View.GONE
+            }
+        }
 
         var check = false
         messages.observe(this@ChatActivity) {
@@ -78,6 +86,7 @@ class ChatActivity : AppCompatActivity() {
                 } else {
                     adapter = ChatAdapter(it, viewModel)
                     binding.progressBar.visibility = View.GONE
+                    binding.progressIndicator.visibility = View.GONE
                     check = true
                 }
             }

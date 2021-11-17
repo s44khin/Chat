@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.data.model.AdapterReaction
 import ru.s44khin.messenger.data.model.Message
 import ru.s44khin.messenger.data.model.Reaction
@@ -20,11 +22,39 @@ import ru.s44khin.messenger.utils.parse
 
 class ChatViewModel : ViewModel() {
 
+    private val _oldMessages = MutableLiveData<MutableList<ChatItem>>()
+    val oldMessages: LiveData<MutableList<ChatItem>> = _oldMessages
+
     private val _messages = MutableLiveData<MutableList<ChatItem>>()
     val messages: LiveData<MutableList<ChatItem>> = _messages
 
     private val disposeBag = CompositeDisposable()
     private val repository = MainRepository()
+    private val dataBase = MessengerApplication.instance.dataBase
+
+    fun getOldMessages(topicName: String) = dataBase.messagesDao().getAll(topicName)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy(
+            onSuccess = {
+                if (it != null && it.isNotEmpty()) {
+                    val result = mutableListOf(
+                        ChatItem.Date(it[0].time),
+                        it[0]
+                    )
+
+                    for (i in 0 until it.lastIndex) {
+                        if (it[i].time != it[i + 1].time)
+                            result.add(ChatItem.Date(it[i + 1].time))
+
+                        result.add(it[i + 1])
+                    }
+
+                    _oldMessages.value = result
+                }
+            },
+            onError = { Log.e("Error", it.message.toString()) }
+        )
 
     fun getMessages(streamId: Int, topicName: String) = repository.getMessages(streamId, topicName)
         .subscribeOn(Schedulers.io())
@@ -32,19 +62,32 @@ class ChatViewModel : ViewModel() {
         .subscribeBy(
             onSuccess = { baseMessages ->
                 val messages = baseMessages.messages
+                val onlyMessages = mutableListOf(
+                    messages[0].toMessageItem(topicName)
+                )
                 val result = mutableListOf(
                     ChatItem.Date(parse(messages[0].timestamp)),
-                    messages[0].toMessageItem()
+                    messages[0].toMessageItem(topicName)
                 )
 
                 for (i in 0 until messages.lastIndex) {
                     if (parse(messages[i].timestamp) != parse(messages[i + 1].timestamp))
                         result.add(ChatItem.Date(parse(messages[i + 1].timestamp)))
 
-                    result.add(messages[i + 1].toMessageItem())
+                    val temp = messages[i + 1].toMessageItem(topicName)
+                    result.add(temp)
+                    onlyMessages.add(temp)
                 }
 
                 _messages.value = result
+
+                Single.fromCallable { dataBase.messagesDao().insertAll(onlyMessages) }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                        onError = { Log.e("Error", it.message.toString()) }
+                    )
+                    .addTo(disposeBag)
             },
             onError = { Log.e("Error", it.message.toString()) }
         )
@@ -67,11 +110,13 @@ class ChatViewModel : ViewModel() {
                         newMessages.add(
                             ChatItem.Message(
                                 id = MY_ID,
+                                topicName = topicName,
                                 time = time,
                                 avatar = MY_AVATAR,
                                 profile = MY_NAME,
                                 content = content,
-                                isMyMessage = true
+                                isMyMessage = true,
+                                reactions = mutableListOf()
                             )
                         )
                     }
@@ -128,8 +173,9 @@ class ChatViewModel : ViewModel() {
         return result
     }
 
-    private fun Message.toMessageItem() = ChatItem.Message(
+    private fun Message.toMessageItem(topicName: String) = ChatItem.Message(
         id = this.id,
+        topicName = topicName,
         time = parse(this.timestamp),
         avatar = this.avatar,
         profile = this.profile,
