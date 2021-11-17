@@ -28,6 +28,20 @@ abstract class TabStreamFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.error.observe(viewLifecycleOwner) {
+            showSnackbar()
+        }
+
+        viewModel.oldStreams.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                initRecyclerView(it)
+                binding.shimmer.root.visibility = View.GONE
+            }
+        }
+    }
+
     protected fun initRecyclerView(streams: List<ResultStream>) = binding.recyclerView.apply {
         layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         adapter = StreamAdapter(streams)
