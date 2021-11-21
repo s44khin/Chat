@@ -14,7 +14,8 @@ import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.data.model.AdapterReaction
 import ru.s44khin.messenger.data.model.Message
 import ru.s44khin.messenger.data.model.Reaction
-import ru.s44khin.messenger.data.repository.MainRepository
+import ru.s44khin.messenger.data.network.ZulipRepository
+import ru.s44khin.messenger.data.network.api.RequestManager
 import ru.s44khin.messenger.utils.MY_AVATAR
 import ru.s44khin.messenger.utils.MY_ID
 import ru.s44khin.messenger.utils.MY_NAME
@@ -29,7 +30,7 @@ class ChatViewModel : ViewModel() {
     val messages: LiveData<MutableList<ChatItem>> = _messages
 
     private val disposeBag = CompositeDisposable()
-    private val repository = MainRepository()
+    private val repository = ZulipRepository(RequestManager.service)
     private val dataBase = MessengerApplication.instance.dataBase
 
     private val _error = MutableLiveData<Throwable>()

@@ -1,6 +1,9 @@
 package ru.s44khin.messenger.utils
 
 import android.annotation.SuppressLint
+import ru.s44khin.messenger.data.model.ResultStream
+import ru.s44khin.messenger.data.model.Stream
+import ru.s44khin.messenger.data.model.Topic
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -13,3 +16,10 @@ const val MY_NAME = "Анохин Александр"
 fun parse(time: Int): String = SimpleDateFormat("d MMM").format(Date(time * 1000L))
 
 fun hexToEmoji(string: String) = String(Character.toChars(string.toInt(16)))
+
+fun resultStreamFromStreamAndTopics(stream: Stream, topics: List<Topic>) = ResultStream(
+    streamId = stream.streamId,
+    description = stream.description,
+    name = stream.name,
+    topics = topics
+)
