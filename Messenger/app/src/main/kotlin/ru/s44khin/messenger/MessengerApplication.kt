@@ -2,12 +2,12 @@ package ru.s44khin.messenger
 
 import android.app.Application
 import androidx.room.Room
-import ru.s44khin.messenger.data.repository.MainRepository
 import ru.s44khin.messenger.data.dataBase.MessengerDataBase
+import ru.s44khin.messenger.data.repository.MainRepository
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-class MessengerApplication: Application() {
+class MessengerApplication : Application() {
 
     companion object {
         lateinit var instance: MessengerApplication
@@ -21,9 +21,7 @@ class MessengerApplication: Application() {
         ).build()
     }
 
-    val repository by lazy {
-        MainRepository()
-    }
+    val repository by lazy { MainRepository() }
 
     val emojiList: List<Pair<String, String>> by lazy {
         val result = mutableListOf<Pair<String, String>>()
@@ -38,7 +36,7 @@ class MessengerApplication: Application() {
             line = reader.readLine()
         }
 
-         result
+        result
     }
 
     override fun onCreate() {

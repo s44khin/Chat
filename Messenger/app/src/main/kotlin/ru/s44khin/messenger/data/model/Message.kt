@@ -4,6 +4,7 @@ import com.squareup.moshi.Json
 
 data class Message(
     @field:Json(name = "id") val id: Int,
+    @field:Json(name = "stream_id") val streamId: Int,
     @field:Json(name = "timestamp") val timestamp: Int,
     @field:Json(name = "avatar_url") val avatar: String,
     @field:Json(name = "sender_full_name") val profile: String,
