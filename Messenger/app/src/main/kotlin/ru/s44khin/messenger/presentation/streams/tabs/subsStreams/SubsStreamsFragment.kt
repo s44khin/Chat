@@ -26,7 +26,7 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>() {
     private var _binding: FragmentTabStreamsBinding? = null
     private val binding get() = _binding!!
     private val adapter = StreamAdapter()
-    override val initEvent = Event.Ui.LoadStreamsNetwork
+    override val initEvent = Event.Ui.LoadStreamsDB
 
     override fun createStore() = GlobalDI.INSTANCE.subsStreamsStoreFactory
 

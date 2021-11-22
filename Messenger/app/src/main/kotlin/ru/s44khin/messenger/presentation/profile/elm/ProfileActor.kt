@@ -21,7 +21,12 @@ class ProfileActor(
                 GlobalDI.INSTANCE.profileStoreFactory.accept(Event.Ui.LoadProfileNetwork)
             }
             .mapEvents(
-                { profile -> Event.Internal.ProfileLoadedDB(profile) },
+                { profile ->
+                    if (profile == null)
+                        Event.Internal.ErrorLoadingDataBase(null)
+                    else
+                        Event.Internal.ProfileLoadedDB(profile)
+                },
                 { error -> Event.Internal.ErrorLoadingDataBase(error) }
             )
     }

@@ -30,7 +30,12 @@ class SubsStreamsActor(
         is Command.LoadStreamsDB -> loadSubsStreams.fromDataBase()
             .doOnSuccess { GlobalDI.INSTANCE.subsStreamsStoreFactory.accept(Event.Ui.LoadStreamsNetwork) }
             .mapEvents(
-                { subsStreams -> Event.Internal.StreamsLoadedDB(subsStreams) },
+                { subsStreams ->
+                    if (subsStreams.isEmpty())
+                        Event.Internal.ErrorLoadingDB(null)
+                    else
+                        Event.Internal.StreamsLoadedDB(subsStreams)
+                },
                 { error -> Event.Internal.ErrorLoadingDB(error) }
             )
     }

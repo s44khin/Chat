@@ -10,10 +10,17 @@ class ProfileReducer : DslReducer<Event, State, Effect, Command>() {
             effects { Effect.ProfileLoadError(event.error) }
         }
         is Event.Internal.ErrorLoadingDataBase -> {
-            state { copy(isLoadingDB = false) }
+            state { copy() }
         }
         is Event.Internal.ProfileLoadedNetwork -> {
-            state { copy(profile = event.profile, isLoadingNetwork = false, error = null) }
+            state {
+                copy(
+                    profile = event.profile,
+                    isLoadingNetwork = false,
+                    isLoadingDB = false,
+                    error = null
+                )
+            }
         }
         is Event.Internal.ProfileLoadedDB -> {
             state { copy(profile = event.profile, isLoadingDB = false, error = null) }

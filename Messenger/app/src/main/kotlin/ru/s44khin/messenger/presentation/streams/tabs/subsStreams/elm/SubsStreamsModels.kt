@@ -6,7 +6,7 @@ data class State(
     val subsStreams: List<ResultStream> = emptyList(),
     val error: Throwable? = null,
     val isLoadingNetwork: Boolean = false,
-    val isLoadingDB: Boolean = false
+    val isLoadingDB: Boolean = true
 )
 
 sealed class Event {
@@ -19,7 +19,7 @@ sealed class Event {
         data class StreamsLoadedNetwork(val streams: List<ResultStream>) : Internal()
         data class StreamsLoadedDB(val streams: List<ResultStream>) : Internal()
         data class ErrorLoadingNetwork(val error: Throwable) : Internal()
-        data class ErrorLoadingDB(val error: Throwable) : Internal()
+        data class ErrorLoadingDB(val error: Throwable?) : Internal()
     }
 }
 

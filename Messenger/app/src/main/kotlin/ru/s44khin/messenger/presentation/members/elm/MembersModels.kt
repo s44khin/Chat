@@ -19,7 +19,7 @@ sealed class Event {
         data class MembersLoadedNetwork(val members: List<Profile>) : Internal()
         data class MembersLoadedDB(val members: List<Profile>) : Internal()
         data class ErrorLoadingNetwork(val error: Throwable) : Internal()
-        data class ErrorLoadingDataBase(val error: Throwable) : Internal()
+        data class ErrorLoadingDataBase(val error: Throwable?) : Internal()
     }
 }
 

@@ -10,10 +10,17 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
             effects { Effect.StreamsLoadError(event.error) }
         }
         is Event.Internal.ErrorLoadingDB -> {
-            state { copy(isLoadingDB = false) }
+            state { copy() }
         }
         is Event.Internal.StreamsLoadedNetwork -> {
-            state { copy(subsStreams = event.streams, isLoadingNetwork = false, error = null) }
+            state {
+                copy(
+                    subsStreams = event.streams,
+                    isLoadingNetwork = false,
+                    isLoadingDB = false,
+                    error = null
+                )
+            }
         }
         is Event.Internal.StreamsLoadedDB -> {
             state { copy(subsStreams = event.streams, isLoadingDB = false, error = null) }

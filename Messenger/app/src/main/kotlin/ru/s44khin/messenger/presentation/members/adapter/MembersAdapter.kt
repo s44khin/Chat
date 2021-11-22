@@ -14,6 +14,10 @@ import ru.s44khin.messenger.data.model.Profile
 class MembersAdapter : RecyclerView.Adapter<MembersAdapter.ViewHolder>() {
 
     var members: List<Profile> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val avatar: ImageView = itemView.findViewById(R.id.peopleAvatar)

@@ -19,7 +19,7 @@ sealed class Event {
         data class StreamsLoadedNetwork(val streams: List<ResultStream>) : Internal()
         data class StreamsLoadedDB(val streams: List<ResultStream>) : Internal()
         data class ErrorLoadingNetwork(val error: Throwable) : Internal()
-        data class ErrorLoadingDB(val error: Throwable) : Internal()
+        data class ErrorLoadingDB(val error: Throwable?) : Internal()
     }
 }
 

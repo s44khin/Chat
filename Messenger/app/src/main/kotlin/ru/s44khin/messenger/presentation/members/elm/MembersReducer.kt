@@ -10,16 +10,23 @@ class MembersReducer : DslReducer<Event, State, Effect, Command>() {
             effects { Effect.MembersLoadError(event.error) }
         }
         is Event.Internal.ErrorLoadingDataBase -> {
-            state { copy(isLoadingDB = false) }
+            state { copy() }
         }
         is Event.Internal.MembersLoadedNetwork -> {
-            state { copy(members = event.members, isLoadingNetwork = false, error = null) }
+            state {
+                copy(
+                    members = event.members,
+                    isLoadingNetwork = false,
+                    isLoadingDB = false,
+                    error = null
+                )
+            }
         }
         is Event.Internal.MembersLoadedDB -> {
             state { copy(members = event.members, isLoadingDB = false, error = null) }
         }
         is Event.Ui.LoadMembersNetwork -> {
-            state { copy(isLoadingNetwork = true, isLoadingDB = false, error = null) }
+            state { copy(isLoadingNetwork = true, error = null) }
             commands { +Command.LoadMembersNetwork }
         }
         is Event.Ui.LoadMembersDB -> {

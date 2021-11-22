@@ -21,7 +21,12 @@ class MembersActor(
                 GlobalDI.INSTANCE.membersStoreFactory.accept(Event.Ui.LoadMembersNetwork)
             }
             .mapEvents(
-                { members -> Event.Internal.MembersLoadedDB(members) },
+                { members ->
+                    if (members.isEmpty())
+                        Event.Internal.ErrorLoadingDataBase(null)
+                    else
+                        Event.Internal.MembersLoadedDB(members)
+                },
                 { error -> Event.Internal.ErrorLoadingDataBase(error) }
             )
     }
