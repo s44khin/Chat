@@ -26,9 +26,9 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>() {
     private var _binding: FragmentTabStreamsBinding? = null
     private val binding get() = _binding!!
     private val adapter = StreamAdapter()
-    override val initEvent = Event.Ui.LoadStreams
+    override val initEvent = Event.Ui.LoadStreamsNetwork
 
-    override fun createStore() = GlobalDI.INSTANCE.allStreamsStoreFactory.provide()
+    override fun createStore() = GlobalDI.INSTANCE.allStreamsStoreFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,8 +47,8 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>() {
     }
 
     override fun render(state: State) {
-        binding.shimmer.root.isVisible = state.isLoading
-        binding.progressIndicator.isVisible = state.isLoading
+        binding.shimmer.root.isVisible = state.isLoadingDB
+        binding.progressIndicator.isVisible = state.isLoadingNetwork
 
         adapter.streams = state.allStreams
 

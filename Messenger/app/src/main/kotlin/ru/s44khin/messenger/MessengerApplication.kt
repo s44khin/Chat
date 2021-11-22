@@ -44,6 +44,6 @@ class MessengerApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        GlobalDI.init()
+        GlobalDI.init(this)
     }
 }

@@ -29,13 +29,13 @@ class ProfileFragment : ElmFragment<Event, Effect, State>() {
         return binding.root
     }
 
-    override val initEvent = Event.Ui.LoadProfile
+    override val initEvent = Event.Ui.LoadProfileDB
 
-    override fun createStore() = GlobalDI.INSTANCE.profileStoreFactory.provide()
+    override fun createStore() = GlobalDI.INSTANCE.profileStoreFactory
 
     override fun render(state: State) {
-        binding.shimmer.isVisible = state.isLoading
-        binding.progressIndicator.isVisible = state.isLoading
+        binding.shimmer.isVisible = state.isLoadingDB
+        binding.progressIndicator.isVisible = state.isLoadingNetwork
 
         if (state.profile != null) {
             Glide.with(binding.avatar)
@@ -56,8 +56,12 @@ class ProfileFragment : ElmFragment<Event, Effect, State>() {
         val snackbar = Snackbar.make(
             binding.root,
             requireActivity().getString(R.string.internetError),
-            Snackbar.LENGTH_SHORT
+            Snackbar.LENGTH_INDEFINITE
         )
+
+        snackbar.setAction("Update") {
+            createStore().accept(Event.Ui.LoadProfileNetwork)
+        }
 
         val view = snackbar.view
         view.translationY = -(58 * requireActivity().resources.displayMetrics.density)

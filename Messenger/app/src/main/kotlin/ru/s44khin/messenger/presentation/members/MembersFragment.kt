@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentMembersBinding
@@ -41,15 +40,16 @@ class MembersFragment : ElmFragment<Event, Effect, State>() {
         }
     }
 
-    override val initEvent = Event.Ui.LoadMembers
+    override val initEvent = Event.Ui.LoadMembersDB
 
-    override fun createStore() = GlobalDI.INSTANCE.membersStoreFactory.provide()
+    override fun createStore() = GlobalDI.INSTANCE.membersStoreFactory
 
     override fun render(state: State) {
-        binding.shimmer.isVisible = state.isLoading
-        binding.progressIndicator.isVisible = state.isLoading
+        binding.shimmer.isVisible = state.isLoadingDB
+        binding.progressIndicator.isVisible = state.isLoadingNetwork
 
-        adapter.members = state.members
+        if (state.members != null)
+            adapter.members = state.members
 
         if (state.error != null)
             showSnackbar()
@@ -63,6 +63,10 @@ class MembersFragment : ElmFragment<Event, Effect, State>() {
             requireActivity().getString(R.string.internetError),
             Snackbar.LENGTH_INDEFINITE
         )
+
+        snackbar.setAction("Update") {
+            createStore().accept(Event.Ui.LoadMembersNetwork)
+        }
 
         val view = snackbar.view
         view.translationY = -(58 * requireActivity().resources.displayMetrics.density)

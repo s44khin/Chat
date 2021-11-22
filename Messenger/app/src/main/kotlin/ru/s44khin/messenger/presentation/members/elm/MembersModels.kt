@@ -3,19 +3,23 @@ package ru.s44khin.messenger.presentation.members.elm
 import ru.s44khin.messenger.data.model.Profile
 
 data class State(
-    val members: List<Profile> = emptyList(),
+    val members: List<Profile>? = null,
     val error: Throwable? = null,
-    val isLoading: Boolean = false
+    val isLoadingNetwork: Boolean = false,
+    val isLoadingDB: Boolean = false
 )
 
 sealed class Event {
     sealed class Ui : Event() {
-        object LoadMembers : Ui()
+        object LoadMembersNetwork : Ui()
+        object LoadMembersDB: Ui()
     }
 
     sealed class Internal : Event() {
-        data class MembersLoaded(val members: List<Profile>) : Internal()
-        data class ErrorLoading(val error: Throwable) : Internal()
+        data class MembersLoadedNetwork(val members: List<Profile>) : Internal()
+        data class MembersLoadedDB(val members: List<Profile>) : Internal()
+        data class ErrorLoadingNetwork(val error: Throwable) : Internal()
+        data class ErrorLoadingDataBase(val error: Throwable) : Internal()
     }
 }
 
@@ -24,5 +28,6 @@ sealed class Effect {
 }
 
 sealed class Command {
-    object LoadMembers : Command()
+    object LoadMembersNetwork : Command()
+    object LoadMembersDB : Command()
 }

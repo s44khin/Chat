@@ -13,6 +13,10 @@ import ru.s44khin.messenger.data.model.ResultStream
 class StreamAdapter : RecyclerView.Adapter<StreamAdapter.ViewHolder>() {
 
     var streams: List<ResultStream> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.streamName)

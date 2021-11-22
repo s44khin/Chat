@@ -5,17 +5,21 @@ import ru.s44khin.messenger.data.model.ResultStream
 data class State(
     val allStreams: List<ResultStream> = emptyList(),
     val error: Throwable? = null,
-    val isLoading: Boolean = false
+    val isLoadingNetwork: Boolean = false,
+    val isLoadingDB: Boolean = false
 )
 
 sealed class Event {
     sealed class Ui : Event() {
-        object LoadStreams: Ui()
+        object LoadStreamsNetwork: Ui()
+        object LoadStreamsDB : Ui()
     }
 
     sealed class Internal : Event() {
-        data class StreamsLoaded(val streams: List<ResultStream>) : Internal()
-        data class ErrorLoading(val error: Throwable) : Internal()
+        data class StreamsLoadedNetwork(val streams: List<ResultStream>) : Internal()
+        data class StreamsLoadedDB(val streams: List<ResultStream>) : Internal()
+        data class ErrorLoadingNetwork(val error: Throwable) : Internal()
+        data class ErrorLoadingDB(val error: Throwable) : Internal()
     }
 }
 
@@ -24,5 +28,6 @@ sealed class Effect {
 }
 
 sealed class Command {
-    object LoadStreams : Command()
+    object LoadStreamsNetwork : Command()
+    object LoadStreamsDB : Command()
 }
