@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.s44khin.messenger.R
@@ -18,6 +19,9 @@ import ru.s44khin.messenger.presentation.streams.tabs.subsStreams.SubsStreamsFra
 import vivid.money.elmslie.android.base.ElmFragment
 
 class StreamsFragment : ElmFragment<Event, Effect, State>() {
+
+    private val allStreamsFragment = AllStreamsFragment.newInstance()
+    private val subsStreamsFragment = SubsStreamsFragment.newInstance()
 
     private var _binding: FragmentStreamsBinding? = null
     private val binding get() = _binding!!
@@ -37,6 +41,7 @@ class StreamsFragment : ElmFragment<Event, Effect, State>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initTabs()
+        initSearch()
     }
 
     override fun render(state: State) {
@@ -52,7 +57,7 @@ class StreamsFragment : ElmFragment<Event, Effect, State>() {
         val tabs = listOf(getString(R.string.subscribed), getString(R.string.allStreams))
 
         binding.viewPager.adapter = PagerAdapter(
-            mutableListOf(SubsStreamsFragment.newInstance(), AllStreamsFragment.newInstance()),
+            mutableListOf(subsStreamsFragment, allStreamsFragment),
             childFragmentManager,
             lifecycle
         )
@@ -60,6 +65,11 @@ class StreamsFragment : ElmFragment<Event, Effect, State>() {
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabs[position]
         }.attach()
+    }
+
+    private fun initSearch() = binding.titleBar.search.doAfterTextChanged { text ->
+        subsStreamsFragment.search(text.toString())
+        allStreamsFragment.search(text.toString())
     }
 
     override fun onDestroyView() {
