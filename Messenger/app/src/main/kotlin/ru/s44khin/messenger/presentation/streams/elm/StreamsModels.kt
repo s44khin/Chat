@@ -3,7 +3,10 @@ package ru.s44khin.messenger.presentation.streams.elm
 import ru.s44khin.messenger.data.model.Profile
 
 data class State(
-    val profile: Profile? = null
+    val profile: Profile? = null,
+    val error: Throwable? = null,
+    val isLoadingNetwork: Boolean = false,
+    val isLoadingDB: Boolean = false
 )
 
 sealed class Event {
@@ -15,7 +18,8 @@ sealed class Event {
     sealed class Internal : Event() {
         data class ProfileLoadedNetwork(val profile: Profile) : Internal()
         data class ProfileLoadedDB(val profile: Profile) : Internal()
-        data class Error(val error: Throwable) : Internal()
+        data class ErrorLoadingNetwork(val error: Throwable) : Internal()
+        data class ErrorLoadingDataBase(val error: Throwable?) : Internal()
     }
 }
 

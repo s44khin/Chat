@@ -18,9 +18,9 @@ import ru.s44khin.messenger.data.model.AdapterReaction
 import ru.s44khin.messenger.ui.chat.bottomSheet.EmojiAdapter.Companion.REQUEST_KEY
 import ru.s44khin.messenger.ui.chat.bottomSheet.EmojiAdapter.Companion.RESULT_KEY
 import ru.s44khin.messenger.ui.chat.bottomSheet.EmojiBottomSheet
-import ru.s44khin.messenger.ui.views.EmojiView
-import ru.s44khin.messenger.ui.views.FlexBoxLayout
-import ru.s44khin.messenger.ui.views.MessageView
+import ru.s44khin.messenger.views.EmojiView
+import ru.s44khin.messenger.views.FlexBoxLayout
+import ru.s44khin.messenger.views.MessageView
 import ru.s44khin.messenger.utils.hexToEmoji
 
 class ChatAdapter(

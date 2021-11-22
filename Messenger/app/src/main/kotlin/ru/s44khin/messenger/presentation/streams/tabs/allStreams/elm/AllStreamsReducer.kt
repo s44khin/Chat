@@ -25,6 +25,17 @@ class AllStreamsReducer : DslReducer<Event, State, Effect, Command>() {
         is Event.Internal.StreamsLoadedDB -> {
             state { copy(allStreams = event.streams, isLoadingDB = false, error = null) }
         }
+        is Event.Ui.LoadStreamsFirst -> if (state.allStreams != null) {
+            state {
+                copy(
+                    allStreams = state.allStreams,
+                    isLoadingNetwork = false,
+                    isLoadingDB = false
+                )
+            }
+        } else {
+            commands { +Command.LoadStreamsDB }
+        }
         is Event.Ui.LoadStreamsNetwork -> {
             state { copy(isLoadingNetwork = true, error = null) }
             commands { +Command.LoadStreamsNetwork }

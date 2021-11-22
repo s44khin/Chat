@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -14,6 +15,7 @@ import ru.s44khin.messenger.presentation.streams.adapters.StreamAdapter
 import ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.Effect
 import ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.Event
 import ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.State
+import ru.s44khin.messenger.utils.showSnackbar
 import vivid.money.elmslie.android.base.ElmFragment
 
 class AllStreamsFragment : ElmFragment<Event, Effect, State>() {
@@ -26,7 +28,7 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>() {
     private var _binding: FragmentTabStreamsBinding? = null
     private val binding get() = _binding!!
     private val adapter = StreamAdapter()
-    override val initEvent = Event.Ui.LoadStreamsDB
+    override val initEvent = Event.Ui.LoadStreamsFirst
 
     override fun createStore() = GlobalDI.INSTANCE.allStreamsStore
 
@@ -50,25 +52,11 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>() {
         binding.shimmer.root.isVisible = state.isLoadingDB
         binding.progressIndicator.isVisible = state.isLoadingNetwork
 
-        adapter.streams = state.allStreams
+        if (state.allStreams != null)
+            adapter.streams = state.allStreams
 
         if (state.error != null)
-            showSnackbar()
-    }
-
-    private fun showSnackbar() {
-        binding.progressIndicator.visibility = View.GONE
-
-        val snackbar = Snackbar.make(
-            binding.root,
-            requireActivity().getString(R.string.internetError),
-            Snackbar.LENGTH_SHORT
-        )
-
-        val view = snackbar.view
-        view.translationY = -(58 * requireActivity().resources.displayMetrics.density)
-
-        snackbar.show()
+            showSnackbar(requireContext(), binding.root, binding.progressIndicator)
     }
 
     override fun onDestroyView() {

@@ -14,6 +14,7 @@ import ru.s44khin.messenger.presentation.streams.adapters.StreamAdapter
 import ru.s44khin.messenger.presentation.streams.tabs.subsStreams.elm.Effect
 import ru.s44khin.messenger.presentation.streams.tabs.subsStreams.elm.Event
 import ru.s44khin.messenger.presentation.streams.tabs.subsStreams.elm.State
+import ru.s44khin.messenger.utils.showSnackbar
 import vivid.money.elmslie.android.base.ElmFragment
 
 class SubsStreamsFragment : ElmFragment<Event, Effect, State>() {
@@ -26,7 +27,7 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>() {
     private var _binding: FragmentTabStreamsBinding? = null
     private val binding get() = _binding!!
     private val adapter = StreamAdapter()
-    override val initEvent = Event.Ui.LoadStreamsDB
+    override val initEvent = Event.Ui.LoadStreamsFirst
 
     override fun createStore() = GlobalDI.INSTANCE.subsStreamsStore
 
@@ -50,25 +51,11 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>() {
         binding.shimmer.root.isVisible = state.isLoadingDB
         binding.progressIndicator.isVisible = state.isLoadingNetwork
 
-        adapter.streams = state.subsStreams
+        if (state.subsStreams != null)
+            adapter.streams = state.subsStreams
 
         if (state.error != null)
-            showSnackbar()
-    }
-
-    private fun showSnackbar() {
-        binding.progressIndicator.visibility = View.GONE
-
-        val snackbar = Snackbar.make(
-            binding.root,
-            requireActivity().getString(R.string.internetError),
-            Snackbar.LENGTH_SHORT
-        )
-
-        val view = snackbar.view
-        view.translationY = -(58 * requireActivity().resources.displayMetrics.density)
-
-        snackbar.show()
+            showSnackbar(requireContext(), binding.root, binding.progressIndicator)
     }
 
     override fun onDestroyView() {

@@ -3,7 +3,7 @@ package ru.s44khin.messenger.presentation.streams.tabs.subsStreams.elm
 import ru.s44khin.messenger.data.model.ResultStream
 
 data class State(
-    val subsStreams: List<ResultStream> = emptyList(),
+    val subsStreams: List<ResultStream>? = null,
     val error: Throwable? = null,
     val isLoadingNetwork: Boolean = false,
     val isLoadingDB: Boolean = true
@@ -11,6 +11,7 @@ data class State(
 
 sealed class Event {
     sealed class Ui : Event() {
+        object LoadStreamsFirst : Ui()
         object LoadStreamsNetwork : Ui()
         object LoadStreamsDB : Ui()
     }

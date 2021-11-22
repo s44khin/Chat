@@ -11,16 +11,23 @@ class StreamsActor(
 
     override fun execute(command: Command): Observable<Event> = when (command) {
         is Command.LoadProfileNetwork -> loadProfile.fromNetwork()
+            .doOnSuccess { loadProfile.saveToDataBase(it) }
             .mapEvents(
                 { profile -> Event.Internal.ProfileLoadedNetwork(profile) },
-                { error -> Event.Internal.Error(error) }
+                { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
-
         is Command.LoadProfileDB -> loadProfile.fromDataBase()
-            .doOnSuccess { GlobalDI.INSTANCE.streamsStore.accept(Event.Ui.LoadProfileNetwork) }
+            .doOnSuccess {
+                GlobalDI.INSTANCE.streamsStore.accept(Event.Ui.LoadProfileNetwork)
+            }
             .mapEvents(
-                { profile -> Event.Internal.ProfileLoadedDB(profile) },
-                { error -> Event.Internal.Error(error) }
+                { profile ->
+                    if (profile == null)
+                        Event.Internal.ErrorLoadingDataBase(null)
+                    else
+                        Event.Internal.ProfileLoadedDB(profile)
+                },
+                { error -> Event.Internal.ErrorLoadingDataBase(error) }
             )
     }
 }

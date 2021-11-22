@@ -1,4 +1,4 @@
-package ru.s44khin.messenger.ui.views
+package ru.s44khin.messenger.views
 
 import android.content.Context
 import android.util.AttributeSet

@@ -25,6 +25,11 @@ class ProfileReducer : DslReducer<Event, State, Effect, Command>() {
         is Event.Internal.ProfileLoadedDB -> {
             state { copy(profile = event.profile, isLoadingDB = false, error = null) }
         }
+        is Event.Ui.LoadProfileFirst -> if (state.profile != null) {
+            state { copy(profile = state.profile, isLoadingNetwork = false, isLoadingDB = false) }
+        } else {
+            commands { +Command.LoadProfileDB }
+        }
         is Event.Ui.LoadProfileNetwork -> {
             state { copy(isLoadingNetwork = true, error = null) }
             commands { +Command.LoadProfileNetwork }

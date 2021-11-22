@@ -14,12 +14,16 @@ import ru.s44khin.messenger.presentation.members.adapter.MembersAdapter
 import ru.s44khin.messenger.presentation.members.elm.Effect
 import ru.s44khin.messenger.presentation.members.elm.Event
 import ru.s44khin.messenger.presentation.members.elm.State
+import ru.s44khin.messenger.utils.showSnackbar
 import vivid.money.elmslie.android.base.ElmFragment
 
 class MembersFragment : ElmFragment<Event, Effect, State>() {
 
     private var _binding: FragmentMembersBinding? = null
     private val binding get() = _binding!!
+    override val initEvent = Event.Ui.LoadMembersFirst
+
+    override fun createStore() = GlobalDI.INSTANCE.membersStore
 
     private val adapter = MembersAdapter()
 
@@ -40,10 +44,6 @@ class MembersFragment : ElmFragment<Event, Effect, State>() {
         }
     }
 
-    override val initEvent = Event.Ui.LoadMembersDB
-
-    override fun createStore() = GlobalDI.INSTANCE.membersStore
-
     override fun render(state: State) {
         binding.shimmer.isVisible = state.isLoadingDB
         binding.progressIndicator.isVisible = state.isLoadingNetwork
@@ -52,26 +52,7 @@ class MembersFragment : ElmFragment<Event, Effect, State>() {
             adapter.members = state.members
 
         if (state.error != null)
-            showSnackbar()
-    }
-
-    private fun showSnackbar() {
-        binding.progressIndicator.visibility = View.GONE
-
-        val snackbar = Snackbar.make(
-            binding.root,
-            requireActivity().getString(R.string.internetError),
-            Snackbar.LENGTH_INDEFINITE
-        )
-
-        snackbar.setAction("Update") {
-            createStore().accept(Event.Ui.LoadMembersNetwork)
-        }
-
-        val view = snackbar.view
-        view.translationY = -(58 * requireActivity().resources.displayMetrics.density)
-
-        snackbar.show()
+            showSnackbar(requireContext(), binding.root, binding.progressIndicator)
     }
 
     override fun onDestroyView() {

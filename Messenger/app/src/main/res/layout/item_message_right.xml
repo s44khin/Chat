@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ru.s44khin.messenger.ui.views.MessageView
+    <ru.s44khin.messenger.views.MessageView
         android:id="@+id/chatMessageRight"
         android:layout_width="300dp"
         android:layout_height="match_parent"

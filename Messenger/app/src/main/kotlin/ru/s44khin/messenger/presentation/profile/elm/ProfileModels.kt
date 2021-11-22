@@ -11,6 +11,7 @@ data class State(
 
 sealed class Event {
     sealed class Ui : Event() {
+        object LoadProfileFirst: Ui()
         object LoadProfileNetwork : Ui()
         object LoadProfileDB : Ui()
     }

@@ -21,7 +21,7 @@ class StreamsFragment : ElmFragment<Event, Effect, State>() {
 
     private var _binding: FragmentStreamsBinding? = null
     private val binding get() = _binding!!
-    override val initEvent = Event.Ui.LoadProfileNetwork
+    override val initEvent = Event.Ui.LoadProfileDB
 
     override fun createStore() = GlobalDI.INSTANCE.streamsStore
 
