@@ -18,7 +18,7 @@ class ProfileActor(
             )
         is Command.LoadProfileDB -> loadProfile.fromDataBase()
             .doOnSuccess {
-                GlobalDI.INSTANCE.profileStoreFactory.accept(Event.Ui.LoadProfileNetwork)
+                GlobalDI.INSTANCE.profileStore.accept(Event.Ui.LoadProfileNetwork)
             }
             .mapEvents(
                 { profile ->

@@ -28,7 +28,7 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>() {
     private val adapter = StreamAdapter()
     override val initEvent = Event.Ui.LoadStreamsDB
 
-    override fun createStore() = GlobalDI.INSTANCE.allStreamsStoreFactory
+    override fun createStore() = GlobalDI.INSTANCE.allStreamsStore
 
     override fun onCreateView(
         inflater: LayoutInflater,

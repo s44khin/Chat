@@ -19,6 +19,9 @@ class ProfileFragment : ElmFragment<Event, Effect, State>() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+    override val initEvent = Event.Ui.LoadProfileDB
+
+    override fun createStore() = GlobalDI.INSTANCE.profileStore
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,10 +31,6 @@ class ProfileFragment : ElmFragment<Event, Effect, State>() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-    override val initEvent = Event.Ui.LoadProfileDB
-
-    override fun createStore() = GlobalDI.INSTANCE.profileStoreFactory
 
     override fun render(state: State) {
         binding.shimmer.isVisible = state.isLoadingDB

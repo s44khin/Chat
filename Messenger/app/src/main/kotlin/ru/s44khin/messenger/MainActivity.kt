@@ -1,14 +1,11 @@
 package ru.s44khin.messenger
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import ru.s44khin.messenger.databinding.ActivityMainBinding
-import ru.s44khin.messenger.di.GlobalDI
-import ru.s44khin.messenger.ui.main.streams.StreamsViewModel
 
 class MainActivity : AppCompatActivity() {
 

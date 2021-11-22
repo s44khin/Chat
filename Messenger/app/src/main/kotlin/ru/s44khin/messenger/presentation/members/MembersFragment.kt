@@ -42,7 +42,7 @@ class MembersFragment : ElmFragment<Event, Effect, State>() {
 
     override val initEvent = Event.Ui.LoadMembersDB
 
-    override fun createStore() = GlobalDI.INSTANCE.membersStoreFactory
+    override fun createStore() = GlobalDI.INSTANCE.membersStore
 
     override fun render(state: State) {
         binding.shimmer.isVisible = state.isLoadingDB

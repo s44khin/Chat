@@ -29,7 +29,7 @@ class AllStreamsActor(
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
         is Command.LoadStreamsDB -> loadAllStreams.fromDataBase()
-            .doOnSuccess { GlobalDI.INSTANCE.allStreamsStoreFactory.accept(Event.Ui.LoadStreamsNetwork) }
+            .doOnSuccess { GlobalDI.INSTANCE.allStreamsStore.accept(Event.Ui.LoadStreamsNetwork) }
             .mapEvents(
                 { allStreams ->
                     if (allStreams.isEmpty())

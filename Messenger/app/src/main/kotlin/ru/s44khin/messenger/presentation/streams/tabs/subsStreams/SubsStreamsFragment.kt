@@ -28,7 +28,7 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>() {
     private val adapter = StreamAdapter()
     override val initEvent = Event.Ui.LoadStreamsDB
 
-    override fun createStore() = GlobalDI.INSTANCE.subsStreamsStoreFactory
+    override fun createStore() = GlobalDI.INSTANCE.subsStreamsStore
 
     override fun onCreateView(
         inflater: LayoutInflater,

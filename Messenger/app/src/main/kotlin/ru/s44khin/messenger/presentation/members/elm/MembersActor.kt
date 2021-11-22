@@ -18,7 +18,7 @@ class MembersActor(
             )
         is Command.LoadMembersDB -> loadMembers.fromDataBase()
             .doAfterSuccess {
-                GlobalDI.INSTANCE.membersStoreFactory.accept(Event.Ui.LoadMembersNetwork)
+                GlobalDI.INSTANCE.membersStore.accept(Event.Ui.LoadMembersNetwork)
             }
             .mapEvents(
                 { members ->
