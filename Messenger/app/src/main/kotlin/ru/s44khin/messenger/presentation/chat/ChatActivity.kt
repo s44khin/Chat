@@ -79,16 +79,17 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
     }
 
     override fun addReaction(messageId: Int, emojiName: String) {
-        createStore().accept(Event.Ui.AddReaction(messageId, emojiName))
+        store.accept(Event.Ui.AddReaction(messageId, emojiName))
     }
 
     override fun removeReaction(messageId: Int, emojiName: String) {
-        createStore().accept(Event.Ui.RemoveReaction(messageId, emojiName))
+        store.accept(Event.Ui.RemoveReaction(messageId, emojiName))
     }
 
     private fun initRecyclerView() = binding.recyclerView.apply {
-        layoutManager =
-            LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, true)
+        val lm = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
+        lm.stackFromEnd = true
+        layoutManager = lm
         adapter = this@ChatActivity.adapter
     }
 
@@ -101,7 +102,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
     private fun initButtons() = binding.messageInput.message.doAfterTextChanged { text ->
         binding.messageInput.send.apply {
             setOnClickListener {
-                createStore().accept(Event.Ui.SendMessage(text.toString()))
+                store.accept(Event.Ui.SendMessage(text.toString()))
                 binding.messageInput.message.setText("")
             }
             backgroundTintList = setButtonsBackground(text?.length ?: 0)

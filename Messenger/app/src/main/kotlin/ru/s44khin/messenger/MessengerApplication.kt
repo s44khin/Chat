@@ -15,16 +15,6 @@ class MessengerApplication : Application() {
         lateinit var instance: MessengerApplication
     }
 
-    val dataBase by lazy {
-        Room.databaseBuilder(
-            this,
-            MessengerDataBase::class.java,
-            "DataBase"
-        ).build()
-    }
-
-    val repository by lazy { ZulipRepository(RequestManager.service) }
-
     val emojiList: List<Pair<String, String>> by lazy {
         val result = mutableListOf<Pair<String, String>>()
         val inputStream = resources.openRawResource(R.raw.emojis)
