@@ -19,7 +19,7 @@ import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiAdapter.Companion.REQUEST_KEY
 import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiAdapter.Companion.RESULT_KEY
 import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiBottomSheet
-import ru.s44khin.messenger.presentation.chat.elm.ReactionSender
+import ru.s44khin.messenger.presentation.chat.ReactionSender
 import ru.s44khin.messenger.utils.hexToEmoji
 import ru.s44khin.messenger.views.EmojiView
 import ru.s44khin.messenger.views.FlexBoxLayout

@@ -1,4 +1,4 @@
-package ru.s44khin.messenger.presentation.chat.elm
+package ru.s44khin.messenger.presentation.chat
 
 interface ReactionSender {
 
