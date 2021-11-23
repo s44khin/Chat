@@ -33,7 +33,7 @@ class ZulipRepository(
 
     fun addReaction(messageId: Int, emojiName: String) = service.addReaction(messageId, emojiName)
 
-    fun deleteReaction(
+    fun removeReaction(
         messageId: Int,
         emojiName: String
     ) = service.deleteReaction(messageId, emojiName)

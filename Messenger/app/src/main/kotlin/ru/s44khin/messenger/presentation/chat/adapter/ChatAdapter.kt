@@ -1,4 +1,4 @@
-package ru.s44khin.messenger.ui.chat
+package ru.s44khin.messenger.presentation.chat.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -15,18 +15,25 @@ import com.bumptech.glide.Glide
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.AdapterReaction
-import ru.s44khin.messenger.ui.chat.bottomSheet.EmojiAdapter.Companion.REQUEST_KEY
-import ru.s44khin.messenger.ui.chat.bottomSheet.EmojiAdapter.Companion.RESULT_KEY
-import ru.s44khin.messenger.ui.chat.bottomSheet.EmojiBottomSheet
+import ru.s44khin.messenger.presentation.chat.ChatItem
+import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiAdapter.Companion.REQUEST_KEY
+import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiAdapter.Companion.RESULT_KEY
+import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiBottomSheet
+import ru.s44khin.messenger.presentation.chat.elm.ReactionSender
+import ru.s44khin.messenger.utils.hexToEmoji
 import ru.s44khin.messenger.views.EmojiView
 import ru.s44khin.messenger.views.FlexBoxLayout
 import ru.s44khin.messenger.views.MessageView
-import ru.s44khin.messenger.utils.hexToEmoji
 
 class ChatAdapter(
-    private val messages: List<ChatItem>,
-    private val viewModel: ChatViewModel
+    private val reactionSender: ReactionSender
 ) : RecyclerView.Adapter<ViewHolder>() {
+
+    var messages: List<ChatItem> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     private enum class TYPE(val value: Int) {
         DATE(0),
@@ -164,11 +171,11 @@ class ChatAdapter(
                 if (emojiView.isSelected) {
                     emojiView.text = (Integer.parseInt(emojiView.text) - 1).toString()
                     emojiView.isSelected = false
-                    viewModel.deleteReaction(messageId, reaction.emojiName)
+                    reactionSender.removeReaction(messageId, reaction.emojiName)
                 } else {
                     emojiView.text = (Integer.parseInt(emojiView.text) + 1).toString()
                     emojiView.isSelected = true
-                    viewModel.addReaction(messageId, reaction.emojiName)
+                    reactionSender.addReaction(messageId, reaction.emojiName)
                 }
 
                 if (emojiView.text == "0") {
@@ -224,7 +231,7 @@ class ChatAdapter(
                 )
             }
 
-            viewModel.addReaction(message.id, emoji.second)
+            reactionSender.addReaction(message.id, emoji.second)
         }
 
         emojiBottomSheet.show(fragmentManager, EmojiBottomSheet.TAG)

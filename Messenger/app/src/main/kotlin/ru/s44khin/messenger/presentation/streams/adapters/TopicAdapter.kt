@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.Topic
-import ru.s44khin.messenger.ui.chat.ChatActivity
+import ru.s44khin.messenger.presentation.chat.ChatActivity
 
 class TopicAdapter(
     private val streamId: Int,

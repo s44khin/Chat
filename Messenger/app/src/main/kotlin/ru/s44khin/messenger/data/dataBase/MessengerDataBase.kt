@@ -10,7 +10,7 @@ import ru.s44khin.messenger.data.dataBase.dao.ProfileDao
 import ru.s44khin.messenger.data.dataBase.dao.StreamsDao
 import ru.s44khin.messenger.data.model.Profile
 import ru.s44khin.messenger.data.model.ResultStream
-import ru.s44khin.messenger.ui.chat.ChatItem.Message
+import ru.s44khin.messenger.presentation.chat.ChatItem.Message
 
 @Database(
     entities = [

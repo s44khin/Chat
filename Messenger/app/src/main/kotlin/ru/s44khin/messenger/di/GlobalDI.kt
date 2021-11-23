@@ -55,4 +55,6 @@ class GlobalDI private constructor() {
 
     private val streamsActor by lazy { StreamsActor(loadProfile) }
     val streamsStore by lazy { StreamsStoreFactory(streamsActor).provide() }
+
+    val loadMessages by lazy { LoadMessages(repository, dataBase.messagesDao()) }
 }

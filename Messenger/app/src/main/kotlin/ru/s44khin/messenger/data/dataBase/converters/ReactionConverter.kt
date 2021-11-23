@@ -4,18 +4,19 @@ import androidx.room.TypeConverter
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import ru.s44khin.messenger.data.model.AdapterReaction
+import ru.s44khin.messenger.data.model.Reaction
 
 class ReactionConverter {
 
     companion object {
         private const val SPLITTER = "/#/"
         private val moshi: Moshi = Moshi.Builder().build()
-        private val jsonAdapter: JsonAdapter<AdapterReaction> =
-            moshi.adapter(AdapterReaction::class.java)
+        private val jsonAdapter: JsonAdapter<Reaction> =
+            moshi.adapter(Reaction::class.java)
     }
 
     @TypeConverter
-    fun fromReactions(reactions: List<AdapterReaction>): String {
+    fun fromReactions(reactions: List<Reaction>): String {
         var result = ""
 
         for (i in reactions.indices) {
@@ -28,11 +29,11 @@ class ReactionConverter {
     }
 
     @TypeConverter
-    fun toReactions(data: String): List<AdapterReaction> {
+    fun toReactions(data: String): List<Reaction> {
         if (data.isEmpty())
             return emptyList()
 
-        val result = mutableListOf<AdapterReaction>()
+        val result = mutableListOf<Reaction>()
         val arr = data.split(SPLITTER)
 
         for (reactionStr in arr)

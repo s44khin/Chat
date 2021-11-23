@@ -1,4 +1,4 @@
-package ru.s44khin.messenger.ui.chat.bottomSheet
+package ru.s44khin.messenger.presentation.chat.bottomSheet
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,21 +1,23 @@
-package ru.s44khin.messenger.ui.chat
+package ru.s44khin.messenger.presentation.chat
 
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityChatBinding
+import ru.s44khin.messenger.di.GlobalDI
+import ru.s44khin.messenger.presentation.chat.adapter.ChatAdapter
+import ru.s44khin.messenger.presentation.chat.elm.*
+import vivid.money.elmslie.android.base.ElmActivity
+import vivid.money.elmslie.core.store.Store
 
-class ChatActivity : AppCompatActivity() {
+class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
 
     companion object {
         const val STREAM_ID = "streamId"
@@ -29,7 +31,20 @@ class ChatActivity : AppCompatActivity() {
                 .putExtra(TOPIC_NAME, topicName)
     }
 
-    private val viewModel: ChatViewModel by viewModels()
+    override val initEvent = Event.Ui.LoadMessagesDB
+
+    override fun createStore(): Store<Event, Effect, State> {
+        val chatActor = ChatActor(
+            loadMessages = GlobalDI.INSTANCE.loadMessages,
+            streamId = streamId,
+            streamName = streamName,
+            topicName = topicName
+        )
+
+        return ChatStoryFactory(chatActor).provide()
+    }
+
+    private val adapter = ChatAdapter(this)
 
     private val streamName by lazy {
         intent.getStringExtra(STREAM_NAME)!!
@@ -49,13 +64,32 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.error.observe(this) {
-            showSnackbar()
-        }
         setContentView(binding.root)
+        initRecyclerView()
         initToolBar()
-        initMessages()
         initButtons()
+    }
+
+    override fun render(state: State) {
+        binding.progressBar.isVisible = state.isLoadingDB
+        binding.progressIndicator.isVisible = state.isLoadingNetwork
+
+        if (state.messages != null)
+            adapter.messages = state.messages
+    }
+
+    override fun addReaction(messageId: Int, emojiName: String) {
+        createStore().accept(Event.Ui.AddReaction(messageId, emojiName))
+    }
+
+    override fun removeReaction(messageId: Int, emojiName: String) {
+        createStore().accept(Event.Ui.RemoveReaction(messageId, emojiName))
+    }
+
+    private fun initRecyclerView() = binding.recyclerView.apply {
+        layoutManager =
+            LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, true)
+        adapter = this@ChatActivity.adapter
     }
 
     private fun initToolBar() = binding.apply {
@@ -64,43 +98,10 @@ class ChatActivity : AppCompatActivity() {
         backButton.setOnClickListener { finish() }
     }
 
-    private fun initMessages() = viewModel.apply {
-        getOldMessages(topicName)
-        getMessages(streamId, topicName)
-
-        val layoutManager =
-            LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
-        layoutManager.stackFromEnd = true
-        layoutManager.reverseLayout = false
-        binding.recyclerView.layoutManager = layoutManager
-
-        oldMessages.observe(this@ChatActivity) {
-            binding.recyclerView.apply {
-                adapter = ChatAdapter(it, viewModel)
-                binding.progressBar.visibility = View.GONE
-            }
-        }
-
-        var check = false
-        messages.observe(this@ChatActivity) {
-            binding.recyclerView.apply {
-                if (check) {
-                    adapter?.notifyItemInserted(it.lastIndex)
-                    scrollToPosition(it.lastIndex)
-                } else {
-                    adapter = ChatAdapter(it, viewModel)
-                    binding.progressBar.visibility = View.GONE
-                    binding.progressIndicator.visibility = View.GONE
-                    check = true
-                }
-            }
-        }
-    }
-
     private fun initButtons() = binding.messageInput.message.doAfterTextChanged { text ->
         binding.messageInput.send.apply {
             setOnClickListener {
-                viewModel.sendMessage(streamName, topicName, text.toString())
+                createStore().accept(Event.Ui.SendMessage(text.toString()))
                 binding.messageInput.message.setText("")
             }
             backgroundTintList = setButtonsBackground(text?.length ?: 0)
@@ -124,19 +125,4 @@ class ChatActivity : AppCompatActivity() {
     )
 
     private fun setButtonsColor(length: Int) = if (length == 0) Color.GRAY else Color.WHITE
-
-    private fun showSnackbar() {
-        binding.progressIndicator.visibility = View.GONE
-
-        val snackbar = Snackbar.make(
-            binding.root,
-            getString(R.string.internetError),
-            Snackbar.LENGTH_SHORT
-        )
-
-        val view = snackbar.view
-        view.translationY = -(58 * resources.displayMetrics.density)
-
-        snackbar.show()
-    }
 }
