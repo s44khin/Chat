@@ -14,8 +14,7 @@ import ru.s44khin.messenger.views.FlexBoxLayout
 import ru.s44khin.messenger.views.MessageView
 
 class LeftAdapterDelegate(
-    private val reactionSender: ReactionSender,
-    private val layoutInflater: LayoutInflater
+    reactionSender: ReactionSender
 ) : AbsListItemAdapterDelegate<ChatItem.Message, ChatItem, LeftAdapterDelegate.LeftViewHolder>() {
 
     private val adapterHelper = AdapterHelper(reactionSender)
@@ -25,6 +24,7 @@ class LeftAdapterDelegate(
         override val reactions: FlexBoxLayout = messageView.flexBoxLayout
 
         init {
+            messageView.alignment = MessageView.LEFT
             reactions.alignment = FlexBoxLayout.LEFT
         }
     }
@@ -40,8 +40,9 @@ class LeftAdapterDelegate(
         return false
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup) =
-        LeftViewHolder(layoutInflater.inflate(R.layout.item_message_left, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup) = LeftViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.item_message_left, parent, false)
+    )
 
     override fun onBindViewHolder(
         item: ChatItem.Message,
@@ -72,6 +73,6 @@ class LeftAdapterDelegate(
             adapterHelper.showBottomSheet(it.context, item, holder.reactions)
         }
 
-        holder.reactions.invalidate()
+        holder.reactions.requestLayout()
     }
 }

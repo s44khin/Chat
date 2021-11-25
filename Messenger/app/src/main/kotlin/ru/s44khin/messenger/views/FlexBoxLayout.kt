@@ -39,8 +39,13 @@ class FlexBoxLayout @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        if (childCount == 0) {
+            setMeasuredDimension(0, 0)
+            return
+        }
+
         var totalWidth = paddingLeft + paddingRight
-        var totalHeight = paddingTop + (getChildAt(0)?.measuredHeight ?: 0) + paddingBottom
+        var totalHeight = paddingTop + getChildAt(0).measuredHeight + paddingBottom
 
         val width = MeasureSpec.getSize(widthMeasureSpec)
 
@@ -55,6 +60,11 @@ class FlexBoxLayout @JvmOverloads constructor(
             }
 
             totalWidth += child.measuredWidth + marginBetween
+        }
+
+        if (totalHeight == 0 && childCount != 0) {
+            setMeasuredDimension(resolveSize(width, widthMeasureSpec), getChildAt(0).measuredHeight)
+            return
         }
 
         val resultWidth = resolveSize(width, widthMeasureSpec)

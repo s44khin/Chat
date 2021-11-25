@@ -40,8 +40,8 @@ class ChatAdapter(
     layoutInflater: LayoutInflater
 ) : AsyncListDifferDelegationAdapter<ChatItem>(
     difItemCallback,
-    LeftAdapterDelegate(reactionSender, layoutInflater),
-    RightAdapterDelegate(reactionSender, layoutInflater),
+    LeftAdapterDelegate(reactionSender),
+    RightAdapterDelegate(reactionSender),
     DateAdapterDelegate(layoutInflater)
 ) {
 
@@ -55,6 +55,7 @@ class ChatAdapter(
         position: Int,
         payloads: MutableList<Any?>
     ) {
+        holder.itemView.requestLayout()
         super.onBindViewHolder(holder, position, payloads)
         paginationAdapterHelper.onBind(position, itemCount)
     }
