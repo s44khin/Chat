@@ -5,11 +5,10 @@
     android:layout_height="wrap_content">
 
     <ru.s44khin.messenger.views.MessageView
-        android:id="@+id/chatMessageRight"
-        android:layout_width="300dp"
+        android:id="@+id/itemChatMessage"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
-        app:alignment="right"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,7 +36,11 @@ class MessageView @JvmOverloads constructor(
     var profile: TextView
     var message: TextView
     var flexBoxLayout: FlexBoxLayout
-    var alignment: Int
+    var alignment: Int = LEFT
+        set(value) {
+            field = value
+            invalidate()
+        }
     var messageCornerRadius: Int
     var messagePadding: Int
     var avatarMessageMargin: Int

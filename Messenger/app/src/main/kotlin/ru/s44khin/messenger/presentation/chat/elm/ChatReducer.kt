@@ -14,9 +14,9 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
             state { copy(error = event.error, isLoadingNetwork = false) }
             effects { Effect.MessagesLoadError(event.error) }
         }
-        is Event.Internal.ErrorLoadingDB -> {
-            state { copy() }
-        }
+//        is Event.Internal.ErrorLoadingDB -> {
+//            state { copy() }
+//        }
         is Event.Internal.ErrorSendMessage -> {
             state { copy(error = event.error) }
         }
@@ -32,13 +32,14 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
                     messages = event.messages,
                     isLoadingNetwork = false,
                     isLoadingDB = false,
-                    error = null
+                    error = null,
+                    pageNumber = state.pageNumber + 1
                 )
             }
         }
-        is Event.Internal.MessagesLoadedDB -> {
-            state { copy(messages = event.messages, isLoadingDB = false) }
-        }
+//        is Event.Internal.MessagesLoadedDB -> {
+//            state { copy(messages = event.messages, isLoadingDB = false) }
+//        }
         is Event.Internal.MessageSent -> {
             state {
                 val newMessages = state.messages?.toMutableList() ?: mutableListOf()
@@ -69,15 +70,19 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
         is Event.Internal.ReactionRemoved -> {
             state { copy() }
         }
-        is Event.Ui.LoadMessagesNetwork -> {
+        is Event.Ui.LoadFirstPage -> {
             state { copy(isLoadingNetwork = true, error = null) }
-            commands { +Command.LoadMessagesNetwork }
+            commands { +Command.LoadPage(state.pageNumber) }
         }
-        is Event.Ui.LoadMessagesDB -> {
-            state { copy(isLoadingDB = true, isLoadingNetwork = true, error = null) }
-            commands { +Command.LoadMessagesDB }
-            commands { +Command.LoadMessagesNetwork }
+        is Event.Ui.LoadNextPage -> {
+            state { copy(isLoadingNetwork = true, error = null) }
+            commands { +Command.LoadPage(state.pageNumber) }
         }
+//        is Event.Ui.LoadMessagesDB -> {
+//            state { copy(isLoadingDB = true, isLoadingNetwork = true, error = null) }
+//            commands { +Command.LoadMessagesDB }
+//            commands { +Command.LoadMessagesNetwork }
+//        }
         is Event.Ui.SendMessage -> {
             commands { +Command.SendMessage(event.content) }
         }

@@ -19,11 +19,19 @@ class ZulipRepository(
 
     fun getMessages(
         streamId: Int,
-        topicName: String
-    ): Single<BaseMessages> = service.getMessages(
-        "[{\"operator\": \"stream\", \"operand\": $streamId}, " +
-                "{\"operator\": \"topic\", \"operand\": \"$topicName\"}]"
-    )
+        topicName: String,
+        pageNumber: Int
+    ): Single<BaseMessages> {
+        val numBefore = pageNumber * 50 + 50
+        val numAfter = pageNumber * 50
+
+        return service.getMessages(
+            narrow = "[{\"operator\": \"stream\", \"operand\": $streamId}, " +
+                    "{\"operator\": \"topic\", \"operand\": \"$topicName\"}]",
+            numBefore = numBefore,
+            numAfter = numAfter
+        )
+    }
 
     fun sendMessage(
         streamName: String,

@@ -14,6 +14,7 @@ import ru.s44khin.messenger.databinding.ActivityChatBinding
 import ru.s44khin.messenger.di.GlobalDI
 import ru.s44khin.messenger.presentation.chat.adapter.ChatAdapter
 import ru.s44khin.messenger.presentation.chat.elm.*
+import ru.s44khin.messenger.presentation.chat.pagination.PaginationAdapterHelper
 import vivid.money.elmslie.android.base.ElmActivity
 import vivid.money.elmslie.core.store.Store
 
@@ -31,7 +32,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
                 .putExtra(TOPIC_NAME, topicName)
     }
 
-    override val initEvent = Event.Ui.LoadMessagesDB
+    override val initEvent = Event.Ui.LoadFirstPage
 
     override fun createStore(): Store<Event, Effect, State> {
         val chatActor = ChatActor(
@@ -44,7 +45,14 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
         return ChatStoryFactory(chatActor).provide()
     }
 
-    private val adapter = ChatAdapter(this)
+    private val adapter by lazy {
+        ChatAdapter(
+            paginationAdapterHelper = PaginationAdapterHelper {
+                store.accept(Event.Ui.LoadNextPage)
+            },
+            layoutInflater = layoutInflater
+        )
+    }
 
     private val streamName by lazy {
         intent.getStringExtra(STREAM_NAME)!!
@@ -75,7 +83,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
         binding.progressIndicator.isVisible = state.isLoadingNetwork
 
         if (state.messages != null)
-            adapter.messages = state.messages
+            adapter.items = state.messages
     }
 
     override fun addReaction(messageId: Int, emojiName: String) {

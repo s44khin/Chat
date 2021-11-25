@@ -11,8 +11,9 @@ class LoadMessages(
 
     fun fromNetwork(
         streamId: Int,
-        topicName: String
-    ) = repository.getMessages(streamId, topicName)
+        topicName: String,
+        pageNumber: Int
+    ) = repository.getMessages(streamId, topicName, pageNumber)
 
     fun fromDataBase(topicName: String) = dataBase.getAll(topicName)
 

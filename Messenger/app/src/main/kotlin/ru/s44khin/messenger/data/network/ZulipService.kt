@@ -21,8 +21,12 @@ interface ZulipService {
     @GET("/api/v1/users/me")
     fun getSelfProfile(): Single<Profile>
 
-    @GET("/api/v1/messages?&anchor=newest&num_before=150&num_after=0&apply_markdown=false")
-    fun getMessages(@Query("narrow") narrow: String): Single<BaseMessages>
+    @GET("/api/v1/messages?&anchor=newest&apply_markdown=false")
+    fun getMessages(
+        @Query("narrow") narrow: String,
+        @Query("num_before") numBefore: Int,
+        @Query("num_after") numAfter: Int
+    ): Single<BaseMessages>
 
     @POST("/api/v1/messages?&type=stream")
     fun sendMessage(

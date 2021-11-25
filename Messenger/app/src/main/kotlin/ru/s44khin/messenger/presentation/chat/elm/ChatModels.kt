@@ -6,13 +6,20 @@ data class State(
     val messages: List<ChatItem>? = null,
     val error: Throwable? = null,
     val isLoadingNetwork: Boolean = false,
-    val isLoadingDB: Boolean = false
-)
+    val isLoadingDB: Boolean = false,
+    val pageNumber: Int = INITIAL_PAGE
+) {
+
+    companion object {
+        const val INITIAL_PAGE = 0
+    }
+}
 
 sealed class Event {
     sealed class Ui : Event() {
-        object LoadMessagesNetwork : Ui()
-        object LoadMessagesDB : Ui()
+        object LoadFirstPage : Ui()
+        object LoadNextPage : Ui()
+//        object LoadMessagesDB : Ui()
         data class SendMessage(val content: String) : Ui()
         data class AddReaction(val messageId: Int, val emojiName: String) : Ui()
         data class RemoveReaction(val messageId: Int, val emojiName: String) : Ui()
@@ -20,14 +27,14 @@ sealed class Event {
 
     sealed class Internal : Event() {
         data class MessagesLoadedNetwork(val messages: List<ChatItem>) : Internal()
-        data class MessagesLoadedDB(val messages: List<ChatItem>) : Internal()
+//        data class MessagesLoadedDB(val messages: List<ChatItem>) : Internal()
         data class MessageSent(val content: String, val topicName: String) : Internal()
         object ReactionAdded : Internal()
         object ReactionRemoved : Internal()
         data class ReactionAddError(val error: Throwable) : Internal()
         data class ReactionRemoveError(val error: Throwable) : Internal()
         data class ErrorLoadingNetwork(val error: Throwable) : Internal()
-        data class ErrorLoadingDB(val error: Throwable) : Internal()
+//        data class ErrorLoadingDB(val error: Throwable) : Internal()
         data class ErrorSendMessage(val error: Throwable) : Internal()
     }
 }
@@ -37,8 +44,8 @@ sealed class Effect {
 }
 
 sealed class Command {
-    object LoadMessagesNetwork : Command()
-    object LoadMessagesDB : Command()
+    data class LoadPage(val pageNumber: Int) : Command()
+//    object LoadMessagesDB : Command()
     data class SendMessage(val content: String) : Command()
     data class AddReaction(val messageId: Int, val emojiName: String) : Command()
     data class RemoveReaction(val messageId: Int, val emojiName: String) : Command()
