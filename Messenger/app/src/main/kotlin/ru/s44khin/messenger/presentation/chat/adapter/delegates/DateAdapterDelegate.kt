@@ -1,4 +1,4 @@
-package ru.s44khin.messenger.presentation.chat.adapter
+package ru.s44khin.messenger.presentation.chat.adapter.delegates
 
 import android.view.LayoutInflater
 import android.view.View

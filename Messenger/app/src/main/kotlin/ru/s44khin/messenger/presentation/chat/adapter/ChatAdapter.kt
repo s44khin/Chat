@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.ReactionSender
+import ru.s44khin.messenger.presentation.chat.adapter.delegates.DateAdapterDelegate
+import ru.s44khin.messenger.presentation.chat.adapter.delegates.LeftAdapterDelegate
+import ru.s44khin.messenger.presentation.chat.adapter.delegates.RightAdapterDelegate
 import ru.s44khin.messenger.presentation.chat.pagination.PaginationAdapterHelper
 
 val difItemCallback = object : DiffUtil.ItemCallback<ChatItem>() {

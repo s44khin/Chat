@@ -1,4 +1,4 @@
-package ru.s44khin.messenger.presentation.chat.adapter
+package ru.s44khin.messenger.presentation.chat.adapter.delegates
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,22 +8,24 @@ import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.ReactionSender
+import ru.s44khin.messenger.presentation.chat.adapter.AdapterHelper
+import ru.s44khin.messenger.presentation.chat.adapter.MessageViewHolder
 import ru.s44khin.messenger.views.FlexBoxLayout
 import ru.s44khin.messenger.views.MessageView
 
-class RightAdapterDelegate(
+class LeftAdapterDelegate(
     private val reactionSender: ReactionSender,
     private val layoutInflater: LayoutInflater
-) : AbsListItemAdapterDelegate<ChatItem.Message, ChatItem, RightAdapterDelegate.RightViewHolder>() {
+) : AbsListItemAdapterDelegate<ChatItem.Message, ChatItem, LeftAdapterDelegate.LeftViewHolder>() {
 
     private val adapterHelper = AdapterHelper(reactionSender)
 
-    class RightViewHolder(itemView: View) : MessageViewHolder(itemView) {
-        override val messageView: MessageView = itemView.findViewById(R.id.itemChatMessageRight)
+    class LeftViewHolder(itemView: View) : MessageViewHolder(itemView) {
+        override val messageView: MessageView = itemView.findViewById(R.id.itemChatMessageLeft)
         override val reactions: FlexBoxLayout = messageView.flexBoxLayout
 
         init {
-            reactions.alignment = FlexBoxLayout.RIGHT
+            reactions.alignment = FlexBoxLayout.LEFT
         }
     }
 
@@ -33,17 +35,17 @@ class RightAdapterDelegate(
         position: Int
     ): Boolean {
         if (items[position] is ChatItem.Message)
-            return (items[position] as ChatItem.Message).isMyMessage
+            return !(items[position] as ChatItem.Message).isMyMessage
 
         return false
     }
 
     override fun onCreateViewHolder(parent: ViewGroup) =
-        RightViewHolder(layoutInflater.inflate(R.layout.item_message_right, parent, false))
+        LeftViewHolder(layoutInflater.inflate(R.layout.item_message_left, parent, false))
 
     override fun onBindViewHolder(
         item: ChatItem.Message,
-        holder: RightViewHolder,
+        holder: LeftViewHolder,
         payloads: MutableList<Any>
     ) {
         Glide.with(holder.messageView.avatar)
@@ -51,8 +53,8 @@ class RightAdapterDelegate(
             .circleCrop()
             .into(holder.messageView.avatar)
 
-        holder.messageView.setMessage(item.content)
-        holder.messageView.setProfile(item.profile)
+        holder.messageView.message.text = item.content
+        holder.messageView.profile.text = item.profile
 
         holder.reactions.removeAllViews()
 
@@ -69,5 +71,7 @@ class RightAdapterDelegate(
         holder.itemView.setOnLongClickListener {
             adapterHelper.showBottomSheet(it.context, item, holder.reactions)
         }
+
+        holder.reactions.invalidate()
     }
 }
