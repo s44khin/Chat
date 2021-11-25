@@ -46,6 +46,7 @@ class ChatAdapter(
 ) {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder.itemView.requestLayout()
         super.onBindViewHolder(holder, position)
         paginationAdapterHelper.onBind(position, itemCount)
     }
