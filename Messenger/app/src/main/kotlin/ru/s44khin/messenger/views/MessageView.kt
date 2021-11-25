@@ -36,11 +36,7 @@ class MessageView @JvmOverloads constructor(
     var profile: TextView
     var message: TextView
     var flexBoxLayout: FlexBoxLayout
-    var alignment: Int = LEFT
-        set(value) {
-            field = value
-            invalidate()
-        }
+    var alignment: Int
     var messageCornerRadius: Int
     var messagePadding: Int
     var avatarMessageMargin: Int
@@ -126,6 +122,14 @@ class MessageView @JvmOverloads constructor(
         val resultHeight = resolveSize(totalHeight, heightMeasureSpec)
 
         setMeasuredDimension(resultWidth, resultHeight)
+    }
+
+    fun setProfile(text: String) {
+        profile.text = text
+    }
+
+    fun setMessage(text: String) {
+        message.text = text
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) = when (alignment) {

@@ -53,11 +53,10 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
                         id = MY_ID,
                         topicName = event.topicName,
                         time = currentTime,
-                        avatar = MY_AVATAR,
-                        profile = MY_NAME,
                         content = event.content,
-                        isMyMessage = true,
-                        reactions = mutableListOf()
+                        profile = MY_NAME,
+                        avatar = MY_AVATAR,
+                        isMyMessage = true
                     )
                 )
 

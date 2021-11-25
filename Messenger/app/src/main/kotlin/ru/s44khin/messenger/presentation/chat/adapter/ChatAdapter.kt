@@ -35,7 +35,8 @@ class ChatAdapter(
     layoutInflater: LayoutInflater
 ) : AsyncListDifferDelegationAdapter<ChatItem>(
     difItemCallback,
-    MessageAdapterDelegate(layoutInflater),
+    LeftMessageAdapterDelegate(layoutInflater),
+    RightMessageAdapterDelegate(layoutInflater),
     DateAdapterDelegate(layoutInflater)
 ) {
 
