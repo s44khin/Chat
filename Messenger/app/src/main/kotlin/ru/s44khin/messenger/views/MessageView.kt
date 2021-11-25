@@ -124,14 +124,6 @@ class MessageView @JvmOverloads constructor(
         setMeasuredDimension(resultWidth, resultHeight)
     }
 
-    fun setProfile(text: String) {
-        profile.text = text
-    }
-
-    fun setMessage(text: String) {
-        message.text = text
-    }
-
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) = when (alignment) {
         LEFT -> onSizeChangedLeft()
         RIGHT -> onSizeChangedRight()

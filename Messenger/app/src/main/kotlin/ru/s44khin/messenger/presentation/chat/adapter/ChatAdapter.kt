@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import ru.s44khin.messenger.presentation.chat.ChatItem
+import ru.s44khin.messenger.presentation.chat.ReactionSender
 import ru.s44khin.messenger.presentation.chat.pagination.PaginationAdapterHelper
 
 val difItemCallback = object : DiffUtil.ItemCallback<ChatItem>() {
@@ -32,11 +33,12 @@ val difItemCallback = object : DiffUtil.ItemCallback<ChatItem>() {
 
 class ChatAdapter(
     private val paginationAdapterHelper: PaginationAdapterHelper,
+    reactionSender: ReactionSender,
     layoutInflater: LayoutInflater
 ) : AsyncListDifferDelegationAdapter<ChatItem>(
     difItemCallback,
-    LeftMessageAdapterDelegate(layoutInflater),
-    RightMessageAdapterDelegate(layoutInflater),
+    LeftAdapterDelegate(reactionSender, layoutInflater),
+    RightAdapterDelegate(reactionSender, layoutInflater),
     DateAdapterDelegate(layoutInflater)
 ) {
 

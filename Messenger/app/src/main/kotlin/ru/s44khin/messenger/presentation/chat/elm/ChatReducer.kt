@@ -56,7 +56,8 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
                         content = event.content,
                         profile = MY_NAME,
                         avatar = MY_AVATAR,
-                        isMyMessage = true
+                        isMyMessage = true,
+                        reactions = mutableListOf()
                     )
                 )
 

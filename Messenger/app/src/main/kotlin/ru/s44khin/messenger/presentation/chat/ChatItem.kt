@@ -16,7 +16,7 @@ sealed class ChatItem {
         val profile: String,
         val content: String,
         val isMyMessage: Boolean,
-        val reactions: MutableList<AdapterReaction> = mutableListOf()
+        val reactions: MutableList<AdapterReaction>
     ) : ChatItem()
 
     class Date(val date: String) : ChatItem()
