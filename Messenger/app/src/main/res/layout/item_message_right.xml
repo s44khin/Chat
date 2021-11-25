@@ -6,7 +6,7 @@
 
     <ru.s44khin.messenger.views.MessageView
         android:id="@+id/itemChatMessageRight"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
         app:alignment="right"
