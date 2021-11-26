@@ -10,12 +10,14 @@ class MembersActor(
 ) : ActorCompat<Command, Event> {
 
     override fun execute(command: Command): Observable<Event> = when (command) {
+
         is Command.LoadMembersNetwork -> loadMembers.fromNetwork()
             .doOnSuccess { loadMembers.saveToDataBase(it.members) }
             .mapEvents(
                 { members -> Event.Internal.MembersLoadedNetwork(members.members) },
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
+
         is Command.LoadMembersDB -> loadMembers.fromDataBase()
             .doAfterSuccess {
                 GlobalDI.INSTANCE.membersStore.accept(Event.Ui.LoadMembersNetwork)

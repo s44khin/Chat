@@ -10,12 +10,14 @@ class ProfileActor(
 ) : ActorCompat<Command, Event> {
 
     override fun execute(command: Command): Observable<Event> = when (command) {
+
         is Command.LoadProfileNetwork -> loadProfile.fromNetwork()
             .doOnSuccess { loadProfile.saveToDataBase(it) }
             .mapEvents(
                 { profile -> Event.Internal.ProfileLoadedNetwork(profile) },
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
+
         is Command.LoadProfileDB -> loadProfile.fromDataBase()
             .doOnSuccess {
                 GlobalDI.INSTANCE.profileStore.accept(Event.Ui.LoadProfileNetwork)

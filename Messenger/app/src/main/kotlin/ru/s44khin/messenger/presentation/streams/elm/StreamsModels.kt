@@ -10,6 +10,7 @@ data class State(
 )
 
 sealed class Event {
+
     sealed class Ui : Event() {
         object LoadProfileNetwork : Ui()
         object LoadProfileDB : Ui()
@@ -24,10 +25,12 @@ sealed class Event {
 }
 
 sealed class Effect {
+
     data class ProfileLoadError(val error: Throwable) : Effect()
 }
 
 sealed class Command {
+
     object LoadProfileNetwork : Command()
     object LoadProfileDB : Command()
 }

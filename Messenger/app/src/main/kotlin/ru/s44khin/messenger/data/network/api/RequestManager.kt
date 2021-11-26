@@ -18,7 +18,7 @@ object RequestManager {
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         val okHttpClient = OkHttpClient.Builder()
-        okHttpClient.authenticator() { _, response ->
+        okHttpClient.authenticator { _, response ->
             val credentials = Credentials.basic(EMAIL, API_KEY)
             response.request.newBuilder().header("Authorization", credentials).build()
         }

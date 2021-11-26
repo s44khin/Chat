@@ -18,6 +18,7 @@ class ChatActor(
 ) : ActorCompat<Command, Event> {
 
     override fun execute(command: Command): Observable<Event> = when (command) {
+
         is Command.LoadPage -> loadMessages.fromNetwork(streamId, topicName, command.pageNumber)
             .doOnSuccess { loadMessages.saveToDataBase(it.messages) }
             .mapEvents(
@@ -26,21 +27,25 @@ class ChatActor(
                 },
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
-//        is Command.LoadMessagesDB -> loadMessages.fromDataBase(topicName)
-//            .mapEvents(
-//                { messages -> Event.Internal.MessagesLoadedDB(messages.toListOfChatItems()) },
-//                { error -> Event.Internal.ErrorLoadingDB(error) }
-//            )
+
+        is Command.LoadMessagesDB -> loadMessages.fromDataBase(topicName)
+            .mapEvents(
+                { messages -> Event.Internal.MessagesLoadedDB(messages.toListOfChatItems()) },
+                { error -> Event.Internal.ErrorLoadingDB(error) }
+            )
+
         is Command.SendMessage -> loadMessages.sendMessage(streamName, topicName, command.content)
             .mapEvents(
                 { Event.Internal.MessageSent(command.content, topicName) },
                 { error -> Event.Internal.ErrorSendMessage(error) }
             )
+
         is Command.AddReaction -> loadMessages.addReaction(command.messageId, command.emojiName)
             .mapEvents(
                 { Event.Internal.ReactionAdded },
                 { error -> Event.Internal.ReactionAddError(error) }
             )
+
         is Command.RemoveReaction -> loadMessages.removeReaction(
             command.messageId,
             command.emojiName

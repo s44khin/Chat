@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentMembersBinding
 import ru.s44khin.messenger.di.GlobalDI
 import ru.s44khin.messenger.presentation.members.adapter.MembersAdapter

@@ -3,7 +3,6 @@ package ru.s44khin.messenger.data.dataBase.converters
 import androidx.room.TypeConverter
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import ru.s44khin.messenger.data.model.AdapterReaction
 import ru.s44khin.messenger.data.model.Reaction
 
 class ReactionConverter {

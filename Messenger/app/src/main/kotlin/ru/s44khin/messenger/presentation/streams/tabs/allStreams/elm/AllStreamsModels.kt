@@ -11,8 +11,8 @@ data class State(
 
 sealed class Event {
     sealed class Ui : Event() {
-        object LoadStreamsFirst: Ui()
-        object LoadStreamsNetwork: Ui()
+        object LoadStreamsFirst : Ui()
+        object LoadStreamsNetwork : Ui()
         object LoadStreamsDB : Ui()
     }
 

@@ -10,10 +10,11 @@ data class State(
 )
 
 sealed class Event {
+
     sealed class Ui : Event() {
         object LoadMembersFirst : Ui()
         object LoadMembersNetwork : Ui()
-        object LoadMembersDB: Ui()
+        object LoadMembersDB : Ui()
     }
 
     sealed class Internal : Event() {
@@ -25,10 +26,12 @@ sealed class Event {
 }
 
 sealed class Effect {
+
     data class MembersLoadError(val error: Throwable) : Effect()
 }
 
 sealed class Command {
+
     object LoadMembersNetwork : Command()
     object LoadMembersDB : Command()
 }

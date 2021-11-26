@@ -1,10 +1,6 @@
 package ru.s44khin.messenger
 
 import android.app.Application
-import androidx.room.Room
-import ru.s44khin.messenger.data.dataBase.MessengerDataBase
-import ru.s44khin.messenger.data.network.ZulipRepository
-import ru.s44khin.messenger.data.network.api.RequestManager
 import ru.s44khin.messenger.di.GlobalDI
 import java.io.BufferedReader
 import java.io.InputStreamReader
