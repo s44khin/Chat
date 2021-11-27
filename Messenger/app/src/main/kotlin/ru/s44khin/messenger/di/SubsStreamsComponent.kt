@@ -9,7 +9,9 @@ import ru.s44khin.messenger.domain.LoadSubsStreams
 import ru.s44khin.messenger.domain.LoadTopics
 import ru.s44khin.messenger.presentation.streams.tabs.subsStreams.elm.*
 import vivid.money.elmslie.core.ElmStoreCompat
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [SubsStreamsModule::class])
 interface SubsStreamsComponent {
 
@@ -20,15 +22,18 @@ interface SubsStreamsComponent {
 class SubsStreamsModule {
 
     @Provides
+    @Singleton
     fun provideLoadSubsStreams(
         repository: ZulipRepository,
         dataBase: MessengerDataBase
     ) = LoadSubsStreams(repository, dataBase)
 
     @Provides
+    @Singleton
     fun provideLoadTopics(repository: ZulipRepository) = LoadTopics(repository)
 
     @Provides
+    @Singleton
     fun provideSubsStreamsStore(
         loadSubsStreams: LoadSubsStreams,
         loadTopics: LoadTopics

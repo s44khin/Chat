@@ -10,7 +10,9 @@ import ru.s44khin.messenger.domain.LoadTopics
 import ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.*
 import vivid.money.elmslie.core.ElmStoreCompat
 import vivid.money.elmslie.core.store.ElmStore
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [AllStreamModule::class])
 interface AllStreamsComponent {
 
@@ -27,9 +29,11 @@ class AllStreamModule {
     ) = LoadAllStreams(repository, dataBase)
 
     @Provides
+    @Singleton
     fun provideLoadTopics(repository: ZulipRepository) = LoadTopics(repository)
 
     @Provides
+    @Singleton
     fun provideAllStreamsStore(
         loadAllStreams: LoadAllStreams,
         loadTopics: LoadTopics

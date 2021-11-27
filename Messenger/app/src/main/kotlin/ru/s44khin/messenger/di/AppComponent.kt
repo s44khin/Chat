@@ -22,9 +22,11 @@ interface AppComponent {
 class AppModule {
 
     @Provides
+    @Singleton
     fun provideRepository() = ZulipRepository(RequestManager.service)
 
     @Provides
+    @Singleton
     fun provideDB() = Room.databaseBuilder(
         MessengerApplication.instance,
         MessengerDataBase::class.java,

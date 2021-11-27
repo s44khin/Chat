@@ -10,7 +10,9 @@ import ru.s44khin.messenger.domain.LoadProfile
 import ru.s44khin.messenger.presentation.profile.elm.*
 import vivid.money.elmslie.core.ElmStoreCompat
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [ProfileModule::class])
 interface ProfileComponent {
 
@@ -21,12 +23,14 @@ interface ProfileComponent {
 class ProfileModule {
 
     @Provides
+    @Singleton
     fun provideLoadProfile(
         repository: ZulipRepository,
         dataBase: MessengerDataBase
     ) = LoadProfile(repository, dataBase)
 
     @Provides
+    @Singleton
     fun provideProfileStore(loadProfile: LoadProfile) = ElmStoreCompat(
         initialState = State(),
         reducer = ProfileReducer(),
