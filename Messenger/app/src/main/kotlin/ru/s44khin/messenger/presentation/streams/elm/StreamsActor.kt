@@ -20,10 +20,6 @@ class StreamsActor(
             )
 
         is Command.LoadProfileDB -> loadProfile.fromDataBase()
-            .doOnSuccess {
-                MessengerApplication
-                    .instance.streamsComponent.streamStore.accept(Event.Ui.LoadProfileNetwork)
-            }
             .mapEvents(
                 { profile ->
                     if (profile == null)

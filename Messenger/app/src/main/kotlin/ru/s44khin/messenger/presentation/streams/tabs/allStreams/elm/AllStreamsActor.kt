@@ -11,10 +11,11 @@ import javax.inject.Inject
 
 class AllStreamsActor(
     private val loadAllStreams: LoadAllStreams,
-    val loadTopics: LoadTopics
+    private val loadTopics: LoadTopics
 ) : ActorCompat<Command, Event> {
 
     override fun execute(command: Command): Observable<Event> = when (command) {
+
         is Command.LoadStreamsNetwork -> loadAllStreams.fromNetwork()
             .flattenAsObservable { it.streams }
             .flatMap {
@@ -29,11 +30,8 @@ class AllStreamsActor(
                 { allStreams -> Event.Internal.StreamsLoadedNetwork(allStreams) },
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
+
         is Command.LoadStreamsDB -> loadAllStreams.fromDataBase()
-            .doOnSuccess {
-                MessengerApplication.
-                instance.allStreamsComponent.allStreamStore.accept(Event.Ui.LoadStreamsNetwork)
-            }
             .mapEvents(
                 { allStreams ->
                     if (allStreams.isEmpty())

@@ -15,6 +15,7 @@ class SubsStreamsActor(
 ) : ActorCompat<Command, Event> {
 
     override fun execute(command: Command): Observable<Event> = when (command) {
+
         is Command.LoadStreamsNetwork -> loadSubsStreams.fromNetwork()
             .flattenAsObservable { it.subscriptions }
             .flatMap {
@@ -28,8 +29,8 @@ class SubsStreamsActor(
                 { allStreams -> Event.Internal.StreamsLoadedNetwork(allStreams) },
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
+
         is Command.LoadStreamsDB -> loadSubsStreams.fromDataBase()
-            .doOnSuccess { MessengerApplication.instance.subsStreamsComponent.subsStreamsStore.accept(Event.Ui.LoadStreamsNetwork) }
             .mapEvents(
                 { subsStreams ->
                     if (subsStreams.isEmpty())

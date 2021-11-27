@@ -10,10 +10,10 @@ data class State(
 )
 
 sealed class Event {
+
     sealed class Ui : Event() {
         object LoadStreamsFirst : Ui()
         object LoadStreamsNetwork : Ui()
-        object LoadStreamsDB : Ui()
     }
 
     sealed class Internal : Event() {
@@ -25,10 +25,12 @@ sealed class Event {
 }
 
 sealed class Effect {
+
     data class StreamsLoadError(val error: Throwable) : Effect()
 }
 
 sealed class Command {
+
     object LoadStreamsNetwork : Command()
     object LoadStreamsDB : Command()
 }

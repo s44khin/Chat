@@ -12,7 +12,8 @@ class StreamsReducer : DslReducer<Event, State, Effect, Command>() {
         }
 
         is Event.Internal.ErrorLoadingDataBase -> {
-            state { copy() }
+            state { copy(isLoadingDB = false, isLoadingNetwork = true, error = null) }
+            commands { +Command.LoadProfileNetwork }
         }
 
         is Event.Internal.ProfileLoadedNetwork -> {
@@ -27,7 +28,15 @@ class StreamsReducer : DslReducer<Event, State, Effect, Command>() {
         }
 
         is Event.Internal.ProfileLoadedDB -> {
-            state { copy(profile = event.profile, isLoadingDB = false, error = null) }
+            state {
+                copy(
+                    profile = event.profile,
+                    isLoadingDB = false,
+                    isLoadingNetwork = true,
+                    error = null
+                )
+            }
+            commands { +Command.LoadProfileNetwork }
         }
 
         is Event.Ui.LoadProfileNetwork -> {

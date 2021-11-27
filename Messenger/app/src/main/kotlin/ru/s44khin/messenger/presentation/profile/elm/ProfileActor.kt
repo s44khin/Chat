@@ -20,9 +20,6 @@ class ProfileActor(
             )
 
         is Command.LoadProfileDB -> loadProfile.fromDataBase()
-            .doOnSuccess {
-                MessengerApplication.instance.profileComponent.profileStore.accept(Event.Ui.LoadProfileNetwork)
-            }
             .mapEvents(
                 { profile ->
                     if (profile == null)

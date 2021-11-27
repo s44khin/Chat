@@ -5,13 +5,17 @@ import vivid.money.elmslie.core.store.dsl_reducer.DslReducer
 class AllStreamsReducer : DslReducer<Event, State, Effect, Command>() {
 
     override fun Result.reduce(event: Event): Any = when (event) {
+
         is Event.Internal.ErrorLoadingNetwork -> {
             state { copy(error = event.error, isLoadingNetwork = false) }
             effects { Effect.StreamsLoadError(event.error) }
         }
+
         is Event.Internal.ErrorLoadingDB -> {
-            state { copy() }
+            state { copy(isLoadingDB = false, isLoadingNetwork = true, error = null) }
+            commands { +Command.LoadStreamsNetwork }
         }
+
         is Event.Internal.StreamsLoadedNetwork -> {
             state {
                 copy(
@@ -22,9 +26,19 @@ class AllStreamsReducer : DslReducer<Event, State, Effect, Command>() {
                 )
             }
         }
+
         is Event.Internal.StreamsLoadedDB -> {
-            state { copy(allStreams = event.streams, isLoadingDB = false, error = null) }
+            state {
+                copy(
+                    allStreams = event.streams,
+                    isLoadingDB = false,
+                    isLoadingNetwork = true,
+                    error = null
+                )
+            }
+            commands { +Command.LoadStreamsDB }
         }
+
         is Event.Ui.LoadStreamsFirst -> if (state.allStreams != null) {
             state {
                 copy(
@@ -34,15 +48,13 @@ class AllStreamsReducer : DslReducer<Event, State, Effect, Command>() {
                 )
             }
         } else {
+            state { copy(isLoadingNetwork = true, isLoadingDB = true) }
             commands { +Command.LoadStreamsDB }
         }
+
         is Event.Ui.LoadStreamsNetwork -> {
             state { copy(isLoadingNetwork = true, error = null) }
             commands { +Command.LoadStreamsNetwork }
-        }
-        is Event.Ui.LoadStreamsDB -> {
-            state { copy(isLoadingDB = true, error = null) }
-            commands { +Command.LoadStreamsDB }
         }
     }
 }

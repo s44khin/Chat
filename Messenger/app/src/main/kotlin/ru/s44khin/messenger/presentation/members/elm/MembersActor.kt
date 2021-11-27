@@ -20,9 +20,6 @@ class MembersActor(
             )
 
         is Command.LoadMembersDB -> loadMembers.fromDataBase()
-            .doAfterSuccess {
-                MessengerApplication.instance.memberComponent.membersStore.accept(Event.Ui.LoadMembersNetwork)
-            }
             .mapEvents(
                 { members ->
                     if (members.isEmpty())

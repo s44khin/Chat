@@ -14,7 +14,6 @@ sealed class Event {
     sealed class Ui : Event() {
         object LoadProfileFirst : Ui()
         object LoadProfileNetwork : Ui()
-        object LoadProfileDB : Ui()
     }
 
     sealed class Internal : Event() {

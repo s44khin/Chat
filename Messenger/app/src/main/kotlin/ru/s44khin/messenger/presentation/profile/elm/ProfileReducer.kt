@@ -12,7 +12,8 @@ class ProfileReducer : DslReducer<Event, State, Effect, Command>() {
         }
 
         is Event.Internal.ErrorLoadingDataBase -> {
-            state { copy() }
+            state { copy(isLoadingDB = false, isLoadingNetwork = true, error = null) }
+            commands { +Command.LoadProfileNetwork }
         }
 
         is Event.Internal.ProfileLoadedNetwork -> {
@@ -27,23 +28,27 @@ class ProfileReducer : DslReducer<Event, State, Effect, Command>() {
         }
 
         is Event.Internal.ProfileLoadedDB -> {
-            state { copy(profile = event.profile, isLoadingDB = false, error = null) }
+            state {
+                copy(
+                    profile = event.profile,
+                    isLoadingDB = false,
+                    isLoadingNetwork = true,
+                    error = null
+                )
+            }
+            commands { +Command.LoadProfileNetwork }
         }
 
         is Event.Ui.LoadProfileFirst -> if (state.profile != null) {
             state { copy(profile = state.profile, isLoadingNetwork = false, isLoadingDB = false) }
         } else {
+            state { copy(isLoadingDB = true, isLoadingNetwork = true) }
             commands { +Command.LoadProfileDB }
         }
 
         is Event.Ui.LoadProfileNetwork -> {
             state { copy(isLoadingNetwork = true, error = null) }
             commands { +Command.LoadProfileNetwork }
-        }
-
-        is Event.Ui.LoadProfileDB -> {
-            state { copy(isLoadingDB = true, error = null) }
-            commands { +Command.LoadProfileDB }
         }
     }
 }
