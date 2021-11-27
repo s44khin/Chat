@@ -2,15 +2,16 @@ package ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm
 
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import ru.s44khin.messenger.di.GlobalDI
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.domain.LoadAllStreams
 import ru.s44khin.messenger.domain.LoadTopics
 import ru.s44khin.messenger.utils.resultStreamFromStreamAndTopics
 import vivid.money.elmslie.core.ActorCompat
+import javax.inject.Inject
 
 class AllStreamsActor(
     private val loadAllStreams: LoadAllStreams,
-    private val loadTopics: LoadTopics
+    val loadTopics: LoadTopics
 ) : ActorCompat<Command, Event> {
 
     override fun execute(command: Command): Observable<Event> = when (command) {
@@ -29,7 +30,10 @@ class AllStreamsActor(
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
         is Command.LoadStreamsDB -> loadAllStreams.fromDataBase()
-            .doOnSuccess { GlobalDI.INSTANCE.allStreamsStore.accept(Event.Ui.LoadStreamsNetwork) }
+            .doOnSuccess {
+                MessengerApplication.
+                instance.allStreamsComponent.allStreamStore.accept(Event.Ui.LoadStreamsNetwork)
+            }
             .mapEvents(
                 { allStreams ->
                     if (allStreams.isEmpty())

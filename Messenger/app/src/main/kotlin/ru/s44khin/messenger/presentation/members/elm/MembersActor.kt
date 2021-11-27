@@ -1,9 +1,10 @@
 package ru.s44khin.messenger.presentation.members.elm
 
 import io.reactivex.Observable
-import ru.s44khin.messenger.di.GlobalDI
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.domain.LoadMembers
 import vivid.money.elmslie.core.ActorCompat
+import javax.inject.Inject
 
 class MembersActor(
     private val loadMembers: LoadMembers
@@ -20,7 +21,7 @@ class MembersActor(
 
         is Command.LoadMembersDB -> loadMembers.fromDataBase()
             .doAfterSuccess {
-                GlobalDI.INSTANCE.membersStore.accept(Event.Ui.LoadMembersNetwork)
+                MessengerApplication.instance.memberComponent.membersStore.accept(Event.Ui.LoadMembersNetwork)
             }
             .mapEvents(
                 { members ->

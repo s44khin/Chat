@@ -9,9 +9,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityChatBinding
-import ru.s44khin.messenger.di.GlobalDI
 import ru.s44khin.messenger.presentation.chat.adapter.ChatAdapter
 import ru.s44khin.messenger.presentation.chat.elm.*
 import ru.s44khin.messenger.presentation.chat.pagination.PaginationAdapterHelper
@@ -36,7 +36,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
 
     override fun createStore(): Store<Event, Effect, State> {
         val chatActor = ChatActor(
-            loadMessages = GlobalDI.INSTANCE.loadMessages,
+            loadMessages = MessengerApplication.instance.chatComponent.loadMessages,
             streamId = streamId,
             streamName = streamName,
             topicName = topicName

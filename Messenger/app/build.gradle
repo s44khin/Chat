@@ -97,4 +97,8 @@ dependencies {
     def adapterDelegates = "4.3.0"
     implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:$adapterDelegates"
     implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-layoutcontainer:$adapterDelegates"
+
+    def dagger = "2.40.2"
+    implementation "com.google.dagger:dagger:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
 }

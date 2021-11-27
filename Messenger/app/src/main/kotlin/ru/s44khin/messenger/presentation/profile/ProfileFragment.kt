@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.databinding.FragmentProfileBinding
-import ru.s44khin.messenger.di.GlobalDI
 import ru.s44khin.messenger.presentation.profile.elm.Effect
 import ru.s44khin.messenger.presentation.profile.elm.Event
 import ru.s44khin.messenger.presentation.profile.elm.State
@@ -20,7 +20,7 @@ class ProfileFragment : ElmFragment<Event, Effect, State>() {
     private val binding get() = _binding!!
     override val initEvent = Event.Ui.LoadProfileFirst
 
-    override fun createStore() = GlobalDI.INSTANCE.profileStore
+    override fun createStore() = MessengerApplication.instance.profileComponent.profileStore
 
     override fun onCreateView(
         inflater: LayoutInflater,

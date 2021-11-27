@@ -2,11 +2,12 @@ package ru.s44khin.messenger.presentation.streams.tabs.subsStreams.elm
 
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import ru.s44khin.messenger.di.GlobalDI
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.domain.LoadSubsStreams
 import ru.s44khin.messenger.domain.LoadTopics
 import ru.s44khin.messenger.utils.resultStreamFromStreamAndTopics
 import vivid.money.elmslie.core.ActorCompat
+import javax.inject.Inject
 
 class SubsStreamsActor(
     private val loadSubsStreams: LoadSubsStreams,
@@ -28,7 +29,7 @@ class SubsStreamsActor(
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
         is Command.LoadStreamsDB -> loadSubsStreams.fromDataBase()
-            .doOnSuccess { GlobalDI.INSTANCE.subsStreamsStore.accept(Event.Ui.LoadStreamsNetwork) }
+            .doOnSuccess { MessengerApplication.instance.subsStreamsComponent.subsStreamsStore.accept(Event.Ui.LoadStreamsNetwork) }
             .mapEvents(
                 { subsStreams ->
                     if (subsStreams.isEmpty())

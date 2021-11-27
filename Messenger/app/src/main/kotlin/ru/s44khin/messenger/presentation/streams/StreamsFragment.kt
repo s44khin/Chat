@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentStreamsBinding
-import ru.s44khin.messenger.di.GlobalDI
 import ru.s44khin.messenger.presentation.streams.adapters.PagerAdapter
 import ru.s44khin.messenger.presentation.streams.elm.Effect
 import ru.s44khin.messenger.presentation.streams.elm.Event
@@ -27,7 +27,7 @@ class StreamsFragment : ElmFragment<Event, Effect, State>() {
     private val binding get() = _binding!!
     override val initEvent = Event.Ui.LoadProfileDB
 
-    override fun createStore() = GlobalDI.INSTANCE.streamsStore
+    override fun createStore() = MessengerApplication.instance.streamsComponent.streamStore
 
     override fun onCreateView(
         inflater: LayoutInflater,

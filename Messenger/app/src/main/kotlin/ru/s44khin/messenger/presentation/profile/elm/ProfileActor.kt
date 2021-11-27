@@ -1,9 +1,10 @@
 package ru.s44khin.messenger.presentation.profile.elm
 
 import io.reactivex.Observable
-import ru.s44khin.messenger.di.GlobalDI
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.domain.LoadProfile
 import vivid.money.elmslie.core.ActorCompat
+import javax.inject.Inject
 
 class ProfileActor(
     private val loadProfile: LoadProfile
@@ -20,7 +21,7 @@ class ProfileActor(
 
         is Command.LoadProfileDB -> loadProfile.fromDataBase()
             .doOnSuccess {
-                GlobalDI.INSTANCE.profileStore.accept(Event.Ui.LoadProfileNetwork)
+                MessengerApplication.instance.profileComponent.profileStore.accept(Event.Ui.LoadProfileNetwork)
             }
             .mapEvents(
                 { profile ->

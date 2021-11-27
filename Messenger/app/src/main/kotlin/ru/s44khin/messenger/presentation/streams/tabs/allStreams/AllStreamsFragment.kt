@@ -12,9 +12,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.databinding.FragmentTabStreamsBinding
-import ru.s44khin.messenger.di.GlobalDI
 import ru.s44khin.messenger.presentation.streams.SearchStream
 import ru.s44khin.messenger.presentation.streams.adapters.StreamAdapter
 import ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.Effect
@@ -37,7 +37,7 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), SearchStream {
     private var stockStreams: List<ResultStream>? = null
     override val initEvent = Event.Ui.LoadStreamsFirst
 
-    override fun createStore() = GlobalDI.INSTANCE.allStreamsStore
+    override fun createStore() = MessengerApplication.instance.allStreamsComponent.allStreamStore
 
     override fun onCreateView(
         inflater: LayoutInflater,

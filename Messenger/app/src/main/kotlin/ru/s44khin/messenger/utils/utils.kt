@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.data.model.Stream
 import ru.s44khin.messenger.data.model.Topic
-import ru.s44khin.messenger.di.GlobalDI
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,16 +43,16 @@ fun showSnackbar(
     )
 
     snackbar.setAction("Update") {
-        GlobalDI.INSTANCE.subsStreamsStore.accept(
+        MessengerApplication.instance.subsStreamsComponent.subsStreamsStore.accept(
             ru.s44khin.messenger.presentation.streams.tabs.subsStreams.elm.Event.Ui.LoadStreamsNetwork
         )
-        GlobalDI.INSTANCE.allStreamsStore.accept(
+        MessengerApplication.instance.allStreamsComponent.allStreamStore.accept(
             ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.Event.Ui.LoadStreamsNetwork
         )
-        GlobalDI.INSTANCE.membersStore.accept(
+        MessengerApplication.instance.memberComponent.membersStore.accept(
             ru.s44khin.messenger.presentation.members.elm.Event.Ui.LoadMembersNetwork
         )
-        GlobalDI.INSTANCE.profileStore.accept(
+        MessengerApplication.instance.profileComponent.profileStore.accept(
             ru.s44khin.messenger.presentation.profile.elm.Event.Ui.LoadProfileNetwork
         )
     }

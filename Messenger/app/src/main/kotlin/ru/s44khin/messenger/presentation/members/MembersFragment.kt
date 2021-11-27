@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.databinding.FragmentMembersBinding
-import ru.s44khin.messenger.di.GlobalDI
 import ru.s44khin.messenger.presentation.members.adapter.MembersAdapter
 import ru.s44khin.messenger.presentation.members.elm.Effect
 import ru.s44khin.messenger.presentation.members.elm.Event
@@ -21,7 +21,7 @@ class MembersFragment : ElmFragment<Event, Effect, State>() {
     private val binding get() = _binding!!
     override val initEvent = Event.Ui.LoadMembersFirst
 
-    override fun createStore() = GlobalDI.INSTANCE.membersStore
+    override fun createStore() = MessengerApplication.instance.memberComponent.membersStore
 
     private val adapter = MembersAdapter()
 
