@@ -12,6 +12,7 @@ class EmojiBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "EmojiBottomSheet"
+        fun newInstance() = EmojiBottomSheet()
     }
 
     private var _binding: FragmentEmojiBottomSheetBinding? = null

@@ -52,9 +52,6 @@ fun showSnackbar(
         MessengerApplication.instance.memberComponent.membersStore.accept(
             ru.s44khin.messenger.presentation.members.elm.Event.Ui.LoadMembersNetwork
         )
-        MessengerApplication.instance.profileComponent.profileStore.accept(
-            ru.s44khin.messenger.presentation.profile.elm.Event.Ui.LoadProfileNetwork
-        )
     }
 
     val snackbarView = snackbar.view

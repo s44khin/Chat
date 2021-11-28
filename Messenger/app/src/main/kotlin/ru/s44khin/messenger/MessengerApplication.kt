@@ -28,7 +28,6 @@ class MessengerApplication : Application() {
     }
 
     lateinit var appComponent: AppComponent
-    lateinit var profileComponent: ProfileComponent
     lateinit var memberComponent: MembersComponent
     lateinit var allStreamsComponent: AllStreamsComponent
     lateinit var subsStreamsComponent: SubsStreamsComponent
@@ -39,7 +38,6 @@ class MessengerApplication : Application() {
         super.onCreate()
 
         appComponent = DaggerAppComponent.create()
-        profileComponent = DaggerProfileComponent.create()
         memberComponent = DaggerMembersComponent.create()
         allStreamsComponent = DaggerAllStreamsComponent.create()
         subsStreamsComponent = DaggerSubsStreamsComponent.create()

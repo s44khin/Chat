@@ -16,10 +16,4 @@
         android:name="ru.s44khin.messenger.presentation.members.MembersFragment"
         android:label="@string/people"
         tools:layout="@layout/fragment_members" />
-
-    <fragment
-        android:id="@+id/navProfile"
-        android:name="ru.s44khin.messenger.presentation.profile.ProfileFragment"
-        android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" />
 </navigation>
