@@ -4,18 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.setFragmentResultListener
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentStreamsBinding
 import ru.s44khin.messenger.presentation.streams.adapters.PagerAdapter
+import ru.s44khin.messenger.presentation.streams.createStreamFragment.CreateStreamFragment
 import ru.s44khin.messenger.presentation.streams.elm.Effect
 import ru.s44khin.messenger.presentation.streams.elm.Event
 import ru.s44khin.messenger.presentation.streams.elm.State
 import ru.s44khin.messenger.presentation.streams.tabs.allStreams.AllStreamsFragment
 import ru.s44khin.messenger.presentation.streams.tabs.subsStreams.SubsStreamsFragment
+import ru.s44khin.messenger.utils.showSnackbar
 import vivid.money.elmslie.android.base.ElmFragment
 
 class StreamsFragment : ElmFragment<Event, Effect, State>() {
@@ -42,6 +46,7 @@ class StreamsFragment : ElmFragment<Event, Effect, State>() {
         super.onViewCreated(view, savedInstanceState)
         initTabs()
         initSearch()
+        onCreateClick()
     }
 
     override fun render(state: State) {
@@ -72,8 +77,34 @@ class StreamsFragment : ElmFragment<Event, Effect, State>() {
         allStreamsFragment.search(text.toString())
     }
 
+    private fun onCreateClick() = binding.create.setOnClickListener {
+        CreateStreamFragment.newInstance().show(parentFragmentManager, CreateStreamFragment.TAG)
+
+        setFragmentResultListener(CreateStreamFragment.REQUEST_KEY) { _, bundle ->
+            val name = bundle.getString(CreateStreamFragment.RESULT_NAME)
+                ?: return@setFragmentResultListener
+            val description = bundle.getString(CreateStreamFragment.RESULT_DESCRIPTION)
+                ?: return@setFragmentResultListener
+
+            store.accept(Event.Ui.CreateStream(name, description))
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun handleEffect(effect: Effect) {
+        if (effect is Effect.StreamCreated) {
+            allStreamsFragment.update()
+            subsStreamsFragment.update()
+        }
+
+        if (effect is Effect.CreateStreamError) {
+            Toast.makeText(requireContext(), effect.error.message, Toast.LENGTH_LONG).show()
+        }
+
+        Toast.makeText(requireContext(), "ASD", Toast.LENGTH_LONG).show()
     }
 }

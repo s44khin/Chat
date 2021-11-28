@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.databinding.FragmentTabStreamsBinding
-import ru.s44khin.messenger.presentation.streams.SearchStream
+import ru.s44khin.messenger.presentation.streams.ChildStreamsFragments
 import ru.s44khin.messenger.presentation.streams.adapters.StreamAdapter
 import ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.Effect
 import ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.Event
@@ -23,7 +23,7 @@ import ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.State
 import ru.s44khin.messenger.utils.showSnackbar
 import vivid.money.elmslie.android.base.ElmFragment
 
-class AllStreamsFragment : ElmFragment<Event, Effect, State>(), SearchStream {
+class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildStreamsFragments {
 
     companion object {
         const val TAG = "AllStreamsFragment"
@@ -80,6 +80,10 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), SearchStream {
                 )
                 .addTo(disposeBag)
         }
+    }
+
+    override fun update() {
+        store.accept(Event.Ui.LoadStreamsNetwork)
     }
 
     override fun onDestroyView() {

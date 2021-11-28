@@ -13,6 +13,9 @@ class ZulipRepository(
 
     fun getTopics(streamId: Int): Single<BaseTopics> = service.getTopics(streamId)
 
+    fun createStream(name: String, description: String) : Single<Result> =
+        service.createStream("[{\"description\": \"$description\", \"name\": \"$name\"}]")
+
     fun getMembers(): Single<BaseMembers> = service.getMembers()
 
     fun getSelfProfile(): Single<Profile> = service.getSelfProfile()

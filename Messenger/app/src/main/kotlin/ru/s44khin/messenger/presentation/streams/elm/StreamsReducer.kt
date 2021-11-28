@@ -16,6 +16,11 @@ class StreamsReducer : DslReducer<Event, State, Effect, Command>() {
             commands { +Command.LoadProfileNetwork }
         }
 
+        is Event.Internal.ErrorCreateStream -> {
+            state { copy() }
+            effects { Effect.CreateStreamError(event.error) }
+        }
+
         is Event.Internal.ProfileLoadedNetwork -> {
             state {
                 copy(
@@ -39,6 +44,10 @@ class StreamsReducer : DslReducer<Event, State, Effect, Command>() {
             commands { +Command.LoadProfileNetwork }
         }
 
+        is Event.Internal.StreamCreated -> {
+            effects { Effect.StreamCreated }
+        }
+
         is Event.Ui.LoadProfileNetwork -> {
             state { copy(isLoadingNetwork = true, error = null) }
             commands { +Command.LoadProfileNetwork }
@@ -47,6 +56,10 @@ class StreamsReducer : DslReducer<Event, State, Effect, Command>() {
         is Event.Ui.LoadProfileDB -> {
             state { copy(isLoadingDB = true, error = null) }
             commands { +Command.LoadProfileDB }
+        }
+
+        is Event.Ui.CreateStream -> {
+            commands { +Command.CreateStream(event.name, event.description) }
         }
     }
 }

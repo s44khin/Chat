@@ -1,6 +1,8 @@
 package ru.s44khin.messenger.presentation.streams
 
-interface SearchStream {
+interface ChildStreamsFragments {
 
     fun search(text: String)
+
+    fun update()
 }

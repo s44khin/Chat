@@ -19,6 +19,12 @@ class StreamsActor(
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
 
+        is Command.CreateStream -> loadProfile.createStream(command.name, command.description)
+            .mapEvents(
+                { Event.Internal.StreamCreated },
+                { error -> Event.Internal.ErrorCreateStream(error) }
+            )
+
         is Command.LoadProfileDB -> loadProfile.fromDataBase()
             .mapEvents(
                 { profile ->
