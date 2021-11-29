@@ -6,7 +6,7 @@ data class State(
     val subsStreams: List<ResultStream>? = null,
     val error: Throwable? = null,
     val isLoadingNetwork: Boolean = false,
-    val isLoadingDB: Boolean = true
+    val isLoadingDB: Boolean = false
 )
 
 sealed class Event {

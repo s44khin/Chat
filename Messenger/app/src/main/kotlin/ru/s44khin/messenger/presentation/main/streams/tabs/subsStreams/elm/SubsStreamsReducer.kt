@@ -7,12 +7,12 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
     override fun Result.reduce(event: Event): Any = when (event) {
 
         is Event.Internal.ErrorLoadingNetwork -> {
-            state { copy(error = event.error, isLoadingNetwork = false) }
+            state { copy(error = event.error, isLoadingNetwork = false, isLoadingDB = false) }
             effects { Effect.StreamsLoadError(event.error) }
         }
 
         is Event.Internal.ErrorLoadingDB -> {
-            state { copy(isLoadingDB = false, isLoadingNetwork = true, error = null) }
+            state { copy(isLoadingDB = true, isLoadingNetwork = true, error = null) }
             commands { +Command.LoadStreamsNetwork }
         }
 
