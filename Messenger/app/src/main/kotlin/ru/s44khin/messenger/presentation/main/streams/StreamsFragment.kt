@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.tabs.TabLayoutMediator
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentStreamsBinding
-import ru.s44khin.messenger.presentation.main.Search
+import ru.s44khin.messenger.presentation.main.ChildFragments
 import ru.s44khin.messenger.presentation.main.streams.adapters.PagerAdapter
+import ru.s44khin.messenger.presentation.main.streams.createStreamFragment.CreateStreamFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.allStreams.AllStreamsFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.SubsStreamsFragment
 
-class StreamsFragment : Fragment(), Search {
+class StreamsFragment : Fragment(), ChildFragments {
 
     companion object {
         const val TAG = "STREAMS_FRAGMENT"
@@ -38,7 +40,6 @@ class StreamsFragment : Fragment(), Search {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initTabs()
-//        onCreateClick()
     }
 
     private fun initTabs() {
@@ -60,18 +61,10 @@ class StreamsFragment : Fragment(), Search {
         allStreamsFragment.search(text)
     }
 
-//    private fun onCreateClick() = binding.create.setOnClickListener {
-//        CreateStreamFragment.newInstance().show(parentFragmentManager, CreateStreamFragment.TAG)
-//
-//        setFragmentResultListener(CreateStreamFragment.REQUEST_KEY) { _, bundle ->
-//            val name = bundle.getString(CreateStreamFragment.RESULT_NAME)
-//                ?: return@setFragmentResultListener
-//            val description = bundle.getString(CreateStreamFragment.RESULT_DESCRIPTION)
-//                ?: return@setFragmentResultListener
-//
-//            store.accept(Event.Ui.CreateStream(name, description))
-//        }
-//    }
+    override fun update() {
+        allStreamsFragment.update()
+        subsStreamsFragment.update()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

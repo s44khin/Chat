@@ -1,11 +1,9 @@
 package ru.s44khin.messenger.presentation.main.members
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Observable
@@ -17,16 +15,15 @@ import io.reactivex.schedulers.Schedulers
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.data.model.Profile
 import ru.s44khin.messenger.databinding.FragmentMembersBinding
-import ru.s44khin.messenger.presentation.main.Search
+import ru.s44khin.messenger.presentation.main.ChildFragments
 import ru.s44khin.messenger.presentation.main.members.adapter.MembersAdapter
 import ru.s44khin.messenger.presentation.main.members.elm.Effect
 import ru.s44khin.messenger.presentation.main.members.elm.Event
 import ru.s44khin.messenger.presentation.main.members.elm.State
-import ru.s44khin.messenger.presentation.main.streams.StreamsFragment
 import ru.s44khin.messenger.utils.showSnackbar
 import vivid.money.elmslie.android.base.ElmFragment
 
-class MembersFragment : ElmFragment<Event, Effect, State>(), Search {
+class MembersFragment : ElmFragment<Event, Effect, State>(), ChildFragments {
 
     companion object {
         const val TAG = "MEMBERS_FRAGMENT"
@@ -83,6 +80,10 @@ class MembersFragment : ElmFragment<Event, Effect, State>(), Search {
             )
             .addTo(disposeBag)
 
+    }
+
+    override fun update() {
+        store.accept(Event.Ui.LoadMembersNetwork)
     }
 
     override fun onDestroyView() {
