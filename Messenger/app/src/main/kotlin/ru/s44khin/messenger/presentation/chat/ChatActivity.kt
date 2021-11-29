@@ -21,9 +21,9 @@ import vivid.money.elmslie.core.store.Store
 class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
 
     companion object {
-        const val STREAM_ID = "streamId"
-        const val STREAM_NAME = "streamName"
-        const val TOPIC_NAME = "topicName"
+        const val STREAM_ID = "STREAM_ID"
+        const val STREAM_NAME = "STREAM_NAME"
+        const val TOPIC_NAME = "TOPIC_NAME"
 
         fun createIntent(context: Context, streamId: Int, streamName: String, topicName: String) =
             Intent(context, ChatActivity::class.java)

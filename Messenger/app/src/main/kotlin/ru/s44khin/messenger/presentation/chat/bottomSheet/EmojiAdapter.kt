@@ -19,8 +19,8 @@ class EmojiAdapter(
     private val emojis = MessengerApplication.instance.emojiList
 
     companion object {
-        const val REQUEST_KEY = "RequestEmoji"
-        const val RESULT_KEY = "ResultEmoji"
+        const val REQUEST_KEY = "REQUEST_EMOJI"
+        const val RESULT_KEY = "RESULT_EMOJI"
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

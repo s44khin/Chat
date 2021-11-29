@@ -12,14 +12,20 @@ data class State(
 sealed class Event {
 
     sealed class Ui : Event() {
+
         object LoadMembersFirst : Ui()
+
         object LoadMembersNetwork : Ui()
     }
 
     sealed class Internal : Event() {
+
         data class MembersLoadedNetwork(val members: List<Profile>) : Internal()
+
         data class MembersLoadedDB(val members: List<Profile>) : Internal()
+
         data class ErrorLoadingNetwork(val error: Throwable) : Internal()
+
         data class ErrorLoadingDataBase(val error: Throwable?) : Internal()
     }
 }
@@ -32,5 +38,6 @@ sealed class Effect {
 sealed class Command {
 
     object LoadMembersNetwork : Command()
+
     object LoadMembersDB : Command()
 }

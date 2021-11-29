@@ -15,9 +15,13 @@ sealed class Event {
     }
 
     sealed class Internal : Event() {
+
         data class ProfileLoadedDatabase(val profile: Profile) : Internal()
+
         data class ProfileLoadedNetwork(val profile: Profile) : Internal()
+
         data class ErrorLoadingDatabase(val error: Throwable?) : Internal()
+
         data class ErrorLoadingNetwork(val error: Throwable?) : Internal()
     }
 }
@@ -27,5 +31,6 @@ sealed class Effect
 sealed class Command {
 
     object LoadProfileDatabase : Command()
+
     object LoadProfileNetwork : Command()
 }

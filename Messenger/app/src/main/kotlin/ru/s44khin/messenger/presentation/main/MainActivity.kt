@@ -1,7 +1,6 @@
 package ru.s44khin.messenger.presentation.main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.view.WindowCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment

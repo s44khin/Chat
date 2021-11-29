@@ -28,7 +28,7 @@ class Mediator(
         })
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
-            viewPager2.currentItem = map[menuItem]!!
+            viewPager2.currentItem = map[menuItem] ?: error("Error")
             true
         }
     }

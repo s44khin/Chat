@@ -1,5 +1,6 @@
 package ru.s44khin.messenger.presentation.main.members.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import ru.s44khin.messenger.data.model.Profile
 class MembersAdapter : RecyclerView.Adapter<MembersAdapter.ViewHolder>() {
 
     var members: List<Profile> = emptyList()
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()

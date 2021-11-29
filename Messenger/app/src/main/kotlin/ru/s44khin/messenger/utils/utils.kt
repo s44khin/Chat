@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.data.model.Stream

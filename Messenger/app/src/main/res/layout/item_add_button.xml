@@ -17,7 +17,7 @@
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
-        android:text="+"
+        android:text="@string/plus"
         android:textColor="@color/textColor"
         android:textSize="18sp" />
 </androidx.cardview.widget.CardView>

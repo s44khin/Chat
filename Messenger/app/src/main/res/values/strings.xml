@@ -14,4 +14,9 @@
     <string name="description">Description</string>
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
+    <string name="back">back</string>
+    <string name="emojis">emojis</string>
+    <string name="send">send</string>
+    <string name="avatar">avatar</string>
+    <string name="plus">+</string>
 </resources>

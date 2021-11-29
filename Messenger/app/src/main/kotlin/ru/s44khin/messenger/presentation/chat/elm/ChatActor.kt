@@ -9,7 +9,6 @@ import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.utils.MY_ID
 import ru.s44khin.messenger.utils.parse
 import vivid.money.elmslie.core.ActorCompat
-import javax.inject.Inject
 
 class ChatActor(
     private val loadMessages: LoadMessages,

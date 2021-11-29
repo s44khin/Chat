@@ -26,7 +26,7 @@ import vivid.money.elmslie.android.base.ElmFragment
 class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments {
 
     companion object {
-        const val TAG = "AllStreamsFragment"
+        const val TAG = "ALL_STREAMS_FRAGMENT"
         fun newInstance() = AllStreamsFragment()
     }
 

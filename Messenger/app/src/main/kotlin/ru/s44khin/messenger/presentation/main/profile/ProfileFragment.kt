@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import ru.s44khin.messenger.R
@@ -20,6 +19,7 @@ class ProfileFragment(
 
     companion object {
         const val TAG = "PROFILE_FRAGMENT"
+
         fun newInstance(
             avatar: String,
             name: String,

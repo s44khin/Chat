@@ -1,5 +1,6 @@
 package ru.s44khin.messenger.presentation.main.streams.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import ru.s44khin.messenger.data.model.ResultStream
 class StreamAdapter : RecyclerView.Adapter<StreamAdapter.ViewHolder>() {
 
     var streams: List<ResultStream> = emptyList()
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
