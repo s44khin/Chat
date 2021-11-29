@@ -18,6 +18,12 @@ data class ResultStream(
     @ColumnInfo(name = "name")
     val name: String,
 
+    @ColumnInfo(name = "color")
+    val color: String?,
+
+    @ColumnInfo(name = "date")
+    val date: Int?,
+
     @ColumnInfo(name = "topics")
     @TypeConverters(TopicConverter::class)
     val topics: List<Topic>

@@ -19,12 +19,17 @@ const val MY_NAME = "Анохин Александр"
 @SuppressLint("SimpleDateFormat")
 fun parse(time: Int): String = SimpleDateFormat("d MMM").format(Date(time * 1000L))
 
+@SuppressLint("SimpleDateFormat")
+fun parse2(time: Int): String = SimpleDateFormat("dd.MM.yyyy").format(Date(time * 1000L))
+
 fun hexToEmoji(string: String) = String(Character.toChars(string.toInt(16)))
 
 fun resultStreamFromStreamAndTopics(stream: Stream, topics: List<Topic>) = ResultStream(
     streamId = stream.streamId,
     description = stream.description,
     name = stream.name,
+    color = stream.color,
+    date = stream.date,
     topics = topics
 )
 
