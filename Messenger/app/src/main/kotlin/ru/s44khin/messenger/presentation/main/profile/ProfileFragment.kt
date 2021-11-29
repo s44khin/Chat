@@ -59,6 +59,10 @@ class ProfileFragment(
 
         binding.name.text = name
         binding.email.text = email
+
+        binding.close.setOnClickListener {
+            dismiss()
+        }
     }
 
     override fun onDestroyView() {

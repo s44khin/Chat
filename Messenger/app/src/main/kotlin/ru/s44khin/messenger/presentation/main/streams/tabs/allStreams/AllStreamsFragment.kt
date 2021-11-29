@@ -78,7 +78,6 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments {
                 onError = { }
             )
             .addTo(disposeBag)
-
     }
 
     override fun update() {

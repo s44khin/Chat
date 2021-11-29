@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@id/line">
 
         <include layout="@layout/shimmer_people" />
@@ -42,6 +43,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@id/line" />
 </androidx.constraintlayout.widget.ConstraintLayout>

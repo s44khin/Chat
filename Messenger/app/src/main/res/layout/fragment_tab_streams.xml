@@ -6,7 +6,8 @@
 
     <include
         android:id="@+id/shimmer"
-        layout="@layout/shimmer_streams" />
+        layout="@layout/shimmer_streams"
+        android:visibility="invisible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -21,5 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"
+        android:visibility="invisible"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
