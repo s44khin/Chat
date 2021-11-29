@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fragment_dialog_background"
-    android:padding="@dimen/defaultPadding">
+    android:padding="32dp">
 
     <ImageView
         android:id="@+id/avatar"

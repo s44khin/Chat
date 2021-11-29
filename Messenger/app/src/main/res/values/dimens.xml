@@ -5,6 +5,6 @@
     <dimen name="defaultPadding">16dp</dimen>
     <dimen name="defaultTextSize">16sp</dimen>
     <dimen name="cornerRadius">20dp</dimen>
-    <dimen name="dialogWidth">350dp</dimen>
-    <dimen name="dialogHeight">240dp</dimen>
+    <dimen name="dialogWidth">380dp</dimen>
+    <dimen name="dialogHeight">400dp</dimen>
 </resources>

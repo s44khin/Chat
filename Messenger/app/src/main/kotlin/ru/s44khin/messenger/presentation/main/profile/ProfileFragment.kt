@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
+import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentProfileBinding
 
 class ProfileFragment(
@@ -37,8 +38,7 @@ class ProfileFragment(
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         if (dialog != null && dialog!!.window != null) {
-            dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
-            dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE);
+            dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
 
         return binding.root
@@ -46,6 +46,11 @@ class ProfileFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val width = resources.getDimension(R.dimen.dialogWidth).toInt()
+        val height = resources.getDimension(R.dimen.dialogHeight).toInt()
+
+        dialog!!.window!!.setLayout(width, height)
 
         Glide.with(binding.avatar)
             .load(avatar)
