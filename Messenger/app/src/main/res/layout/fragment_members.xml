@@ -4,46 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/people" />
-
     <View
-        android:id="@+id/view"
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="10dp"
         android:background="@color/tabBottom"
-        app:layout_constraintTop_toBottomOf="@id/toolBar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/shimmer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/view">
+        app:layout_constraintTop_toBottomOf="@id/line">
 
-        <include
-            layout="@layout/shimmer_people"
-            app:layout_constraintTop_toBottomOf="@id/toolBar" />
+        <include layout="@layout/shimmer_people" />
 
-        <include
-            layout="@layout/shimmer_people"
-            app:layout_constraintTop_toBottomOf="@id/toolBar" />
+        <include layout="@layout/shimmer_people" />
 
-        <include
-            layout="@layout/shimmer_people"
-            app:layout_constraintTop_toBottomOf="@id/toolBar" />
+        <include layout="@layout/shimmer_people" />
 
-        <include
-            layout="@layout/shimmer_people"
-            app:layout_constraintTop_toBottomOf="@id/toolBar" />
+        <include layout="@layout/shimmer_people" />
 
-        <include
-            layout="@layout/shimmer_people"
-            app:layout_constraintTop_toBottomOf="@id/toolBar" />
+        <include layout="@layout/shimmer_people" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -51,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view" />
+        app:layout_constraintTop_toBottomOf="@id/line" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/progressIndicator"
@@ -59,5 +43,5 @@
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/toolBar" />
+        app:layout_constraintTop_toBottomOf="@id/line" />
 </androidx.constraintlayout.widget.ConstraintLayout>

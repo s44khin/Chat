@@ -43,15 +43,7 @@ fun showSnackbar(
     )
 
     snackbar.setAction("Update") {
-        MessengerApplication.instance.subsStreamsComponent.subsStreamsStore.accept(
-            ru.s44khin.messenger.presentation.streams.tabs.subsStreams.elm.Event.Ui.LoadStreamsNetwork
-        )
-        MessengerApplication.instance.allStreamsComponent.allStreamStore.accept(
-            ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.Event.Ui.LoadStreamsNetwork
-        )
-        MessengerApplication.instance.memberComponent.membersStore.accept(
-            ru.s44khin.messenger.presentation.members.elm.Event.Ui.LoadMembersNetwork
-        )
+
     }
 
     val snackbarView = snackbar.view

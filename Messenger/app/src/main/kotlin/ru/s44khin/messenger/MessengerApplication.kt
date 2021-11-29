@@ -28,20 +28,20 @@ class MessengerApplication : Application() {
     }
 
     lateinit var appComponent: AppComponent
-    lateinit var memberComponent: MembersComponent
+    lateinit var mainComponent: MainComponent
     lateinit var allStreamsComponent: AllStreamsComponent
     lateinit var subsStreamsComponent: SubsStreamsComponent
-    lateinit var streamsComponent: StreamsComponent
+    lateinit var membersComponent: MembersComponent
     lateinit var chatComponent: ChatComponent
 
     override fun onCreate() {
         super.onCreate()
 
         appComponent = DaggerAppComponent.create()
-        memberComponent = DaggerMembersComponent.create()
+        mainComponent = DaggerMainComponent.create()
         allStreamsComponent = DaggerAllStreamsComponent.create()
         subsStreamsComponent = DaggerSubsStreamsComponent.create()
-        streamsComponent = DaggerStreamsComponent.create()
+        membersComponent = DaggerMembersComponent.create()
         chatComponent = DaggerChatComponent.create()
 
         instance = this

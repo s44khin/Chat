@@ -1,13 +1,12 @@
 package ru.s44khin.messenger.domain
 
-import ru.s44khin.messenger.data.dataBase.MessengerDataBase
+import ru.s44khin.messenger.data.dataBase.MessengerDatabase
 import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.data.network.ZulipRepository
-import javax.inject.Inject
 
 class LoadAllStreams(
     private val repository: ZulipRepository,
-    private val dataBase: MessengerDataBase
+    private val dataBase: MessengerDatabase
 ) {
 
     fun fromNetwork() = repository.getAllStreams()
