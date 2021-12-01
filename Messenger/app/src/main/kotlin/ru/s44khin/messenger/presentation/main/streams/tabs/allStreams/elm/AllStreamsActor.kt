@@ -2,6 +2,7 @@ package ru.s44khin.messenger.presentation.main.streams.tabs.allStreams.elm
 
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.domain.LoadAllStreams
 import ru.s44khin.messenger.domain.LoadTopics
 import ru.s44khin.messenger.utils.resultStreamFromStreamAndTopics
@@ -44,6 +45,11 @@ class AllStreamsActor(
             command.streamName,
             command.description
         )
+            .doAfterSuccess {
+                MessengerApplication.instance.subsStreamsComponent.subsStreamsStore.accept(
+                    ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.elm.Event.Ui.LoadStreamsNetwork
+                )
+            }
             .mapEvents(
                 { result ->
                     if (result.result == "success")

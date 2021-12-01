@@ -22,4 +22,6 @@
     <string name="plus">+</string>
     <string name="close">close</string>
     <string name="tag">#</string>
+    <string name="subscribe">Подписаться</string>
+    <string name="unsubscribe">Отписаться</string>
 </resources>

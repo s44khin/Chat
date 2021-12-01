@@ -66,7 +66,9 @@ class MembersFragment : ElmFragment<Event, Effect, State>(), ChildFragments {
         }
 
         if (state.error != null)
-            showSnackbar(requireContext(), binding.root, binding.progressIndicator)
+            showSnackbar(requireContext(), binding.root, binding.progressIndicator) {
+                update()
+            }
     }
 
     override fun search(text: String) {

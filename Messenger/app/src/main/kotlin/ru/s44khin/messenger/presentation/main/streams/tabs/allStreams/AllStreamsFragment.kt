@@ -66,7 +66,9 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, 
         }
 
         if (state.error != null)
-            showSnackbar(requireContext(), binding.root, binding.progressIndicator)
+            showSnackbar(requireContext(), binding.root, binding.progressIndicator) {
+                update()
+            }
     }
 
     override fun search(text: String) {
@@ -90,7 +92,7 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, 
     }
 
     override fun subscribe(streamName: String, description: String) {
-        MessengerApplication.instance.subsStreamsComponent.subsStreamsStore.accept(ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.elm.Event.Ui.LoadStreamsNetwork)
+        store.accept(Event.Ui.SubscribeToStream(streamName, description))
     }
 
     override fun onDestroyView() {

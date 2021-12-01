@@ -36,7 +36,8 @@ fun resultStreamFromStreamAndTopics(stream: Stream, topics: List<Topic>) = Resul
 fun showSnackbar(
     context: Context,
     view: View,
-    indicator: View?
+    indicator: View?,
+    onUpdate: () -> Unit
 ) {
     indicator?.visibility = View.GONE
 
@@ -47,7 +48,7 @@ fun showSnackbar(
     )
 
     snackbar.setAction("Update") {
-
+        onUpdate()
     }
 
     val snackbarView = snackbar.view
