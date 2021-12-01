@@ -1,13 +1,10 @@
 package ru.s44khin.messenger.presentation.main.streams.adapters
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.Topic
 import ru.s44khin.messenger.presentation.chat.ChatActivity

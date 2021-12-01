@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/tabBottom"
     android:layout_marginTop="8dp"
+    app:cardBackgroundColor="@color/tabBottom"
     app:cardCornerRadius="8dp"
     app:cardElevation="0dp">
 
@@ -19,8 +19,8 @@
             android:id="@+id/topicName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:textColor="@color/textColor"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Testing" />

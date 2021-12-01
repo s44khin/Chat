@@ -17,7 +17,7 @@ interface ZulipService {
 
     @POST("/api/v1/users/me/subscriptions")
     fun subscribeToStream(
-        @Query ("subscriptions") array: String
+        @Query("subscriptions") array: String
     ): Single<Result>
 
     @DELETE("/api/v1/users/me/subscriptions")
