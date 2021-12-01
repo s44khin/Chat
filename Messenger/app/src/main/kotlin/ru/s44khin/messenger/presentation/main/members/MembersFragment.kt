@@ -20,10 +20,11 @@ import ru.s44khin.messenger.presentation.main.members.adapter.MembersAdapter
 import ru.s44khin.messenger.presentation.main.members.elm.Effect
 import ru.s44khin.messenger.presentation.main.members.elm.Event
 import ru.s44khin.messenger.presentation.main.members.elm.State
+import ru.s44khin.messenger.presentation.main.profile.ProfileFragment
 import ru.s44khin.messenger.utils.showSnackbar
 import vivid.money.elmslie.android.base.ElmFragment
 
-class MembersFragment : ElmFragment<Event, Effect, State>(), ChildFragments {
+class MembersFragment : ElmFragment<Event, Effect, State>(), ChildFragments, OnClick {
 
     companion object {
         const val TAG = "MEMBERS_FRAGMENT"
@@ -34,7 +35,7 @@ class MembersFragment : ElmFragment<Event, Effect, State>(), ChildFragments {
     private val binding get() = _binding!!
     private val disposeBag = CompositeDisposable()
     override val initEvent = Event.Ui.LoadMembersFirst
-    private val adapter = MembersAdapter()
+    private val adapter = MembersAdapter(this)
     private var stockMembers: List<Profile>? = null
 
     override fun createStore() = MessengerApplication.instance.membersComponent.membersStore
@@ -86,6 +87,11 @@ class MembersFragment : ElmFragment<Event, Effect, State>(), ChildFragments {
 
     override fun update() {
         store.accept(Event.Ui.LoadMembersNetwork)
+    }
+
+    override fun onClick(avatar: String, name: String, email: String) {
+        ProfileFragment.newInstance(avatar, name, email)
+            .show(parentFragmentManager, ProfileFragment.TAG)
     }
 
     override fun onDestroyView() {

@@ -11,8 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.Profile
+import ru.s44khin.messenger.presentation.main.members.OnClick
 
-class MembersAdapter : RecyclerView.Adapter<MembersAdapter.ViewHolder>() {
+class MembersAdapter(
+    private val onClick: OnClick
+) : RecyclerView.Adapter<MembersAdapter.ViewHolder>() {
 
     var members: List<Profile> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
@@ -46,7 +49,7 @@ class MembersAdapter : RecyclerView.Adapter<MembersAdapter.ViewHolder>() {
                 .into(avatar)
 
             itemView.setOnClickListener {
-                Toast.makeText(it.context, "Click to ${profile.name}", Toast.LENGTH_SHORT).show()
+                onClick.onClick(profile.avatar, profile.name, profile.email)
             }
         }
     }
