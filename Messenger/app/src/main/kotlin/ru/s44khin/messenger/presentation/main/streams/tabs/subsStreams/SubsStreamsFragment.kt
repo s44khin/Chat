@@ -17,13 +17,14 @@ import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.databinding.FragmentTabStreamsBinding
 import ru.s44khin.messenger.presentation.main.ChildFragments
 import ru.s44khin.messenger.presentation.main.streams.adapters.StreamAdapter
+import ru.s44khin.messenger.presentation.main.streams.tabs.PopupMenuHandler
 import ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.elm.Effect
 import ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.elm.Event
 import ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.elm.State
 import ru.s44khin.messenger.utils.showSnackbar
 import vivid.money.elmslie.android.base.ElmFragment
 
-class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments {
+class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, PopupMenuHandler {
 
     companion object {
         const val TAG = "SUBS_STREAMS_FRAGMENT"
@@ -33,7 +34,7 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments 
     private var _binding: FragmentTabStreamsBinding? = null
     private val binding get() = _binding!!
     private val disposeBag = CompositeDisposable()
-    private val adapter = StreamAdapter()
+    private val adapter = StreamAdapter(this)
     private var stockStreams: List<ResultStream>? = null
     override val initEvent = Event.Ui.LoadStreamsFirst
 
@@ -82,6 +83,14 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments 
 
     override fun update() {
         store.accept(Event.Ui.LoadStreamsNetwork)
+    }
+
+    override fun unsubscribe(streamName: String) {
+
+    }
+
+    override fun subscribe(streamName: String, description: String) {
+
     }
 
     override fun onDestroyView() {

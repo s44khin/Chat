@@ -5,15 +5,21 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.annotation.MenuRes
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.ResultStream
+import ru.s44khin.messenger.presentation.main.streams.tabs.PopupMenuHandler
 import ru.s44khin.messenger.utils.parse2
 
-class StreamAdapter : RecyclerView.Adapter<StreamAdapter.ViewHolder>() {
+class StreamAdapter(
+    private val popupMenuHandler: PopupMenuHandler
+) : RecyclerView.Adapter<StreamAdapter.ViewHolder>() {
 
     var streams: List<ResultStream> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
@@ -26,6 +32,7 @@ class StreamAdapter : RecyclerView.Adapter<StreamAdapter.ViewHolder>() {
         val date: TextView = itemView.findViewById(R.id.streamDate)
         val name: TextView = itemView.findViewById(R.id.streamName)
         val tag: TextView = itemView.findViewById(R.id.streamTag)
+        val more: ImageView = itemView.findViewById(R.id.streamMoreButton)
         val description: TextView = itemView.findViewById(R.id.streamDescription)
         val line: View = itemView.findViewById(R.id.streamLine)
         val topics: RecyclerView = itemView.findViewById(R.id.streamRecyclerView)
@@ -59,6 +66,23 @@ class StreamAdapter : RecyclerView.Adapter<StreamAdapter.ViewHolder>() {
             if (stream.color != null) {
                 name.setTextColor(Color.parseColor(stream.color))
                 tag.setTextColor(Color.parseColor(stream.color))
+                more.setOnClickListener { view ->
+                    showMenu(
+                        view = view,
+                        menuRes = R.menu.unsubscribe_menu,
+                        streamName = stream.name,
+                        description = stream.description
+                    )
+                }
+            } else {
+                more.setOnClickListener { view ->
+                    showMenu(
+                        view = view,
+                        menuRes = R.menu.subscribe_menu,
+                        streamName = stream.name,
+                        description = stream.description
+                    )
+                }
             }
 
             if (description.text == "")
@@ -77,6 +101,34 @@ class StreamAdapter : RecyclerView.Adapter<StreamAdapter.ViewHolder>() {
                 topics.isVisible = true
             }
         }
+    }
+
+    private fun showMenu(
+        view: View,
+        @MenuRes menuRes: Int,
+        streamName: String,
+        description: String
+    ) {
+        val popup = PopupMenu(view.context, view)
+        popup.menuInflater.inflate(menuRes, popup.menu)
+
+        popup.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.subscribe -> {
+                    popupMenuHandler.subscribe(streamName, description)
+                    true
+                }
+                R.id.unsubscribe -> {
+                    popupMenuHandler.unsubscribe(streamName)
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
+
+        popup.show()
     }
 
     override fun getItemCount() = streams.size

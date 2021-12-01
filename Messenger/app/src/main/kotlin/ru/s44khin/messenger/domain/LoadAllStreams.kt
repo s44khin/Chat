@@ -14,4 +14,7 @@ class LoadAllStreams(
     fun fromDataBase() = dataBase.streamsDao().getAll()
 
     fun saveToDataBase(streams: List<ResultStream>) = dataBase.streamsDao().insertAll(streams)
+
+    fun subscribeToStream(streamName: String, description: String) =
+        repository.subscribeToStream(streamName, description)
 }

@@ -16,7 +16,9 @@ interface ZulipService {
     fun getTopics(@Path("stream_id") streamId: Int): Single<BaseTopics>
 
     @POST("/api/v1/users/me/subscriptions")
-    fun createStream(@Query("subscriptions") subscriptions: String): Single<Result>
+    fun subscribeToStream(
+        @Query ("subscriptions") array: String
+    ): Single<Result>
 
     @GET("/api/v1/users")
     fun getMembers(): Single<BaseMembers>

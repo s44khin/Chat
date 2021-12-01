@@ -21,4 +21,6 @@
     <string name="plus">+</string>
     <string name="close">close</string>
     <string name="tag">#</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="unsubscribe">Unsubscribe</string>
 </resources>

@@ -16,6 +16,11 @@ sealed class Event {
         object LoadStreamsFirst : Ui()
 
         object LoadStreamsNetwork : Ui()
+
+        data class SubscribeToStream(
+            val streamName: String,
+            val description: String
+        ) : Ui()
     }
 
     sealed class Internal : Event() {
@@ -24,15 +29,21 @@ sealed class Event {
 
         data class StreamsLoadedDB(val streams: List<ResultStream>) : Internal()
 
+        object SuccessfulSubscriptionToStream : Internal()
+
         data class ErrorLoadingNetwork(val error: Throwable) : Internal()
 
         data class ErrorLoadingDB(val error: Throwable?) : Internal()
+
+        object ErrorSubscribeToStream : Internal()
     }
 }
 
 sealed class Effect {
 
     data class StreamsLoadError(val error: Throwable) : Effect()
+
+    object SubscribeToStreamError : Effect()
 }
 
 sealed class Command {
@@ -40,4 +51,9 @@ sealed class Command {
     object LoadStreamsNetwork : Command()
 
     object LoadStreamsDB : Command()
+
+    data class SubscribeToStream(
+        val streamName: String,
+        val description: String
+    ) : Command()
 }

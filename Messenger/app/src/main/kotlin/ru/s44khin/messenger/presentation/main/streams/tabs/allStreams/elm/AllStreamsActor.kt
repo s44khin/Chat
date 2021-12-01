@@ -39,5 +39,19 @@ class AllStreamsActor(
                 },
                 { error -> Event.Internal.ErrorLoadingDB(error) }
             )
+
+        is Command.SubscribeToStream -> loadAllStreams.subscribeToStream(
+            command.streamName,
+            command.description
+        )
+            .mapEvents(
+                { result ->
+                    if (result.result == "success")
+                        Event.Internal.SuccessfulSubscriptionToStream
+                    else
+                        Event.Internal.ErrorSubscribeToStream
+                },
+                { Event.Internal.ErrorSubscribeToStream }
+            )
     }
 }

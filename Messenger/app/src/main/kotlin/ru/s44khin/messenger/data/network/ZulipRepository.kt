@@ -13,8 +13,8 @@ class ZulipRepository(
 
     fun getTopics(streamId: Int): Single<BaseTopics> = service.getTopics(streamId)
 
-    fun createStream(name: String, description: String): Single<Result> =
-        service.createStream("[{\"description\": \"$description\", \"name\": \"$name\"}]")
+    fun subscribeToStream(streamName: String, description: String): Single<Result> =
+        service.subscribeToStream("[{\"name\":\"${streamName}\", \"description\":\"${description}\"}]")
 
     fun getMembers(): Single<BaseMembers> = service.getMembers()
 
