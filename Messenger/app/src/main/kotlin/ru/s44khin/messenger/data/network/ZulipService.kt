@@ -20,6 +20,11 @@ interface ZulipService {
         @Query ("subscriptions") array: String
     ): Single<Result>
 
+    @DELETE("/api/v1/users/me/subscriptions")
+    fun unsubscribeFromStream(
+        @Query("subscriptions") array: String
+    ): Single<Result>
+
     @GET("/api/v1/users")
     fun getMembers(): Single<BaseMembers>
 

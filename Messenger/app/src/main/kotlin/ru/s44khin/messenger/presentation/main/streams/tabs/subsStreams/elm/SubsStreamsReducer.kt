@@ -16,6 +16,10 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
             commands { +Command.LoadStreamsNetwork }
         }
 
+        is Event.Internal.ErrorUnsubscribeFromStream -> {
+            effects { Effect.ErrorUnsubscribeFromStream }
+        }
+
         is Event.Internal.StreamsLoadedNetwork -> {
             state {
                 copy(
@@ -39,6 +43,11 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
             commands { +Command.LoadStreamsNetwork }
         }
 
+        is Event.Internal.SuccessfulUnsubscribeFromStream -> {
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadStreamsNetwork }
+        }
+
         is Event.Ui.LoadStreamsFirst -> if (state.subsStreams != null) {
             state {
                 copy(
@@ -48,13 +57,17 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
                 )
             }
         } else {
-            state {copy(isLoadingNetwork = true, isLoadingDB = true)}
+            state { copy(isLoadingNetwork = true, isLoadingDB = true) }
             commands { +Command.LoadStreamsDB }
         }
 
         is Event.Ui.LoadStreamsNetwork -> {
             state { copy(isLoadingNetwork = true, error = null) }
             commands { +Command.LoadStreamsNetwork }
+        }
+
+        is Event.Ui.UnsubscribeFromStream -> {
+            commands { +Command.UnsubscribeFromStream(event.streamName) }
         }
     }
 }

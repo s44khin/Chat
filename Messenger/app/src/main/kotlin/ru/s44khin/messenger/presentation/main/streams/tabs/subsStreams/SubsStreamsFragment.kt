@@ -86,7 +86,7 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
     }
 
     override fun unsubscribe(streamName: String) {
-
+        store.accept(Event.Ui.UnsubscribeFromStream(streamName))
     }
 
     override fun subscribe(streamName: String, description: String) {

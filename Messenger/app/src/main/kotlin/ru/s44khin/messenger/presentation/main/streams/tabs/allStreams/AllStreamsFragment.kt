@@ -90,7 +90,7 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, 
     }
 
     override fun subscribe(streamName: String, description: String) {
-        store.accept(Event.Ui.SubscribeToStream(streamName, description))
+        MessengerApplication.instance.subsStreamsComponent.subsStreamsStore.accept(ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.elm.Event.Ui.LoadStreamsNetwork)
     }
 
     override fun onDestroyView() {

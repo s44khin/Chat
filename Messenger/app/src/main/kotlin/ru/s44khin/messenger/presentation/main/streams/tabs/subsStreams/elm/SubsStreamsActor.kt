@@ -38,5 +38,16 @@ class SubsStreamsActor(
                 },
                 { error -> Event.Internal.ErrorLoadingDB(error) }
             )
+
+        is Command.UnsubscribeFromStream -> loadSubsStreams.unsubscribeFromStream(command.streamName)
+            .mapEvents(
+                { result ->
+                    if (result.result == "success")
+                        Event.Internal.SuccessfulUnsubscribeFromStream
+                    else
+                        Event.Internal.ErrorUnsubscribeFromStream
+                },
+                { Event.Internal.ErrorUnsubscribeFromStream }
+            )
     }
 }

@@ -16,6 +16,9 @@ class ZulipRepository(
     fun subscribeToStream(streamName: String, description: String): Single<Result> =
         service.subscribeToStream("[{\"name\":\"${streamName}\", \"description\":\"${description}\"}]")
 
+    fun unsubscribeFromStream(streamName: String): Single<Result> =
+        service.unsubscribeFromStream("[\"${streamName}\"]")
+
     fun getMembers(): Single<BaseMembers> = service.getMembers()
 
     fun getSelfProfile(): Single<Profile> = service.getSelfProfile()

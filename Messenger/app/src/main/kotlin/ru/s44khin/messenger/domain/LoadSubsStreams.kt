@@ -11,4 +11,6 @@ class LoadSubsStreams(
     fun fromNetwork() = repository.getSubsStreams()
 
     fun fromDataBase() = dataBase.streamsDao().getAll()
+
+    fun unsubscribeFromStream(streamName: String) = repository.unsubscribeFromStream(streamName)
 }
