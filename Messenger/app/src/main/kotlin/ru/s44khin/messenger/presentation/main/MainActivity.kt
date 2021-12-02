@@ -73,7 +73,7 @@ class MainActivity : ElmActivity<Event, Effect, State>() {
         avatar: String,
         name: String,
         email: String
-    ) = binding.titleBar.avatar.setOnClickListener {
+    ) = binding.titleBar.avatarCard.setOnClickListener {
         ProfileFragment.newInstance(avatar, name, email)
             .show(supportFragmentManager, ProfileFragment.TAG)
     }

@@ -24,7 +24,7 @@
                 android:id="@+id/view"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/defaultPadding"
                 android:contentDescription="@string/search"
                 android:src="@drawable/ic_search"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -35,26 +35,37 @@
                 android:id="@+id/search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/defaultPadding"
+                android:layout_marginEnd="@dimen/defaultPadding"
                 android:background="@null"
                 android:hint="@string/search"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:maxLines="1"
-                app:layout_constraintEnd_toStartOf="@id/avatar"
+                app:layout_constraintEnd_toStartOf="@id/avatarCard"
                 app:layout_constraintStart_toEndOf="@id/view" />
 
-            <ImageView
-                android:id="@+id/avatar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="16dp"
-                android:contentDescription="@string/avatar"
-                android:src="@drawable/ic_profile"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/avatarCard"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="@dimen/defaultPadding"
+                app:cardBackgroundColor="@android:color/transparent"
+                android:foreground="?android:selectableItemBackground"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/avatar"
+                    android:src="@drawable/ic_profile" />
+            </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>
