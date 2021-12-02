@@ -64,12 +64,23 @@ class StreamAdapter(
             if (stream.color != null) {
                 name.setTextColor(Color.parseColor(stream.color))
                 tag.setTextColor(Color.parseColor(stream.color))
-                more.setOnClickListener { view ->
-                    menuHandler.showMenu(stream.name, parse2(stream.date!!), stream.description, stream.color)
+                more.setOnClickListener {
+                    menuHandler.showMenu(
+                        stream.streamId,
+                        stream.name,
+                        parse2(stream.date!!),
+                        stream.description,
+                        stream.color
+                    )
                 }
             } else {
-                more.setOnClickListener { view ->
-                    menuHandler.showMenu(stream.name, parse2(stream.date!!), stream.description)
+                more.setOnClickListener {
+                    menuHandler.showMenu(
+                        stream.streamId,
+                        stream.name,
+                        parse2(stream.date!!),
+                        stream.description
+                    )
                 }
             }
 
@@ -82,34 +93,6 @@ class StreamAdapter(
 
             topics.adapter = TopicAdapter(stream.streamId, stream.name, stream.topics)
         }
-    }
-
-    private fun showMenu(
-        view: View,
-        @MenuRes menuRes: Int,
-        streamName: String,
-        description: String
-    ) {
-        val popup = PopupMenu(view.context, view)
-        popup.menuInflater.inflate(menuRes, popup.menu)
-
-        popup.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.subscribe -> {
-                    menuHandler.subscribe(streamName, description)
-                    true
-                }
-                R.id.unsubscribe -> {
-                    menuHandler.unsubscribe(streamName)
-                    true
-                }
-                else -> {
-                    false
-                }
-            }
-        }
-
-        popup.show()
     }
 
     override fun getItemCount() = streams.size

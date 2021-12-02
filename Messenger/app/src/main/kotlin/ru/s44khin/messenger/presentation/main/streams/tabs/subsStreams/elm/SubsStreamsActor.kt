@@ -49,5 +49,16 @@ class SubsStreamsActor(
                 },
                 { Event.Internal.ErrorUnsubscribeFromStream }
             )
+
+        is Command.SetStreamColor -> loadSubsStreams.setStreamColor(command.streamId, command.color)
+            .mapEvents(
+                { result ->
+                    if (result.result == "success")
+                        Event.Internal.SuccessfulSetStreamColor
+                    else
+                        Event.Internal.ErrorSetStreamColor
+                },
+                { Event.Internal.ErrorSetStreamColor }
+            )
     }
 }

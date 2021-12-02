@@ -11,6 +11,7 @@ import ru.s44khin.messenger.databinding.FragmentMenuBinding
 import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 
 class BottomMenuFragment(
+    private val streamId: Int,
     private val name: String,
     private val date: String,
     private val description: String,
@@ -22,12 +23,13 @@ class BottomMenuFragment(
         const val TAG = "MENU_FRAGMENT"
 
         fun newInstance(
+            streamId: Int,
             name: String,
             date: String,
             description: String,
             menuHandler: MenuHandler,
             color: String? = null
-        ) = BottomMenuFragment(name, date, description, menuHandler, color)
+        ) = BottomMenuFragment(streamId, name, date, description, menuHandler, color)
     }
 
     private var _binding: FragmentMenuBinding? = null
@@ -56,9 +58,11 @@ class BottomMenuFragment(
         if (color != null) {
             binding.streamTagMenu.setTextColor(Color.parseColor(color))
             binding.streamNameMenu.setTextColor(Color.parseColor(color))
-            binding.recyclerView.adapter = MenuAdapter(name, description, false, menuHandler, this)
+            binding.recyclerView.adapter =
+                MenuAdapter(streamId, name, description, false, color, menuHandler, this)
         } else {
-            binding.recyclerView.adapter = MenuAdapter(name, description, true, menuHandler, this)
+            binding.recyclerView.adapter =
+                MenuAdapter(streamId, name, description, true, color, menuHandler, this)
         }
     }
 

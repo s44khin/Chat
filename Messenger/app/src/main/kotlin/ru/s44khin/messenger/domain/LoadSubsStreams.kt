@@ -13,4 +13,6 @@ class LoadSubsStreams(
     fun fromDataBase() = dataBase.streamsDao().getAll()
 
     fun unsubscribeFromStream(streamName: String) = repository.unsubscribeFromStream(streamName)
+
+    fun setStreamColor(streamId: Int, color: String) = repository.setStreamColor(streamId, color)
 }

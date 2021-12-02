@@ -6,5 +6,13 @@ interface MenuHandler {
 
     fun unsubscribe(streamName: String)
 
-    fun showMenu(name: String, date: String, description: String, color: String? = null)
+    fun setStreamColor(streamId: Int, color: String)
+
+    fun showMenu(
+        streamId: Int,
+        name: String,
+        date: String,
+        description: String,
+        color: String? = null
+    )
 }

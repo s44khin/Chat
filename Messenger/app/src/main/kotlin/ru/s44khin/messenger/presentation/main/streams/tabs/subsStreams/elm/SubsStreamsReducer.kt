@@ -20,6 +20,10 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
             effects { Effect.ErrorUnsubscribeFromStream }
         }
 
+        is Event.Internal.ErrorSetStreamColor -> {
+            effects { Effect.ErrorSetStreamColor }
+        }
+
         is Event.Internal.StreamsLoadedNetwork -> {
             state {
                 copy(
@@ -48,6 +52,11 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
             commands { +Command.LoadStreamsNetwork }
         }
 
+        is Event.Internal.SuccessfulSetStreamColor -> {
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadStreamsNetwork }
+        }
+
         is Event.Ui.LoadStreamsFirst -> if (state.subsStreams != null) {
             state {
                 copy(
@@ -68,6 +77,10 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
 
         is Event.Ui.UnsubscribeFromStream -> {
             commands { +Command.UnsubscribeFromStream(event.streamName) }
+        }
+
+        is Event.Ui.SetStreamColor -> {
+            commands { +Command.SetStreamColor(event.streamId, event.color) }
         }
     }
 }

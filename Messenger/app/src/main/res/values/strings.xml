@@ -25,4 +25,6 @@
     <string name="unsubscribe">Unsubscribe</string>
     <string name="topics">Topics:</string>
     <string name="set_color">Set color</string>
+    <string name="choose_color">Choose color</string>
+    <string name="сonfirm">Confirm</string>
 </resources>

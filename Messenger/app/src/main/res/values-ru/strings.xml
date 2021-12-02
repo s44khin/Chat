@@ -26,4 +26,6 @@
     <string name="unsubscribe">Отписаться</string>
     <string name="topics">Топики:</string>
     <string name="set_color">Изменить цвет</string>
+    <string name="choose_color">Выберите цвет</string>
+    <string name="сonfirm">Подтвердить</string>
 </resources>

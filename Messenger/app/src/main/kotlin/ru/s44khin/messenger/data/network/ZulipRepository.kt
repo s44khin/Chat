@@ -19,6 +19,9 @@ class ZulipRepository(
     fun unsubscribeFromStream(streamName: String): Single<Result> =
         service.unsubscribeFromStream("[\"${streamName}\"]")
 
+    fun setStreamColor(streamId: Int, color: String): Single<Result> =
+        service.setStreamColor("[{\"stream_id\":$streamId,\"property\":\"color\",\"value\":\"$color\"}]")
+
     fun getMembers(): Single<BaseMembers> = service.getMembers()
 
     fun getSelfProfile(): Single<Profile> = service.getSelfProfile()
