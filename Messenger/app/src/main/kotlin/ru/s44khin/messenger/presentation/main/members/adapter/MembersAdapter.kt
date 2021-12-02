@@ -27,6 +27,7 @@ class MembersAdapter(
         val avatar: ImageView = itemView.findViewById(R.id.peopleAvatar)
         val name: TextView = itemView.findViewById(R.id.peopleName)
         val email: TextView = itemView.findViewById(R.id.peopleEmail)
+        val line: View = itemView.findViewById(R.id.peopleLine)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,6 +42,8 @@ class MembersAdapter(
         holder.apply {
             name.text = profile.name
             email.text = profile.email
+
+            line.visibility = if (position == members.lastIndex) View.GONE else View.VISIBLE
 
             Glide.with(avatar)
                 .load(profile.avatar)

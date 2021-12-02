@@ -8,4 +8,5 @@
     <color name="messageSelected">#3A3A3A</color>
     <color name="tabBottom">#6A6A6A</color>
     <color name="shimmerBackground">#333333</color>
+    <color name="lineCard">#3A3A3A</color>
 </resources>

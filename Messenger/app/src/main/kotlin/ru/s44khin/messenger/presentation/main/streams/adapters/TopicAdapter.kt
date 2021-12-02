@@ -17,6 +17,7 @@ class TopicAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.topicName)
+        val line: View = itemView.findViewById(R.id.topicLine)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,6 +31,8 @@ class TopicAdapter(
 
         holder.apply {
             name.text = topic.name
+
+            line.visibility = if (position == topics.lastIndex) View.GONE else View.VISIBLE
 
             itemView.setOnClickListener {
                 itemView.context.startActivity(
