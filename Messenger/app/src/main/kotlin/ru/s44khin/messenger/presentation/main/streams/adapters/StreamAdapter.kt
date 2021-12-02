@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.annotation.MenuRes
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.s44khin.messenger.R
@@ -31,7 +32,7 @@ class StreamAdapter(
         val date: TextView = itemView.findViewById(R.id.streamDate)
         val name: TextView = itemView.findViewById(R.id.streamName)
         val tag: TextView = itemView.findViewById(R.id.streamTag)
-        val more: ImageView = itemView.findViewById(R.id.streamMoreButton)
+        val more: CardView = itemView.findViewById(R.id.streamMoreButton)
         val description: TextView = itemView.findViewById(R.id.streamDescription)
         val topics: RecyclerView = itemView.findViewById(R.id.streamRecyclerView)
 
