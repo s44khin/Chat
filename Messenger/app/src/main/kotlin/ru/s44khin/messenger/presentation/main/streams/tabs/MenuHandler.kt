@@ -1,8 +1,10 @@
 package ru.s44khin.messenger.presentation.main.streams.tabs
 
-interface PopupMenuHandler {
+interface MenuHandler {
 
     fun subscribe(streamName: String, description: String)
 
     fun unsubscribe(streamName: String)
+
+    fun showMenu(name: String, date: String, description: String, color: String? = null)
 }

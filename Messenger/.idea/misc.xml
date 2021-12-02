@@ -51,8 +51,11 @@
         <entry key="..\:/Users/s44kh/AndroidStudioProjects/Messenger/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3880208333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable-v24/outline_more_vert_24.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable/fragment_dialog_background.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable/outline_add_circle_outline_24.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable/outline_chat_24.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable/outline_close_24.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable/outline_opacity_24.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable/outline_remove_circle_outline_24.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable/round_article_24.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable/round_chat_24.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable/round_question_answer_24.xml" value="0.4036458333333333" />
@@ -66,8 +69,9 @@
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_dialog.xml" value="0.33" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_emoji_bottom_sheet.xml" value="0.3875" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_members.xml" value="0.1884498480243161" />
+        <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_menu.xml" value="0.3875" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_people.xml" value="0.275" />
-        <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_streams.xml" value="0.275" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_tab_streams.xml" value="0.275" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/item_add_button.xml" value="0.34193840579710144" />
@@ -79,6 +83,7 @@
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/item_people.xml" value="0.275" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/item_stream.xml" value="0.275" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/item_topic.xml" value="0.275" />
+        <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/menu_item.xml" value="0.3875" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/message_view.xml" value="0.34193840579710144" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/shimmer_people.xml" value="0.34193840579710144" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/shimmer_streams.xml" value="0.275" />

@@ -17,14 +17,15 @@ import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.databinding.FragmentTabStreamsBinding
 import ru.s44khin.messenger.presentation.main.ChildFragments
 import ru.s44khin.messenger.presentation.main.streams.adapters.StreamAdapter
-import ru.s44khin.messenger.presentation.main.streams.tabs.PopupMenuHandler
+import ru.s44khin.messenger.presentation.main.streams.bottomMenu.BottomMenuFragment
+import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 import ru.s44khin.messenger.presentation.main.streams.tabs.allStreams.elm.Effect
 import ru.s44khin.messenger.presentation.main.streams.tabs.allStreams.elm.Event
 import ru.s44khin.messenger.presentation.main.streams.tabs.allStreams.elm.State
 import ru.s44khin.messenger.utils.showSnackbar
 import vivid.money.elmslie.android.base.ElmFragment
 
-class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, PopupMenuHandler {
+class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, MenuHandler {
 
     companion object {
         const val TAG = "ALL_STREAMS_FRAGMENT"
@@ -93,6 +94,11 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, 
 
     override fun subscribe(streamName: String, description: String) {
         store.accept(Event.Ui.SubscribeToStream(streamName, description))
+    }
+
+    override fun showMenu(name: String, date: String, description: String, color: String?) {
+        BottomMenuFragment.newInstance(name, date, description, this, color)
+            .show(parentFragmentManager, BottomMenuFragment.TAG)
     }
 
     override fun onDestroyView() {

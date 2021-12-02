@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.ResultStream
-import ru.s44khin.messenger.presentation.main.streams.tabs.PopupMenuHandler
+import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 import ru.s44khin.messenger.utils.parse2
 
 class StreamAdapter(
-    private val popupMenuHandler: PopupMenuHandler
+    private val menuHandler: MenuHandler
 ) : RecyclerView.Adapter<StreamAdapter.ViewHolder>() {
 
     var streams: List<ResultStream> = emptyList()
@@ -65,26 +65,16 @@ class StreamAdapter(
                 name.setTextColor(Color.parseColor(stream.color))
                 tag.setTextColor(Color.parseColor(stream.color))
                 more.setOnClickListener { view ->
-                    showMenu(
-                        view = view,
-                        menuRes = R.menu.unsubscribe_menu,
-                        streamName = stream.name,
-                        description = stream.description
-                    )
+                    menuHandler.showMenu(stream.name, parse2(stream.date!!), stream.description, stream.color)
                 }
             } else {
                 more.setOnClickListener { view ->
-                    showMenu(
-                        view = view,
-                        menuRes = R.menu.subscribe_menu,
-                        streamName = stream.name,
-                        description = stream.description
-                    )
+                    menuHandler.showMenu(stream.name, parse2(stream.date!!), stream.description)
                 }
             }
 
             // Тут description.text == "." нужно потому что все потоки кроме
-            // главного имеют описание ".", у меня внутренный перфекционист умирает
+            // главного имеют описание ".", у меня внутренний перфекционист умирает
             description.visibility = if (description.text == "" || description.text == ".")
                 View.GONE
             else
@@ -106,11 +96,11 @@ class StreamAdapter(
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.subscribe -> {
-                    popupMenuHandler.subscribe(streamName, description)
+                    menuHandler.subscribe(streamName, description)
                     true
                 }
                 R.id.unsubscribe -> {
-                    popupMenuHandler.unsubscribe(streamName)
+                    menuHandler.unsubscribe(streamName)
                     true
                 }
                 else -> {

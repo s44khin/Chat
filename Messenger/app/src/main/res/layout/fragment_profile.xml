@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/fragment_dialog_background"
     android:padding="@dimen/defaultPadding">
 
     <androidx.cardview.widget.CardView
@@ -16,7 +15,7 @@
         android:layout_height="8dp"
         app:cardElevation="0dp"
         app:cardBackgroundColor="@color/tabBottom"
-        app:cardCornerRadius="30dp" />
+        app:cardCornerRadius="4dp" />
 
     <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="wrap_content"
