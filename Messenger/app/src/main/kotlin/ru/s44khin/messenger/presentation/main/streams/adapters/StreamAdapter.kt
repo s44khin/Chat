@@ -83,7 +83,9 @@ class StreamAdapter(
                 }
             }
 
-            description.visibility = if (description.text == "")
+            // Тут description.text == "." нужно потому что все потоки кроме
+            // главного имеют описание ".", у меня внутренный перфекционист умирает
+            description.visibility = if (description.text == "" || description.text == ".")
                 View.GONE
             else
                 View.VISIBLE
