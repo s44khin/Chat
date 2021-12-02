@@ -1,21 +1,18 @@
 package ru.s44khin.messenger.presentation.main.profile
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
-import ru.s44khin.messenger.R
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.s44khin.messenger.databinding.FragmentProfileBinding
 
 class ProfileFragment(
     private val avatar: String,
     private val name: String,
     private val email: String
-) : DialogFragment() {
+) : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "PROFILE_FRAGMENT"
@@ -36,21 +33,11 @@ class ProfileFragment(
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-
-        if (dialog != null && dialog!!.window != null) {
-            dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        }
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val width = resources.getDimension(R.dimen.dialogWidth).toInt()
-        val height = resources.getDimension(R.dimen.dialogHeight).toInt()
-
-        dialog!!.window!!.setLayout(width, height)
 
         Glide.with(binding.avatar)
             .load(avatar)
@@ -59,10 +46,6 @@ class ProfileFragment(
 
         binding.name.text = name
         binding.email.text = email
-
-        binding.close.setOnClickListener {
-            dismiss()
-        }
     }
 
     override fun onDestroyView() {

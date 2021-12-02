@@ -90,7 +90,7 @@ class StreamAdapter(
 
             topics.adapter = TopicAdapter(stream.streamId, stream.name, stream.topics)
 
-            itemView.setOnClickListener {
+            name.rootView.rootView.setOnClickListener {
                 line.isVisible = !line.isVisible
                 topics.isVisible = !topics.isVisible
                 notifyItemChanged(position, topics)
