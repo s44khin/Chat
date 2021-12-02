@@ -23,4 +23,5 @@
     <string name="tag">#</string>
     <string name="subscribe">Subscribe</string>
     <string name="unsubscribe">Unsubscribe</string>
+    <string name="topics">Topics:</string>
 </resources>

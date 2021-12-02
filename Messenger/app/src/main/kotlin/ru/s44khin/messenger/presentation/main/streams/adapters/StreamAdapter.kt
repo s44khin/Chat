@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.annotation.MenuRes
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.s44khin.messenger.R
@@ -34,7 +33,6 @@ class StreamAdapter(
         val tag: TextView = itemView.findViewById(R.id.streamTag)
         val more: ImageView = itemView.findViewById(R.id.streamMoreButton)
         val description: TextView = itemView.findViewById(R.id.streamDescription)
-        val line: View = itemView.findViewById(R.id.streamLine)
         val topics: RecyclerView = itemView.findViewById(R.id.streamRecyclerView)
 
         init {
@@ -85,21 +83,12 @@ class StreamAdapter(
                 }
             }
 
-            if (description.text == "")
-                description.visibility = View.GONE
+            description.visibility = if (description.text == "")
+                View.GONE
+            else
+                View.VISIBLE
 
             topics.adapter = TopicAdapter(stream.streamId, stream.name, stream.topics)
-
-            name.rootView.rootView.setOnClickListener {
-                line.isVisible = !line.isVisible
-                topics.isVisible = !topics.isVisible
-                notifyItemChanged(position, topics)
-            }
-
-            if (position == 0) {
-                line.isVisible = true
-                topics.isVisible = true
-            }
         }
     }
 
