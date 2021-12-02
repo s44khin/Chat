@@ -8,22 +8,22 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/lineProfile"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="60dp"
         android:layout_height="8dp"
-        app:cardElevation="0dp"
         app:cardBackgroundColor="@color/tabBottom"
-        app:cardCornerRadius="4dp" />
+        app:cardCornerRadius="4dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:constraint_referenced_ids="avatar, name, email"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="avatar, name, email"
         app:flow_verticalGap="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

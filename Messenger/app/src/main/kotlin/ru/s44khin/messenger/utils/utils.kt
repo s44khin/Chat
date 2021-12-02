@@ -2,7 +2,6 @@ package ru.s44khin.messenger.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import ru.s44khin.messenger.R

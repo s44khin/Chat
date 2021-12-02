@@ -26,7 +26,7 @@ interface ZulipService {
     ): Single<Result>
 
     @POST("/api/v1/users/me/subscriptions/properties")
-    fun setStreamColor(@Query("subscription_data") array: String) : Single<Result>
+    fun setStreamColor(@Query("subscription_data") array: String): Single<Result>
 
     @GET("/api/v1/users")
     fun getMembers(): Single<BaseMembers>

@@ -6,15 +6,15 @@
     android:background="?android:selectableItemBackground">
 
     <ImageView
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
         android:id="@+id/peopleAvatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription="@string/avatar"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.helper.widget.Flow
@@ -47,7 +47,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/tabBottom"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/peopleName"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/peopleName" />
 </androidx.constraintlayout.widget.ConstraintLayout>
