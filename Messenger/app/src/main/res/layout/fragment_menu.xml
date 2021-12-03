@@ -67,10 +67,54 @@
         android:background="@color/lineCard"
         app:layout_constraintTop_toBottomOf="@id/streamDescriptionMenu" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <TextView
+        android:id="@+id/menuSubscribe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/defaultPadding"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/subscribe"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_subscribe"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/streamLineMenu" />
+
+    <TextView
+        android:id="@+id/menuUnsubscribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/unsubscribe"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_unsubscribe"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuSubscribe" />
+
+    <TextView
+        android:id="@+id/menuSetColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/set_color"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_color"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuUnsubscribe" />
 </androidx.constraintlayout.widget.ConstraintLayout>

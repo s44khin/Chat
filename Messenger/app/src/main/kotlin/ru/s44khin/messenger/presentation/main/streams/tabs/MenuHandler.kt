@@ -1,5 +1,7 @@
 package ru.s44khin.messenger.presentation.main.streams.tabs
 
+import ru.s44khin.messenger.data.model.ResultStream
+
 interface MenuHandler {
 
     fun subscribe(streamName: String, description: String)
@@ -8,11 +10,5 @@ interface MenuHandler {
 
     fun setStreamColor(streamId: Int, color: String)
 
-    fun showMenu(
-        streamId: Int,
-        name: String,
-        date: String,
-        description: String,
-        color: String? = null
-    )
+    fun showMenu(stream: ResultStream)
 }

@@ -93,22 +93,18 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
     }
 
     override fun subscribe(streamName: String, description: String) {
-
+        store.accept(Event.Ui.LoadStreamsNetwork)
     }
 
     override fun setStreamColor(streamId: Int, color: String) {
         store.accept(Event.Ui.SetStreamColor(streamId, color))
     }
 
-    override fun showMenu(
-        streamId: Int,
-        name: String,
-        date: String,
-        description: String,
-        color: String?
-    ) {
-        BottomMenuFragment.newInstance(streamId, name, date, description, this, color)
-            .show(parentFragmentManager, BottomMenuFragment.TAG)
+    override fun showMenu(stream: ResultStream) {
+        BottomMenuFragment.newInstance(stream, this).show(
+            parentFragmentManager,
+            BottomMenuFragment.TAG
+        )
     }
 
     override fun onDestroyView() {

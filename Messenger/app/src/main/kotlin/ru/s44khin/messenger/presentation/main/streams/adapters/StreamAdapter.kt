@@ -63,22 +63,11 @@ class StreamAdapter(
                 name.setTextColor(Color.parseColor(stream.color))
                 tag.setTextColor(Color.parseColor(stream.color))
                 more.setOnClickListener {
-                    menuHandler.showMenu(
-                        stream.streamId,
-                        stream.name,
-                        parse2(stream.date!!),
-                        stream.description,
-                        stream.color
-                    )
+                    menuHandler.showMenu(stream)
                 }
             } else {
                 more.setOnClickListener {
-                    menuHandler.showMenu(
-                        stream.streamId,
-                        stream.name,
-                        parse2(stream.date!!),
-                        stream.description
-                    )
+                    menuHandler.showMenu(stream)
                 }
             }
 
