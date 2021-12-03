@@ -100,6 +100,14 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, 
         store.accept(Event.Ui.LoadStreamsNetwork)
     }
 
+    override fun pinToTop(streamId: Int) {
+        store.accept(Event.Ui.LoadStreamsNetwork)
+    }
+
+    override fun unpinFromTop(streamId: Int) {
+        store.accept(Event.Ui.LoadStreamsNetwork)
+    }
+
     override fun showMenu(stream: ResultStream) {
         BottomMenuFragment.newInstance(stream, this).show(
             parentFragmentManager,

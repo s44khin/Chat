@@ -117,4 +117,38 @@
         app:drawableTint="@color/textColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/menuUnsubscribe" />
+
+    <TextView
+        android:id="@+id/menuPinToTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/pin_to_top"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_pin"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuSetColor" />
+
+    <TextView
+        android:id="@+id/menuUnPinFromTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/unpin_from_top"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_unpin"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuPinToTop" />
 </androidx.constraintlayout.widget.ConstraintLayout>

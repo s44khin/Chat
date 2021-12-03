@@ -10,5 +10,9 @@ interface MenuHandler {
 
     fun setStreamColor(streamId: Int, color: String)
 
+    fun pinToTop(streamId: Int)
+
+    fun unpinFromTop(streamId: Int)
+
     fun showMenu(stream: ResultStream)
 }

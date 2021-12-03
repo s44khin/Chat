@@ -18,11 +18,14 @@ data class ResultStream(
     @ColumnInfo(name = "name")
     val name: String,
 
+    @ColumnInfo(name = "date")
+    val date: Int,
+
+    @ColumnInfo(name = "pin_to_top")
+    val pinToTop: Boolean?,
+
     @ColumnInfo(name = "color")
     val color: String?,
-
-    @ColumnInfo(name = "date")
-    val date: Int?,
 
     @ColumnInfo(name = "topics")
     @TypeConverters(TopicConverter::class)

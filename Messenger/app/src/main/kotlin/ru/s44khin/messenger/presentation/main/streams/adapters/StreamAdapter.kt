@@ -29,6 +29,7 @@ class StreamAdapter(
         val date: TextView = itemView.findViewById(R.id.streamDate)
         val name: TextView = itemView.findViewById(R.id.streamName)
         val tag: TextView = itemView.findViewById(R.id.streamTag)
+        val unpin: CardView = itemView.findViewById(R.id.streamUnpinButton)
         val more: CardView = itemView.findViewById(R.id.streamMoreButton)
         val description: TextView = itemView.findViewById(R.id.streamDescription)
         val topics: RecyclerView = itemView.findViewById(R.id.streamRecyclerView)
@@ -51,10 +52,16 @@ class StreamAdapter(
         val stream = streams[position]
 
         holder.apply {
-            if (stream.date == null)
-                date.visibility = View.GONE
-            else
-                date.text = parse2(stream.date)
+            if (stream.pinToTop != null && stream.pinToTop == true) {
+                unpin.visibility = View.VISIBLE
+                unpin.setOnClickListener {
+                    menuHandler.unpinFromTop(stream.streamId)
+                }
+            } else {
+                unpin.visibility = View.GONE
+            }
+
+            date.text = parse2(stream.date)
 
             name.text = stream.name
             description.text = stream.description

@@ -100,6 +100,14 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
         store.accept(Event.Ui.SetStreamColor(streamId, color))
     }
 
+    override fun pinToTop(streamId: Int) {
+        store.accept(Event.Ui.PinStreamToTop(streamId))
+    }
+
+    override fun unpinFromTop(streamId: Int) {
+        store.accept(Event.Ui.UnpinStreamFromTop(streamId))
+    }
+
     override fun showMenu(stream: ResultStream) {
         BottomMenuFragment.newInstance(stream, this).show(
             parentFragmentManager,

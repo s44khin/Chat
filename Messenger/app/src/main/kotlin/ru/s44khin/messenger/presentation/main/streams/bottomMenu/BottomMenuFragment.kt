@@ -40,7 +40,7 @@ class BottomMenuFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.streamNameMenu.text = stream.name
-        binding.streamDateMenu.text = parse2(stream.date!!)
+        binding.streamDateMenu.text = parse2(stream.date)
 
         if (stream.description != "" && stream.description != ".")
             binding.streamDescriptionMenu.text = stream.description
@@ -60,6 +60,11 @@ class BottomMenuFragment(
         streamNameMenu.setTextColor(color)
 
         menuSubscribe.visibility = View.GONE
+
+        if (stream.pinToTop!!)
+            menuPinToTop.visibility = View.GONE
+        else
+            menuUnPinFromTop.visibility = View.GONE
 
         menuUnsubscribe.setOnClickListener {
             menuHandler.unsubscribe(stream.name)
@@ -83,11 +88,23 @@ class BottomMenuFragment(
                 .build()
                 .show()
         }
+
+        menuPinToTop.setOnClickListener {
+            menuHandler.pinToTop(stream.streamId)
+            dismiss()
+        }
+
+        menuUnPinFromTop.setOnClickListener {
+            menuHandler.unpinFromTop(stream.streamId)
+            dismiss()
+        }
     }
 
     private fun initUnSubs() = binding.apply {
         menuUnsubscribe.visibility = View.GONE
         menuSetColor.visibility = View.GONE
+        menuPinToTop.visibility = View.GONE
+        menuUnPinFromTop.visibility = View.GONE
 
         menuSubscribe.setOnClickListener {
             menuHandler.subscribe(stream.name, stream.description)

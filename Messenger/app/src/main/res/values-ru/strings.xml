@@ -19,4 +19,7 @@
     <string name="topics">Топики:</string>
     <string name="set_color">Изменить цвет</string>
     <string name="сonfirm">Подтвердить</string>
+    <string name="pin_to_top">Закрепить сверху</string>
+    <string name="unpin_from_top">Открепить</string>
+    <string name="menu">Менюв</string>
 </resources>

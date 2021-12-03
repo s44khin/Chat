@@ -24,7 +24,7 @@ class SubsStreamsActor(
             }
             .toList()
             .mapEvents(
-                { allStreams -> Event.Internal.StreamsLoadedNetwork(allStreams) },
+                { subsStreams -> Event.Internal.StreamsLoadedNetwork(subsStreams.sortedByDescending { it.pinToTop }) },
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
 
@@ -34,7 +34,7 @@ class SubsStreamsActor(
                     if (subsStreams.isEmpty())
                         Event.Internal.ErrorLoadingDB(null)
                     else
-                        Event.Internal.StreamsLoadedDB(subsStreams)
+                        Event.Internal.StreamsLoadedDB(subsStreams.sortedByDescending { it.pinToTop })
                 },
                 { error -> Event.Internal.ErrorLoadingDB(error) }
             )
@@ -59,6 +59,28 @@ class SubsStreamsActor(
                         Event.Internal.ErrorSetStreamColor
                 },
                 { Event.Internal.ErrorSetStreamColor }
+            )
+
+        is Command.PinStreamToTop -> loadSubsStreams.pinStreamToTop(command.streamId)
+            .mapEvents(
+                { result ->
+                    if (result.result == "success")
+                        Event.Internal.SuccessfulPinned
+                    else
+                        Event.Internal.ErrorPinned
+                },
+                { Event.Internal.ErrorPinned }
+            )
+
+        is Command.UnpinFromTop -> loadSubsStreams.unpinStreamFromTop(command.streamId)
+            .mapEvents(
+                { result ->
+                    if (result.result == "success")
+                        Event.Internal.SuccessfulUnpinned
+                    else
+                        Event.Internal.ErrorUnpinned
+                },
+                { Event.Internal.ErrorUnpinned }
             )
     }
 }

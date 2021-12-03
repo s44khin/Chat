@@ -28,8 +28,9 @@ fun resultStreamFromStreamAndTopics(stream: Stream, topics: List<Topic>) = Resul
     streamId = stream.streamId,
     description = stream.description,
     name = stream.name,
-    color = stream.color,
     date = stream.date,
+    pinToTop = stream.pinToTop,
+    color = stream.color,
     topics = topics
 )
 

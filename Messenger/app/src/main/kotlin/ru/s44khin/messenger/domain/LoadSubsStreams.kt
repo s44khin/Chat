@@ -15,4 +15,8 @@ class LoadSubsStreams(
     fun unsubscribeFromStream(streamName: String) = repository.unsubscribeFromStream(streamName)
 
     fun setStreamColor(streamId: Int, color: String) = repository.setStreamColor(streamId, color)
+
+    fun pinStreamToTop(streamId: Int) = repository.pinStreamToTop(streamId)
+
+    fun unpinStreamFromTop(streamId: Int) = repository.unpinStreamFromTop(streamId)
 }
