@@ -91,10 +91,10 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
             commands { +Command.LoadPage(state.pageNumber) }
         }
 
-        is Event.Ui.LoadMessagesDB -> {
-            state { copy(isLoadingDB = true, isLoadingNetwork = true, error = null) }
-            commands { +Command.LoadMessagesDB }
-        }
+//        is Event.Ui.LoadMessagesDB -> {
+//            state { copy(isLoadingDB = true, isLoadingNetwork = true, error = null) }
+//            commands { +Command.LoadMessagesDB }
+//        }
 
         is Event.Ui.SendMessage -> {
             commands { +Command.SendMessage(event.content) }

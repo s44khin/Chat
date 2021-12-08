@@ -11,7 +11,7 @@ class LoadMessages(
 
     fun fromNetwork(
         streamId: Int,
-        topicName: String,
+        topicName: String?,
         pageNumber: Int
     ) = repository.getMessages(streamId, topicName, pageNumber)
 
@@ -19,7 +19,7 @@ class LoadMessages(
 
     fun saveToDataBase(messages: List<Message>) = dataBase.messagesDao().insertAll(messages)
 
-    fun sendMessage(streamName: String, topicName: String, content: String) =
+    fun sendMessage(streamName: String, topicName: String?, content: String) =
         repository.sendMessage(streamName, topicName, content)
 
     fun addReaction(messageId: Int, emojiName: String) =

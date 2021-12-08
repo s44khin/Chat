@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.ResultStream
+import ru.s44khin.messenger.presentation.chat.ChatActivity
 import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 import ru.s44khin.messenger.utils.parse2
 
@@ -76,6 +77,17 @@ class StreamAdapter(
                 more.setOnClickListener {
                     menuHandler.showMenu(stream)
                 }
+            }
+
+            itemView.setOnClickListener {
+                itemView.context.startActivity(
+                    ChatActivity.createIntent(
+                        context = itemView.context,
+                        streamId = stream.streamId,
+                        streamName = stream.name,
+                        topicName = null
+                    )
+                )
             }
 
             // Тут description.text == "." нужно потому что все потоки кроме

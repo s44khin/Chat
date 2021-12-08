@@ -14,7 +14,7 @@ class ChatActor(
     private val loadMessages: LoadMessages,
     private val streamId: Int,
     private val streamName: String,
-    private val topicName: String
+    private val topicName: String?
 ) : ActorCompat<Command, Event> {
 
     override fun execute(command: Command): Observable<Event> = when (command) {
@@ -28,15 +28,15 @@ class ChatActor(
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
 
-        is Command.LoadMessagesDB -> loadMessages.fromDataBase(topicName)
-            .mapEvents(
-                { messages -> Event.Internal.MessagesLoadedDB(messages.toListOfChatItems()) },
-                { error -> Event.Internal.ErrorLoadingDB(error) }
-            )
+//        is Command.LoadMessagesDB -> loadMessages.fromDataBase(topicName)
+//            .mapEvents(
+//                { messages -> Event.Internal.MessagesLoadedDB(messages.toListOfChatItems()) },
+//                { error -> Event.Internal.ErrorLoadingDB(error) }
+//            )
 
         is Command.SendMessage -> loadMessages.sendMessage(streamName, topicName, command.content)
             .mapEvents(
-                { Event.Internal.MessageSent(command.content, topicName) },
+                { Event.Internal.MessageSent(command.content, topicName ?: "") },
                 { error -> Event.Internal.ErrorSendMessage(error) }
             )
 
@@ -98,14 +98,14 @@ class ChatActor(
     private fun List<Message>.toListOfChatItems(): List<ChatItem> {
         val result = mutableListOf(
             ChatItem.Date(parse(this[0].timestamp)),
-            this[0].toMessageItem(topicName)
+            this[0].toMessageItem(topicName ?: "")
         )
 
         for (i in 0 until this.lastIndex) {
             if (parse(this[i].timestamp) != parse(this[i + 1].timestamp))
                 result.add(ChatItem.Date(parse(this[i + 1].timestamp)))
 
-            result.add(this[i + 1].toMessageItem(topicName))
+            result.add(this[i + 1].toMessageItem(topicName ?: ""))
         }
 
         return result

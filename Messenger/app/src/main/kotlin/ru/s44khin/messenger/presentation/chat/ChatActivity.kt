@@ -25,7 +25,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
         const val STREAM_NAME = "STREAM_NAME"
         const val TOPIC_NAME = "TOPIC_NAME"
 
-        fun createIntent(context: Context, streamId: Int, streamName: String, topicName: String) =
+        fun createIntent(context: Context, streamId: Int, streamName: String, topicName: String?) =
             Intent(context, ChatActivity::class.java)
                 .putExtra(STREAM_ID, streamId)
                 .putExtra(STREAM_NAME, streamName)
@@ -64,7 +64,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
     }
 
     private val topicName by lazy {
-        intent.getStringExtra(TOPIC_NAME)!!
+        intent.getStringExtra(TOPIC_NAME)
     }
 
     private val binding: ActivityChatBinding by lazy {

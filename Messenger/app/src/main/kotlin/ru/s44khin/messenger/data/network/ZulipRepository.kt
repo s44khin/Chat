@@ -34,25 +34,32 @@ class ZulipRepository(
 
     fun getMessages(
         streamId: Int,
-        topicName: String,
+        topicName: String?,
         pageNumber: Int
     ): Single<BaseMessages> {
         val numBefore = pageNumber * 50 + 50
         val numAfter = pageNumber * 50
 
-        return service.getMessages(
-            narrow = "[{\"operator\": \"stream\", \"operand\": $streamId}, " +
-                    "{\"operator\": \"topic\", \"operand\": \"$topicName\"}]",
-            numBefore = numBefore,
-            numAfter = numAfter
-        )
+        return if (topicName == null)
+            service.getMessages(
+                narrow = "[{\"operator\": \"stream\", \"operand\": $streamId}]",
+                numBefore = numBefore,
+                numAfter = numAfter
+            )
+        else
+            service.getMessages(
+                narrow = "[{\"operator\": \"stream\", \"operand\": $streamId}, " +
+                        "{\"operator\": \"topic\", \"operand\": \"$topicName\"}]",
+                numBefore = numBefore,
+                numAfter = numAfter
+            )
     }
 
     fun sendMessage(
         streamName: String,
-        topicName: String,
+        topicName: String?,
         content: String
-    ): Single<ResultMessage> = service.sendMessage(streamName, topicName, content)
+    ): Single<ResultMessage> = service.sendMessage(streamName, topicName ?: "", content)
 
     fun addReaction(messageId: Int, emojiName: String) = service.addReaction(messageId, emojiName)
 
