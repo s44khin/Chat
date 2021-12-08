@@ -8,7 +8,6 @@ import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.data.model.Stream
 import ru.s44khin.messenger.data.model.Topic
-import ru.s44khin.messenger.di.GlobalDI
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,21 +19,28 @@ const val MY_NAME = "Анохин Александр"
 @SuppressLint("SimpleDateFormat")
 fun parse(time: Int): String = SimpleDateFormat("d MMM").format(Date(time * 1000L))
 
+@SuppressLint("SimpleDateFormat")
+fun parse2(time: Int): String = SimpleDateFormat("dd.MM.yyyy").format(Date(time * 1000L))
+
 fun hexToEmoji(string: String) = String(Character.toChars(string.toInt(16)))
 
 fun resultStreamFromStreamAndTopics(stream: Stream, topics: List<Topic>) = ResultStream(
     streamId = stream.streamId,
     description = stream.description,
     name = stream.name,
+    date = stream.date,
+    pinToTop = stream.pinToTop,
+    color = stream.color,
     topics = topics
 )
 
 fun showSnackbar(
     context: Context,
     view: View,
-    indicator: View
+    indicator: View?,
+    onUpdate: () -> Unit
 ) {
-    indicator.visibility = View.GONE
+    indicator?.visibility = View.GONE
 
     val snackbar = Snackbar.make(
         view,
@@ -43,18 +49,7 @@ fun showSnackbar(
     )
 
     snackbar.setAction("Update") {
-        GlobalDI.INSTANCE.subsStreamsStore.accept(
-            ru.s44khin.messenger.presentation.streams.tabs.subsStreams.elm.Event.Ui.LoadStreamsNetwork
-        )
-        GlobalDI.INSTANCE.allStreamsStore.accept(
-            ru.s44khin.messenger.presentation.streams.tabs.allStreams.elm.Event.Ui.LoadStreamsNetwork
-        )
-        GlobalDI.INSTANCE.membersStore.accept(
-            ru.s44khin.messenger.presentation.members.elm.Event.Ui.LoadMembersNetwork
-        )
-        GlobalDI.INSTANCE.profileStore.accept(
-            ru.s44khin.messenger.presentation.profile.elm.Event.Ui.LoadProfileNetwork
-        )
+        onUpdate()
     }
 
     val snackbarView = snackbar.view

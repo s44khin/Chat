@@ -97,4 +97,13 @@ dependencies {
     def adapterDelegates = "4.3.0"
     implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:$adapterDelegates"
     implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-layoutcontainer:$adapterDelegates"
+
+    // Dagger
+    def dagger = "2.40.2"
+    implementation "com.google.dagger:dagger:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+
+    // Color Picker
+    def colorPicker = "0.0.15"
+    implementation "com.github.QuadFlask:colorpicker:$colorPicker"
 }

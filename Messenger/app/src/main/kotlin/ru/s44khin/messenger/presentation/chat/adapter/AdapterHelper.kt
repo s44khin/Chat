@@ -31,7 +31,7 @@ class AdapterHelper(
         flexBox: FlexBoxLayout,
     ): Boolean {
         val fragmentManager = (context as FragmentActivity).supportFragmentManager
-        val emojiBottomSheet = EmojiBottomSheet()
+        val emojiBottomSheet = EmojiBottomSheet.newInstance()
 
         fragmentManager.setFragmentResultListener(EmojiAdapter.REQUEST_KEY, context) { _, bundle ->
             val position = bundle.getInt(EmojiAdapter.RESULT_KEY)

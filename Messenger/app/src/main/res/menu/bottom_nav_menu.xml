@@ -9,9 +9,4 @@
         android:id="@+id/navMembers"
         android:icon="@drawable/selector_people"
         android:title="@string/people" />
-
-    <item
-        android:id="@+id/navProfile"
-        android:icon="@drawable/selector_profile"
-        android:title="@string/profile" />
 </menu>

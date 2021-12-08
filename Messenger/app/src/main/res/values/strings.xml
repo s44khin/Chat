@@ -2,10 +2,23 @@
     <string name="app_name">Messenger</string>
     <string name="streams">Streams</string>
     <string name="people">People</string>
-    <string name="profile">Profile</string>
     <string name="search">Search</string>
     <string name="subscribed">Subscribed</string>
     <string name="allStreams">All streams</string>
     <string name="write">Write</string>
     <string name="internetError">Check your internet connection</string>
+    <string name="back">back</string>
+    <string name="emojis">emojis</string>
+    <string name="send">send</string>
+    <string name="avatar">avatar</string>
+    <string name="plus">+</string>
+    <string name="tag">#</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="unsubscribe">Unsubscribe</string>
+    <string name="topics">Topics:</string>
+    <string name="set_color">Set color</string>
+    <string name="сonfirm">Confirm</string>
+    <string name="pin_to_top">Pin to top</string>
+    <string name="unpin_from_top">Unpin from top</string>
+    <string name="menu">menu</string>
 </resources>

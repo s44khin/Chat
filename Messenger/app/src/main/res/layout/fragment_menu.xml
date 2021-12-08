@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/defaultPadding">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/lineMenu"
+        android:layout_width="60dp"
+        android:layout_height="8dp"
+        app:cardBackgroundColor="@color/tabBottom"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/streamTagMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/tag"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lineMenu" />
+
+    <TextView
+        android:id="@+id/streamNameMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/streamTagMenu"
+        app:layout_constraintStart_toEndOf="@id/streamTagMenu"
+        tools:text="asdasdasd" />
+
+    <TextView
+        android:id="@+id/streamDateMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/streamTagMenu"
+        tools:text="01.02.1234" />
+
+    <TextView
+        android:id="@+id/streamDescriptionMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/defaultPadding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/streamDateMenu"
+        tools:text="asdasdasdasdasdasdasdasdasdasdasdasdasdasd" />
+
+    <View
+        android:id="@+id/streamLineMenu"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/defaultPadding"
+        android:background="@color/lineCard"
+        app:layout_constraintTop_toBottomOf="@id/streamDescriptionMenu" />
+
+    <TextView
+        android:id="@+id/menuSubscribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/subscribe"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_subscribe"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/streamLineMenu" />
+
+    <TextView
+        android:id="@+id/menuUnsubscribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/unsubscribe"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_unsubscribe"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuSubscribe" />
+
+    <TextView
+        android:id="@+id/menuSetColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/set_color"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_color"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuUnsubscribe" />
+
+    <TextView
+        android:id="@+id/menuPinToTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/pin_to_top"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_pin"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuSetColor" />
+
+    <TextView
+        android:id="@+id/menuUnPinFromTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/unpin_from_top"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_unpin"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuPinToTop" />
+</androidx.constraintlayout.widget.ConstraintLayout>

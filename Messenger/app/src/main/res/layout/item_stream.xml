@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -10,13 +11,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:selectableItemBackground"
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/streamName"
+            android:id="@+id/streamTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/tag"
             android:textColor="@color/textColor"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -24,18 +25,99 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/streamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/textColor"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@id/streamTag"
+            app:layout_constraintStart_toEndOf="@id/streamTag"
+            tools:text="asdasdasd" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/streamUnpinButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:foreground="?android:selectableItemBackground"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/background"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toStartOf="@id/streamMoreButton"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@string/unpin_from_top"
+                android:src="@drawable/ic_unpin" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/streamMoreButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:foreground="?android:selectableItemBackground"
+            app:cardBackgroundColor="@color/background"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@string/menu"
+                android:src="@drawable/ic_menu" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/streamDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/streamTag"
+            tools:text="01.02.1234" />
+
+        <TextView
             android:id="@+id/streamDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/defaultPadding"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/streamName" />
+            app:layout_constraintTop_toBottomOf="@id/streamDate"
+            tools:text="asdasdasdasdasdasdasdasdasdasdasdasdasdasd" />
+
+        <View
+            android:id="@+id/streamLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/defaultPadding"
+            android:background="@color/lineCard"
+            app:layout_constraintTop_toBottomOf="@id/streamDescription" />
+
+        <TextView
+            android:id="@+id/topics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/defaultPadding"
+            android:text="@string/topics"
+            android:textColor="@color/textColor"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/streamLine" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/streamRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/streamDescription" />
+            app:layout_constraintTop_toBottomOf="@id/topics" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

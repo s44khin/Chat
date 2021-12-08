@@ -11,7 +11,8 @@ import ru.s44khin.messenger.databinding.FragmentEmojiBottomSheetBinding
 class EmojiBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
-        const val TAG = "EmojiBottomSheet"
+        const val TAG = "EMOJI_BOTTOM_SHEET"
+        fun newInstance() = EmojiBottomSheet()
     }
 
     private var _binding: FragmentEmojiBottomSheetBinding? = null

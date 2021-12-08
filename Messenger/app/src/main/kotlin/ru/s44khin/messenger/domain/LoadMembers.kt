@@ -1,17 +1,22 @@
 package ru.s44khin.messenger.domain
 
-import ru.s44khin.messenger.data.dataBase.dao.ProfileDao
+import ru.s44khin.messenger.data.dataBase.MessengerDatabase
 import ru.s44khin.messenger.data.model.Profile
 import ru.s44khin.messenger.data.network.ZulipRepository
+import ru.s44khin.messenger.utils.MY_ID
 
 class LoadMembers(
     private val repository: ZulipRepository,
-    private val dataBase: ProfileDao
+    private val dataBase: MessengerDatabase
 ) {
 
     fun fromNetwork() = repository.getMembers()
 
-    fun fromDataBase() = dataBase.getAll()
+    fun getSelfProfileFromNetwork() = repository.getSelfProfile()
 
-    fun saveToDataBase(members: List<Profile>) = dataBase.insertAll(members)
+    fun fromDatabase() = dataBase.profileDao().getAll()
+
+    fun getSelfProfileFromDatabase() = dataBase.profileDao().getById(MY_ID)
+
+    fun saveToDataBase(members: List<Profile>) = dataBase.profileDao().insertAll(members)
 }

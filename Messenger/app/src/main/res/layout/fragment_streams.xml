@@ -4,22 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/titleBar"
-        layout="@layout/tool_bar_search"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         style="@style/TabLayoutTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/titleBar"
+        app:layout_constraintTop_toTopOf="parent"
         app:tabIndicator="@drawable/tab_selector_background"
         app:tabIndicatorFullWidth="false"
         app:tabIndicatorHeight="3dp" />
 
     <View
+        android:id="@+id/streamLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/tabBottom"
@@ -30,5 +26,5 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+        app:layout_constraintTop_toBottomOf="@id/streamLine" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,21 @@ class ZulipRepository(
 
     fun getTopics(streamId: Int): Single<BaseTopics> = service.getTopics(streamId)
 
+    fun subscribeToStream(streamName: String, description: String): Single<Result> =
+        service.subscribeToStream("[{\"name\":\"${streamName}\", \"description\":\"${description}\"}]")
+
+    fun unsubscribeFromStream(streamName: String): Single<Result> =
+        service.unsubscribeFromStream("[\"${streamName}\"]")
+
+    fun setStreamColor(streamId: Int, color: String): Single<Result> =
+        service.updateSettings("[{\"stream_id\":$streamId,\"property\":\"color\",\"value\":\"$color\"}]")
+
+    fun pinStreamToTop(streamId: Int): Single<Result> =
+        service.updateSettings("[{\"stream_id\":$streamId,\"property\":\"pin_to_top\",\"value\":true}]")
+
+    fun unpinStreamFromTop(streamId: Int): Single<Result> =
+        service.updateSettings("[{\"stream_id\":$streamId,\"property\":\"pin_to_top\",\"value\":false}]")
+
     fun getMembers(): Single<BaseMembers> = service.getMembers()
 
     fun getSelfProfile(): Single<Profile> = service.getSelfProfile()
