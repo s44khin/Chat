@@ -6,7 +6,7 @@
         android:title="@string/streams" />
 
     <item
-        android:id="@+id/navPeople"
+        android:id="@+id/navMembers"
         android:icon="@drawable/selector_people"
         android:title="@string/people" />
 

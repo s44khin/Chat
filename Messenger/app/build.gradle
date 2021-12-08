@@ -41,33 +41,60 @@ android {
 dependencies {
 
     // Core
+    def coreKtxVersion = "1.7.0"
+    def appCompatVersion = "1.4.0"
+    def fragmentVersion = "1.4.0"
+    def navigationFragment = "2.3.5"
+    def materialVersion = "1.4.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$coreKtxVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationFragment"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigationUi"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationFragment"
     implementation "com.google.android.material:material:$materialVersion"
 
+    // Elmslie
+    def elmslie = "1.2.0"
+    implementation "com.github.vivid-money.elmslie:elmslie-core:$elmslie"
+    implementation "com.github.vivid-money.elmslie:elmslie-android:$elmslie"
+    implementation "com.github.vivid-money.elmslie:elmslie-rxjava-2:$elmslie"
+
     // RX
+    def rxjava = "2.2.21"
+    def rxandroid = "2.1.1"
+    def rxkotlin = "2.4.0"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin"
 
     // Retrofit
+    def retrofit = "2.9.0"
+    def retrofitMoshi = "2.4.0"
+    def okhttp = "4.9.1"
+    def loggingInterceptor = "4.8.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitMoshi"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitRXJava"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
     implementation "com.squareup.okhttp3:okhttp:$okhttp"
     implementation "com.squareup.okhttp3:logging-interceptor:$loggingInterceptor"
 
     // Room
+    def room_version = "2.3.0"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
     // Shimmer
+    def shimmer = "0.5.0"
     implementation "com.facebook.shimmer:shimmer:$shimmer"
 
     // Glide
+    def glide = "4.12.0"
     implementation "com.github.bumptech.glide:glide:$glide"
+
+    // Adapter Delegates
+    def adapterDelegates = "4.3.0"
+    implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:$adapterDelegates"
+    implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-layoutcontainer:$adapterDelegates"
 }

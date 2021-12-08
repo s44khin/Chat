@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.reactivex.Single
-import ru.s44khin.messenger.ui.chat.ChatItem.Message
+import ru.s44khin.messenger.data.model.Message
 
 @Dao
 interface MessagesDao {
