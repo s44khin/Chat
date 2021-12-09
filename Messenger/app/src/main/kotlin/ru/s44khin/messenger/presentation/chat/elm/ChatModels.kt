@@ -19,11 +19,9 @@ sealed class Event {
 
     sealed class Ui : Event() {
 
-        object LoadFirstPage : Ui()
-
         object LoadNextPage : Ui()
 
-//        object LoadMessagesDB : Ui()
+        object LoadMessagesDB : Ui()
 
         data class SendMessage(val content: String) : Ui()
 
@@ -74,7 +72,7 @@ sealed class Command {
 
     data class LoadPage(val pageNumber: Int) : Command()
 
-//    object LoadMessagesDB : Command()
+    object LoadMessagesDB : Command()
 
     data class SendMessage(val content: String) : Command()
 

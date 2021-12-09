@@ -59,7 +59,7 @@ class ZulipRepository(
         streamName: String,
         topicName: String?,
         content: String
-    ): Single<ResultMessage> = service.sendMessage(streamName, topicName ?: "", content)
+    ): Single<ResultMessage> = service.sendMessage(streamName, topicName ?: "(no topic)", content)
 
     fun addReaction(messageId: Int, emojiName: String) = service.addReaction(messageId, emojiName)
 

@@ -17,7 +17,8 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
         }
 
         is Event.Internal.ErrorLoadingDB -> {
-            state { copy() }
+            state { copy(isLoadingDB = true, isLoadingNetwork = true) }
+            commands { +Command.LoadPage(state.pageNumber) }
         }
 
         is Event.Internal.ErrorSendMessage -> {
@@ -81,20 +82,15 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
             state { copy() }
         }
 
-        is Event.Ui.LoadFirstPage -> {
-            state { copy(isLoadingNetwork = true, error = null) }
-            commands { +Command.LoadPage(state.pageNumber) }
-        }
-
         is Event.Ui.LoadNextPage -> {
             state { copy(isLoadingNetwork = true, error = null) }
             commands { +Command.LoadPage(state.pageNumber) }
         }
 
-//        is Event.Ui.LoadMessagesDB -> {
-//            state { copy(isLoadingDB = true, isLoadingNetwork = true, error = null) }
-//            commands { +Command.LoadMessagesDB }
-//        }
+        is Event.Ui.LoadMessagesDB -> {
+            state { copy(isLoadingDB = true, isLoadingNetwork = true, error = null) }
+            commands { +Command.LoadMessagesDB }
+        }
 
         is Event.Ui.SendMessage -> {
             commands { +Command.SendMessage(event.content) }

@@ -32,7 +32,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
                 .putExtra(TOPIC_NAME, topicName)
     }
 
-    override val initEvent = Event.Ui.LoadFirstPage
+    override val initEvent = Event.Ui.LoadMessagesDB
 
     override fun createStore(): Store<Event, Effect, State> {
         val chatActor = ChatActor(
@@ -104,7 +104,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
 
     private fun initToolBar() = binding.apply {
         streamName.text = this@ChatActivity.streamName
-        topicName.text = this@ChatActivity.topicName
+        topicName.text = this@ChatActivity.topicName ?: "all topics"
         backButton.setOnClickListener { finish() }
     }
 

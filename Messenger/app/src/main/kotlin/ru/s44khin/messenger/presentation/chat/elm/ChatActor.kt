@@ -28,15 +28,15 @@ class ChatActor(
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
 
-//        is Command.LoadMessagesDB -> loadMessages.fromDataBase(topicName)
-//            .mapEvents(
-//                { messages -> Event.Internal.MessagesLoadedDB(messages.toListOfChatItems()) },
-//                { error -> Event.Internal.ErrorLoadingDB(error) }
-//            )
+        is Command.LoadMessagesDB -> loadMessages.fromDataBase(topicName ?: "")
+            .mapEvents(
+                { messages -> Event.Internal.MessagesLoadedDB(messages.toListOfChatItems()) },
+                { error -> Event.Internal.ErrorLoadingDB(error) }
+            )
 
         is Command.SendMessage -> loadMessages.sendMessage(streamName, topicName, command.content)
             .mapEvents(
-                { Event.Internal.MessageSent(command.content, topicName ?: "") },
+                { Event.Internal.MessageSent(command.content, topicName ?: "(no topic)") },
                 { error -> Event.Internal.ErrorSendMessage(error) }
             )
 
@@ -105,7 +105,7 @@ class ChatActor(
             if (parse(this[i].timestamp) != parse(this[i + 1].timestamp))
                 result.add(ChatItem.Date(parse(this[i + 1].timestamp)))
 
-            result.add(this[i + 1].toMessageItem(topicName ?: ""))
+            result.add(this[i + 1].toMessageItem(topicName ?: "(no topic)"))
         }
 
         return result
