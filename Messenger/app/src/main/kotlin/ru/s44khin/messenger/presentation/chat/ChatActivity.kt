@@ -123,6 +123,11 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
     }
 
     private fun initButtons() = binding.messageInput.message.doAfterTextChanged { text ->
+        binding.messageInput.send.setOnClickListener {
+            store.accept(Event.Ui.SendMessage(text.toString()))
+            binding.messageInput.message.setText("")
+        }
+
         if (text?.length != 0) {
             binding.messageInput.send.show()
             binding.messageInput.attach.hide()
