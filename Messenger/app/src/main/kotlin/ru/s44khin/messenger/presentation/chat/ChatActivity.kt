@@ -1,10 +1,12 @@
 package ru.s44khin.messenger.presentation.chat
 
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -19,7 +21,7 @@ import ru.s44khin.messenger.presentation.main.profile.ProfileFragment
 import vivid.money.elmslie.android.base.ElmActivity
 import vivid.money.elmslie.core.store.Store
 
-class ChatActivity : ElmActivity<Event, Effect, State>(), AdapterHandler {
+class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
 
     companion object {
         const val STREAM_ID = "STREAM_ID"
@@ -98,6 +100,13 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), AdapterHandler {
 
     override fun removeReaction(messageId: Int, emojiName: String) {
         store.accept(Event.Ui.RemoveReaction(messageId, emojiName))
+    }
+
+    override fun copyTextToClipboard(content: String) {
+        val clipboardManager =
+            ContextCompat.getSystemService(this, android.content.ClipboardManager::class.java)
+        val clip = ClipData.newPlainText("label", content)
+        clipboardManager?.setPrimaryClip(clip)
     }
 
     private fun initRecyclerView() = binding.recyclerView.apply {

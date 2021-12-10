@@ -21,5 +21,12 @@
     <string name="сonfirm">Подтвердить</string>
     <string name="pin_to_top">Закрепить сверху</string>
     <string name="unpin_from_top">Открепить</string>
-    <string name="menu">Менюв</string>
+    <string name="menu">Меню</string>
+    <string name="name">Название</string>
+    <string name="description">Описание</string>
+    <string name="create">Создать</string>
+    <string name="copy">Копировать</string>
+    <string name="change_topic">Изменить топик</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
 </resources>

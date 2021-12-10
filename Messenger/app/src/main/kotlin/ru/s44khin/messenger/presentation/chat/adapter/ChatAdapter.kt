@@ -3,8 +3,8 @@ package ru.s44khin.messenger.presentation.chat.adapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
-import ru.s44khin.messenger.presentation.chat.AdapterHandler
 import ru.s44khin.messenger.presentation.chat.ChatItem
+import ru.s44khin.messenger.presentation.chat.MenuHandler
 import ru.s44khin.messenger.presentation.chat.adapter.delegates.LeftAdapterDelegate
 import ru.s44khin.messenger.presentation.chat.adapter.delegates.RightAdapterDelegate
 import ru.s44khin.messenger.presentation.chat.pagination.PaginationAdapterHelper
@@ -23,7 +23,7 @@ val difItemCallback = object : DiffUtil.ItemCallback<ChatItem>() {
 
 class ChatAdapter(
     private val paginationAdapterHelper: PaginationAdapterHelper,
-    reactionSender: AdapterHandler,
+    reactionSender: MenuHandler,
 ) : AsyncListDifferDelegationAdapter<ChatItem>(
     difItemCallback,
     LeftAdapterDelegate(reactionSender),

@@ -7,12 +7,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.s44khin.messenger.databinding.FragmentEmojiBottomSheetBinding
+import ru.s44khin.messenger.presentation.chat.MenuHandler
 
-class EmojiBottomSheet : BottomSheetDialogFragment() {
+class EmojiBottomSheet(
+    private val content: String,
+    private val isMyMessage: Boolean,
+    private val menuHandler: MenuHandler
+) : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "EMOJI_BOTTOM_SHEET"
-        fun newInstance() = EmojiBottomSheet()
+
+        fun newInstance(
+            content: String,
+            isMyMessage: Boolean,
+            menuHandler: MenuHandler
+        ) = EmojiBottomSheet(content, isMyMessage, menuHandler)
     }
 
     private var _binding: FragmentEmojiBottomSheetBinding? = null
@@ -28,9 +38,28 @@ class EmojiBottomSheet : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.recyclerView.apply {
-            layoutManager = GridLayoutManager(context, 5)
-            adapter = EmojiAdapter(this@EmojiBottomSheet)
+        binding.apply {
+            recyclerView.apply {
+                layoutManager = GridLayoutManager(context, 5)
+                adapter = EmojiAdapter(this@EmojiBottomSheet)
+            }
+
+            content.text = this@EmojiBottomSheet.content
+        }
+
+        initMenu()
+    }
+
+    private fun initMenu() = binding.apply {
+        if (!(isMyMessage)) {
+            menuDelete.visibility = View.GONE
+            menuChangeTopic.visibility = View.GONE
+            menuEdit.visibility = View.GONE
+        }
+
+        menuCopy.setOnClickListener {
+            menuHandler.copyTextToClipboard(this@EmojiBottomSheet.content)
+            dismiss()
         }
     }
 

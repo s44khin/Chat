@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentActivity
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.AdapterReaction
-import ru.s44khin.messenger.presentation.chat.AdapterHandler
 import ru.s44khin.messenger.presentation.chat.ChatItem
+import ru.s44khin.messenger.presentation.chat.MenuHandler
 import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiAdapter
 import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiBottomSheet
 import ru.s44khin.messenger.utils.hexToEmoji
@@ -17,7 +17,7 @@ import ru.s44khin.messenger.views.EmojiView
 import ru.s44khin.messenger.views.FlexBoxLayout
 
 class AdapterHelper(
-    private val reactionSender: AdapterHandler,
+    private val reactionSender: MenuHandler,
 ) {
     fun addPlusButton(flexBox: FlexBoxLayout, message: ChatItem) {
         LayoutInflater.from(flexBox.context).inflate(R.layout.item_add_button, flexBox).apply {
@@ -31,7 +31,8 @@ class AdapterHelper(
         flexBox: FlexBoxLayout,
     ): Boolean {
         val fragmentManager = (context as FragmentActivity).supportFragmentManager
-        val emojiBottomSheet = EmojiBottomSheet.newInstance()
+        val emojiBottomSheet =
+            EmojiBottomSheet.newInstance(message.content, message.isMyMessage, reactionSender)
 
         fragmentManager.setFragmentResultListener(EmojiAdapter.REQUEST_KEY, context) { _, bundle ->
             val position = bundle.getInt(EmojiAdapter.RESULT_KEY)

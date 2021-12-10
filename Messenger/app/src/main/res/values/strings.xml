@@ -24,4 +24,8 @@
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="create">Create</string>
+    <string name="copy">Copy</string>
+    <string name="change_topic">Change topic</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
