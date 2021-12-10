@@ -27,4 +27,6 @@ class LoadMessages(
 
     fun removeReaction(messageId: Int, emojiName: String) =
         repository.removeReaction(messageId, emojiName)
+
+    fun deleteMessage(id: Int) = repository.deleteMessage(id)
 }

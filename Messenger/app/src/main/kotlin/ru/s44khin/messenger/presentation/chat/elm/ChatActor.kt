@@ -49,10 +49,17 @@ class ChatActor(
         is Command.RemoveReaction -> loadMessages.removeReaction(
             command.messageId,
             command.emojiName
-        ).mapEvents(
-            { Event.Internal.ReactionRemoved },
-            { error -> Event.Internal.ReactionRemoveError(error) }
         )
+            .mapEvents(
+                { Event.Internal.ReactionRemoved },
+                { error -> Event.Internal.ReactionRemoveError(error) }
+            )
+
+        is Command.DeleteMessage -> loadMessages.deleteMessage(command.id)
+            .mapEvents(
+                { Event.Internal.MessageDeleted },
+                { error -> Event.Internal.ErrorDeleteMessage(error) }
+            )
     }
 
     private fun List<Reaction>.toAdapterReactions(): MutableList<AdapterReaction> {

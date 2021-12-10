@@ -32,7 +32,7 @@ class AdapterHelper(
     ): Boolean {
         val fragmentManager = (context as FragmentActivity).supportFragmentManager
         val emojiBottomSheet =
-            EmojiBottomSheet.newInstance(message.content, message.isMyMessage, reactionSender)
+            EmojiBottomSheet.newInstance(message, reactionSender)
 
         fragmentManager.setFragmentResultListener(EmojiAdapter.REQUEST_KEY, context) { _, bundle ->
             val position = bundle.getInt(EmojiAdapter.RESULT_KEY)

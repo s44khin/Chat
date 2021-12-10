@@ -109,6 +109,10 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         clipboardManager?.setPrimaryClip(clip)
     }
 
+    override fun deleteMessage(id: Int) {
+        store.accept(Event.Ui.DeleteMessage(id))
+    }
+
     private fun initRecyclerView() = binding.recyclerView.apply {
         val lm = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
         lm.stackFromEnd = true

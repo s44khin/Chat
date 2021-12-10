@@ -9,4 +9,6 @@ interface MenuHandler {
     fun removeReaction(messageId: Int, emojiName: String)
 
     fun copyTextToClipboard(content: String)
+
+    fun deleteMessage(id: Int)
 }

@@ -61,6 +61,8 @@ class ZulipRepository(
         content: String
     ): Single<ResultMessage> = service.sendMessage(streamName, topicName ?: "(no topic)", content)
 
+    fun deleteMessage(id: Int): Single<Result> = service.deleteMessage(id)
+
     fun addReaction(messageId: Int, emojiName: String) = service.addReaction(messageId, emojiName)
 
     fun removeReaction(

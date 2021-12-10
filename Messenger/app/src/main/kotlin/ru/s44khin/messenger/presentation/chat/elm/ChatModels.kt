@@ -23,6 +23,8 @@ sealed class Event {
 
         object LoadMessagesDB : Ui()
 
+        data class DeleteMessage(val id: Int) : Ui()
+
         data class SendMessage(val content: String) : Ui()
 
         data class AddReaction(
@@ -42,6 +44,8 @@ sealed class Event {
 
         data class MessagesLoadedDB(val messages: List<ChatItem>) : Internal()
 
+        object MessageDeleted : Internal()
+
         data class MessageSent(
             val content: String,
             val topicName: String
@@ -60,6 +64,8 @@ sealed class Event {
         data class ErrorLoadingDB(val error: Throwable) : Internal()
 
         data class ErrorSendMessage(val error: Throwable) : Internal()
+
+        data class ErrorDeleteMessage(val error: Throwable) : Internal()
     }
 }
 
@@ -75,6 +81,8 @@ sealed class Command {
     object LoadMessagesDB : Command()
 
     data class SendMessage(val content: String) : Command()
+
+    data class DeleteMessage(val id: Int) : Command()
 
     data class AddReaction(
         val messageId: Int,

@@ -48,6 +48,9 @@ interface ZulipService {
         @Query("content") content: String
     ): Single<ResultMessage>
 
+    @DELETE("api/v1/messages/{msg_id}")
+    fun deleteMessage(@Path("msg_id") id: Int): Single<Result>
+
     @POST("/api/v1/messages/{message_id}/reactions")
     fun addReaction(
         @Path("message_id") messageId: Int,

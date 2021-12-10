@@ -22,6 +22,10 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
             state { copy(error = event.error) }
         }
 
+        is Event.Internal.ErrorDeleteMessage -> {
+            state { copy() }
+        }
+
         is Event.Internal.ReactionAddError -> {
             state { copy(error = event.error) }
         }
@@ -77,6 +81,11 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
             state { copy() }
         }
 
+        is Event.Internal.MessageDeleted -> {
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadPage(state.pageNumber) }
+        }
+
         is Event.Ui.LoadNextPage -> {
             state { copy(isLoadingNetwork = true, error = null) }
             commands { +Command.LoadPage(state.pageNumber) }
@@ -97,6 +106,10 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
 
         is Event.Ui.RemoveReaction -> {
             commands { +Command.RemoveReaction(event.messageId, event.emojiName) }
+        }
+
+        is Event.Ui.DeleteMessage -> {
+            commands { +Command.DeleteMessage(event.id) }
         }
     }
 }

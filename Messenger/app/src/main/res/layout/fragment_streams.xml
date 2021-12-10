@@ -28,15 +28,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/streamLine" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/newStream"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/defaultPadding"
         android:layout_marginBottom="@dimen/defaultPadding"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/primary"
+        android:text="@string/create"
+        android:textColor="@color/primary"
+        app:backgroundTint="@color/background"
+        app:icon="@drawable/ic_add"
+        app:iconTint="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@android:color/white" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

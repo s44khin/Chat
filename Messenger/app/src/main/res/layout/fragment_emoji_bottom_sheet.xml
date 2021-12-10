@@ -88,12 +88,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/menuChangeTopic" />
 
+    <TextView
+        android:id="@+id/menuDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/delete"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_delete"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuEdit" />
+
     <View
         android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/lineCard"
-        app:layout_constraintTop_toBottomOf="@id/menuEdit" />
+        app:layout_constraintTop_toBottomOf="@id/menuDelete" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,6 +17,7 @@ import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.databinding.FragmentTabStreamsBinding
 import ru.s44khin.messenger.presentation.main.ChildFragments
+import ru.s44khin.messenger.presentation.main.streams.NewStreamHandler
 import ru.s44khin.messenger.presentation.main.streams.adapters.StreamAdapter
 import ru.s44khin.messenger.presentation.main.streams.bottomMenu.BottomMenuFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
