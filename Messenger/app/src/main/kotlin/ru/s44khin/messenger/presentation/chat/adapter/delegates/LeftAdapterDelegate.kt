@@ -26,6 +26,7 @@ class LeftAdapterDelegate(
         val cardView: CardView = itemView.findViewById(R.id.leftMessageCardView)
         val profile: TextView = itemView.findViewById(R.id.leftMessageProfile)
         val content: TextView = itemView.findViewById(R.id.leftMessageContent)
+        val topicName: TextView = itemView.findViewById(R.id.leftMessageTopicName)
         val reactions: FlexBoxLayout = itemView.findViewById(R.id.leftMessageReactions)
     }
 
@@ -51,6 +52,7 @@ class LeftAdapterDelegate(
 
         holder.content.text = item.content
         holder.profile.text = item.profile
+        holder.topicName.text = item.topicName
 
         holder.avatar.setOnClickListener {
             adapterHandler.showProfile(item.avatar, item.profile, item.email)

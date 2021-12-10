@@ -21,6 +21,7 @@ class RightAdapterDelegate(
 
     class RightViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val content: TextView = itemView.findViewById(R.id.rightMessageContent)
+        val topicName: TextView = itemView.findViewById(R.id.rightMessageTopicName)
         val cardView: CardView = itemView.findViewById(R.id.rightMessageCardView)
         val reactions: FlexBoxLayout = itemView.findViewById(R.id.rightMessageReactions)
     }
@@ -43,6 +44,7 @@ class RightAdapterDelegate(
         payloads: MutableList<Any>
     ) {
         holder.content.text = item.content
+        holder.topicName.text = item.topicName
 
         holder.reactions.removeAllViews()
 

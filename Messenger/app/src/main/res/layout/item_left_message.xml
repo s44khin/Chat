@@ -46,10 +46,18 @@
             <TextView
                 android:id="@+id/leftMessageContent"
                 android:layout_width="wrap_content"
+                android:textColor="@color/textColor"
                 android:layout_height="wrap_content"
                 android:maxWidth="250dp"
                 android:textSize="16sp"
                 tools:text="Здраствуйте! Не желаете оформить карту по моей реферальной ссылке?" />
+
+            <TextView
+                android:id="@+id/leftMessageTopicName"
+                android:textStyle="italic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="topicName" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

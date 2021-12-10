@@ -52,8 +52,6 @@ class EmojiBottomSheet(
 
     private fun initMenu() = binding.apply {
         if (!(isMyMessage)) {
-            menuDelete.visibility = View.GONE
-            menuChangeTopic.visibility = View.GONE
             menuEdit.visibility = View.GONE
         }
 
