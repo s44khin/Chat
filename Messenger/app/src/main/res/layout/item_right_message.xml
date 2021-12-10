@@ -28,6 +28,7 @@
             <TextView
                 android:id="@+id/rightMessageContent"
                 android:layout_width="wrap_content"
+                android:textColor="@color/textColor"
                 android:layout_height="wrap_content"
                 android:maxWidth="250dp"
                 android:textSize="16sp"
@@ -37,7 +38,6 @@
                 android:id="@+id/rightMessageTopicName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:textStyle="italic"
                 tools:text="topicName" />
         </LinearLayout>
