@@ -3,16 +3,12 @@ package ru.s44khin.messenger.presentation.chat
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.s44khin.messenger.MessengerApplication
-import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityChatBinding
 import ru.s44khin.messenger.presentation.chat.adapter.ChatAdapter
 import ru.s44khin.messenger.presentation.chat.elm.*
@@ -127,30 +123,12 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
     }
 
     private fun initButtons() = binding.messageInput.message.doAfterTextChanged { text ->
-        binding.messageInput.send.apply {
-            setOnClickListener {
-                store.accept(Event.Ui.SendMessage(text.toString()))
-                binding.messageInput.message.setText("")
-            }
-            backgroundTintList = setButtonsBackground(text?.length ?: 0)
-            setImageDrawable(setButtonsImage(text?.length ?: 0))
-            setColorFilter(setButtonsColor(text?.length ?: 0))
+        if (text?.length != 0) {
+            binding.messageInput.send.show()
+            binding.messageInput.attach.hide()
+        } else {
+            binding.messageInput.send.hide()
+            binding.messageInput.attach.show()
         }
     }
-
-    private fun setButtonsBackground(length: Int) = ColorStateList.valueOf(
-        ResourcesCompat.getColor(
-            resources,
-            if (length == 0) R.color.message else R.color.primary,
-            null
-        )
-    )
-
-    private fun setButtonsImage(length: Int) = ResourcesCompat.getDrawable(
-        resources,
-        if (length == 0) R.drawable.ic_attach else R.drawable.ic_send,
-        null
-    )
-
-    private fun setButtonsColor(length: Int) = if (length == 0) Color.GRAY else Color.WHITE
 }
