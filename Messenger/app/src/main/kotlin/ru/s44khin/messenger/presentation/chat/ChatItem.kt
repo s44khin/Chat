@@ -8,6 +8,7 @@ data class ChatItem(
     val time: String,
     val avatar: String,
     val profile: String,
+    val email: String,
     val content: String,
     val isMyMessage: Boolean,
     val reactions: MutableList<AdapterReaction>

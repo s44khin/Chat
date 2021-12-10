@@ -9,7 +9,7 @@ import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.AdapterReaction
 import ru.s44khin.messenger.presentation.chat.ChatItem
-import ru.s44khin.messenger.presentation.chat.ReactionSender
+import ru.s44khin.messenger.presentation.chat.AdapterHandler
 import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiAdapter
 import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiBottomSheet
 import ru.s44khin.messenger.utils.hexToEmoji
@@ -17,7 +17,7 @@ import ru.s44khin.messenger.views.EmojiView
 import ru.s44khin.messenger.views.FlexBoxLayout
 
 class AdapterHelper(
-    private val reactionSender: ReactionSender,
+    private val reactionSender: AdapterHandler,
 ) {
     fun addPlusButton(flexBox: FlexBoxLayout, message: ChatItem) {
         LayoutInflater.from(flexBox.context).inflate(R.layout.item_add_button, flexBox).apply {

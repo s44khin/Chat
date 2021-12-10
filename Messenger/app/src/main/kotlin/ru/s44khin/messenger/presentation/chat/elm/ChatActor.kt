@@ -89,6 +89,7 @@ class ChatActor(
         topicName = this.topicName,
         time = parse(this.timestamp),
         avatar = this.avatar,
+        email = this.email,
         profile = this.profile,
         content = this.content,
         reactions = this.reactions.toAdapterReactions(),

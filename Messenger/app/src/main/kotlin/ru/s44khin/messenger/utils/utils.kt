@@ -16,6 +16,8 @@ const val MY_AVATAR =
     "https://zulip-avatars.s3.amazonaws.com/39154/76c4ab526496e0b37b446c6df4487bd41d499082?version=2"
 const val MY_NAME = "Анохин Александр"
 
+const val MY_EMAIL = "s44khin@gmail.com"
+
 @SuppressLint("SimpleDateFormat")
 fun parse(time: Int): String = SimpleDateFormat("d MMM").format(Date(time * 1000L))
 

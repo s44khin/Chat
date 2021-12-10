@@ -8,13 +8,13 @@
     android:layout_marginTop="10dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/rightMessageCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:foreground="?android:selectableItemBackground"
         app:cardBackgroundColor="@color/message"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -41,6 +41,6 @@
         android:layout_marginTop="8dp"
         android:visibility="gone"
         app:alignment="right"
-        app:layout_constraintEnd_toEndOf="@id/cardView"
-        app:layout_constraintTop_toBottomOf="@id/cardView" />
+        app:layout_constraintEnd_toEndOf="@id/rightMessageCardView"
+        app:layout_constraintTop_toBottomOf="@id/rightMessageCardView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

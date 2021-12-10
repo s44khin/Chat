@@ -15,10 +15,11 @@ import ru.s44khin.messenger.databinding.ActivityChatBinding
 import ru.s44khin.messenger.presentation.chat.adapter.ChatAdapter
 import ru.s44khin.messenger.presentation.chat.elm.*
 import ru.s44khin.messenger.presentation.chat.pagination.PaginationAdapterHelper
+import ru.s44khin.messenger.presentation.main.profile.ProfileFragment
 import vivid.money.elmslie.android.base.ElmActivity
 import vivid.money.elmslie.core.store.Store
 
-class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
+class ChatActivity : ElmActivity<Event, Effect, State>(), AdapterHandler {
 
     companion object {
         const val STREAM_ID = "STREAM_ID"
@@ -85,6 +86,11 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
 
         if (state.messages != null)
             adapter.items = state.messages
+    }
+
+    override fun showProfile(avatar: String, name: String, email: String) {
+        ProfileFragment.newInstance(avatar, name, email)
+            .show(supportFragmentManager, ProfileFragment.TAG)
     }
 
     override fun addReaction(messageId: Int, emojiName: String) {

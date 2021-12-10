@@ -35,6 +35,10 @@ data class Message(
     @field:Json(name = "sender_full_name")
     val profile: String,
 
+    @ColumnInfo(name = "sender_email")
+    @field:Json(name = "sender_email")
+    val email: String,
+
     @ColumnInfo(name = "content")
     @field:Json(name = "content")
     val content: String,

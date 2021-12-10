@@ -1,10 +1,7 @@
 package ru.s44khin.messenger.presentation.chat.elm
 
 import ru.s44khin.messenger.presentation.chat.ChatItem
-import ru.s44khin.messenger.utils.MY_AVATAR
-import ru.s44khin.messenger.utils.MY_ID
-import ru.s44khin.messenger.utils.MY_NAME
-import ru.s44khin.messenger.utils.parse
+import ru.s44khin.messenger.utils.*
 import vivid.money.elmslie.core.store.dsl_reducer.DslReducer
 
 class ChatReducer : DslReducer<Event, State, Effect, Command>() {
@@ -62,6 +59,7 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
                         content = event.content,
                         profile = MY_NAME,
                         avatar = MY_AVATAR,
+                        email = MY_EMAIL,
                         isMyMessage = true,
                         reactions = mutableListOf()
                     )

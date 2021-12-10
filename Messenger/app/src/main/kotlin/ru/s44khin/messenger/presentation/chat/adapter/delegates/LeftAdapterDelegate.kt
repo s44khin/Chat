@@ -5,23 +5,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.presentation.chat.ChatItem
-import ru.s44khin.messenger.presentation.chat.ReactionSender
+import ru.s44khin.messenger.presentation.chat.AdapterHandler
 import ru.s44khin.messenger.presentation.chat.adapter.AdapterHelper
 import ru.s44khin.messenger.views.FlexBoxLayout
 
 class LeftAdapterDelegate(
-    reactionSender: ReactionSender
+    private val adapterHandler: AdapterHandler
 ) : AbsListItemAdapterDelegate<ChatItem, ChatItem, LeftAdapterDelegate.LeftViewHolder>() {
 
-    private val adapterHelper = AdapterHelper(reactionSender)
+    private val adapterHelper = AdapterHelper(adapterHandler)
 
     class LeftViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val avatar: ImageView = itemView.findViewById(R.id.leftMessageAvatar)
+        val cardView: CardView = itemView.findViewById(R.id.leftMessageCardView)
         val profile: TextView = itemView.findViewById(R.id.leftMessageProfile)
         val content: TextView = itemView.findViewById(R.id.leftMessageContent)
         val reactions: FlexBoxLayout = itemView.findViewById(R.id.leftMessageReactions)
@@ -50,6 +52,10 @@ class LeftAdapterDelegate(
         holder.content.text = item.content
         holder.profile.text = item.profile
 
+        holder.avatar.setOnClickListener {
+            adapterHandler.showProfile(item.avatar, item.profile, item.email)
+        }
+
         holder.reactions.removeAllViews()
 
         if (item.reactions.isNotEmpty()) {
@@ -66,7 +72,7 @@ class LeftAdapterDelegate(
                 flexBox = holder.reactions
             )
 
-        holder.itemView.setOnLongClickListener {
+        holder.cardView.setOnLongClickListener {
             adapterHelper.showBottomSheet(it.context, item, holder.reactions)
         }
 
