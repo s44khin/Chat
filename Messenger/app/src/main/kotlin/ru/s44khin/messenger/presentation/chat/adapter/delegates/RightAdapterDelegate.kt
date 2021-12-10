@@ -3,30 +3,24 @@ package ru.s44khin.messenger.presentation.chat.adapter.delegates
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.ReactionSender
 import ru.s44khin.messenger.presentation.chat.adapter.AdapterHelper
-import ru.s44khin.messenger.presentation.chat.adapter.MessageViewHolder
 import ru.s44khin.messenger.views.FlexBoxLayout
-import ru.s44khin.messenger.views.MessageView
 
 class RightAdapterDelegate(
     reactionSender: ReactionSender
-) : AbsListItemAdapterDelegate<ChatItem.Message, ChatItem, RightAdapterDelegate.RightViewHolder>() {
+) : AbsListItemAdapterDelegate<ChatItem, ChatItem, RightAdapterDelegate.RightViewHolder>() {
 
     private val adapterHelper = AdapterHelper(reactionSender)
 
-    class RightViewHolder(itemView: View) : MessageViewHolder(itemView) {
-        override val messageView: MessageView = itemView.findViewById(R.id.itemChatMessageRight)
-        override val reactions: FlexBoxLayout = messageView.flexBoxLayout
-
-        init {
-            messageView.alignment = MessageView.RIGHT
-            reactions.alignment = FlexBoxLayout.RIGHT
-        }
+    class RightViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val content: TextView = itemView.findViewById(R.id.rightMessageContent)
+        val reactions: FlexBoxLayout = itemView.findViewById(R.id.rightMessageReactions)
     }
 
     override fun isForViewType(
@@ -34,33 +28,28 @@ class RightAdapterDelegate(
         items: MutableList<ChatItem>,
         position: Int
     ): Boolean {
-        if (items[position] is ChatItem.Message)
-            return (items[position] as ChatItem.Message).isMyMessage
-
-        return false
+        return item.isMyMessage
     }
 
     override fun onCreateViewHolder(parent: ViewGroup) = RightViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_message_right, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_right_message, parent, false)
     )
 
     override fun onBindViewHolder(
-        item: ChatItem.Message,
+        item: ChatItem,
         holder: RightViewHolder,
         payloads: MutableList<Any>
     ) {
-        Glide.with(holder.messageView.avatar)
-            .load(item.avatar)
-            .circleCrop()
-            .into(holder.messageView.avatar)
-
-        holder.messageView.message.text = item.content
-        holder.messageView.profile.text = item.profile
+        holder.content.text = item.content
 
         holder.reactions.removeAllViews()
 
-        if (item.reactions.isNotEmpty())
+        if (item.reactions.isNotEmpty()) {
+            holder.reactions.visibility = View.VISIBLE
             adapterHelper.addPlusButton(holder.reactions, item)
+        } else {
+            holder.reactions.visibility = View.GONE
+        }
 
         for (reaction in item.reactions)
             adapterHelper.addReaction(

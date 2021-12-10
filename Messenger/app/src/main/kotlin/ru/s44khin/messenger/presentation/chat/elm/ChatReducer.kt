@@ -54,11 +54,8 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
                 val newMessages = state.messages?.toMutableList() ?: mutableListOf()
                 val currentTime = parse((System.currentTimeMillis() / 1000).toInt())
 
-                if ((newMessages.last() as ChatItem.Message).time != currentTime)
-                    newMessages.add(ChatItem.Date(currentTime))
-
                 newMessages.add(
-                    ChatItem.Message(
+                    ChatItem(
                         id = MY_ID,
                         topicName = event.topicName,
                         time = currentTime,

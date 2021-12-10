@@ -84,9 +84,9 @@ class ChatActor(
         return result
     }
 
-    private fun Message.toMessageItem(topicName: String) = ChatItem.Message(
+    private fun Message.toChatItem() = ChatItem(
         id = this.id,
-        topicName = topicName,
+        topicName = this.topicName,
         time = parse(this.timestamp),
         avatar = this.avatar,
         profile = this.profile,
@@ -95,19 +95,5 @@ class ChatActor(
         isMyMessage = MY_ID == this.senderId
     )
 
-    private fun List<Message>.toListOfChatItems(): List<ChatItem> {
-        val result = mutableListOf(
-            ChatItem.Date(parse(this[0].timestamp)),
-            this[0].toMessageItem(topicName ?: "")
-        )
-
-        for (i in 0 until this.lastIndex) {
-            if (parse(this[i].timestamp) != parse(this[i + 1].timestamp))
-                result.add(ChatItem.Date(parse(this[i + 1].timestamp)))
-
-            result.add(this[i + 1].toMessageItem(topicName ?: "(no topic)"))
-        }
-
-        return result
-    }
+    private fun List<Message>.toListOfChatItems() = this.map { it.toChatItem() }
 }

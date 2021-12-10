@@ -19,7 +19,7 @@ import ru.s44khin.messenger.views.FlexBoxLayout
 class AdapterHelper(
     private val reactionSender: ReactionSender,
 ) {
-    fun addPlusButton(flexBox: FlexBoxLayout, message: ChatItem.Message) {
+    fun addPlusButton(flexBox: FlexBoxLayout, message: ChatItem) {
         LayoutInflater.from(flexBox.context).inflate(R.layout.item_add_button, flexBox).apply {
             setOnClickListener { showBottomSheet(flexBox.context, message, flexBox) }
         }
@@ -27,7 +27,7 @@ class AdapterHelper(
 
     fun showBottomSheet(
         context: Context,
-        message: ChatItem.Message,
+        message: ChatItem,
         flexBox: FlexBoxLayout,
     ): Boolean {
         val fragmentManager = (context as FragmentActivity).supportFragmentManager

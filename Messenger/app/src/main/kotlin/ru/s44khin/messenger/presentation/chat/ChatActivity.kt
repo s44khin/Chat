@@ -32,7 +32,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), ReactionSender {
                 .putExtra(TOPIC_NAME, topicName)
     }
 
-    override val initEvent = Event.Ui.LoadMessagesDB
+    override val initEvent = Event.Ui.LoadNextPage
 
     override fun createStore(): Store<Event, Effect, State> {
         val chatActor = ChatActor(
