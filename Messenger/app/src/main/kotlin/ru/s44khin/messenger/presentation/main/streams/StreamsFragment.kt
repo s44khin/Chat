@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,13 +15,11 @@ import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.network.ZulipRepository
 import ru.s44khin.messenger.databinding.FragmentStreamsBinding
-import ru.s44khin.messenger.di.DaggerAppComponent
 import ru.s44khin.messenger.presentation.main.ChildFragments
 import ru.s44khin.messenger.presentation.main.streams.adapters.PagerAdapter
 import ru.s44khin.messenger.presentation.main.streams.addNewStreamFragment.AddNewStreamFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.allStreams.AllStreamsFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.SubsStreamsFragment
-import javax.inject.Inject
 
 class StreamsFragment : Fragment(), ChildFragments, NewStreamHandler {
 
@@ -85,7 +82,7 @@ class StreamsFragment : Fragment(), ChildFragments, NewStreamHandler {
         repository.subscribeToStream(name, description)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy (
+            .subscribeBy(
                 onSuccess = { update() },
                 onError = {}
             )

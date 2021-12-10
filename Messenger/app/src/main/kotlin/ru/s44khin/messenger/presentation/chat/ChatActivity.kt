@@ -51,7 +51,6 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), AdapterHandler {
             paginationAdapterHelper = PaginationAdapterHelper {
                 store.accept(Event.Ui.LoadNextPage)
             },
-            layoutInflater = layoutInflater,
             reactionSender = this
         )
     }

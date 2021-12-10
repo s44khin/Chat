@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentActivity
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.AdapterReaction
-import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.AdapterHandler
+import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiAdapter
 import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiBottomSheet
 import ru.s44khin.messenger.utils.hexToEmoji

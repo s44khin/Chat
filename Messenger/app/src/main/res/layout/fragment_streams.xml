@@ -30,13 +30,13 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newStream"
-        app:backgroundTint="@color/primary"
-        android:src="@drawable/ic_add"
-        app:tint="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/defaultPadding"
         android:layout_marginBottom="@dimen/defaultPadding"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@android:color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

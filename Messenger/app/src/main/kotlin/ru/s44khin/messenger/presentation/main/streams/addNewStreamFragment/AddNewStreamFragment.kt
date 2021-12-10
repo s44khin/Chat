@@ -5,13 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.databinding.FragmentAddNewStreamBinding
 import ru.s44khin.messenger.presentation.main.streams.NewStreamHandler
-import ru.s44khin.messenger.presentation.main.streams.bottomMenu.BottomMenuFragment
-import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 
 class AddNewStreamFragment(
     private val newStreamHandler: NewStreamHandler
