@@ -19,28 +19,53 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/rightMessageContent"
+                android:id="@+id/i"
                 android:layout_width="wrap_content"
-                android:textColor="@color/textColor"
                 android:layout_height="wrap_content"
-                android:maxWidth="250dp"
-                android:textSize="16sp"
-                tools:text="Здраствуйте! Не желаете оформить карту по моей реферальной ссылке?" />
+                android:text="@string/i"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/to"
+                android:textStyle="italic"
+                app:layout_constraintBaseline_toBaselineOf="@id/i"
+                app:layout_constraintStart_toEndOf="@id/i" />
 
             <TextView
                 android:id="@+id/rightMessageTopicName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:textStyle="italic"
-                tools:text="topicName" />
-        </LinearLayout>
+                app:layout_constraintBaseline_toBaselineOf="@id/to"
+                app:layout_constraintStart_toEndOf="@id/to"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/rightMessageContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="250dp"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/i"
+                tools:text="Здраствуйте! Не желаете оформить карту по моей реферальной ссылке?" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <ru.s44khin.messenger.views.FlexBoxLayout

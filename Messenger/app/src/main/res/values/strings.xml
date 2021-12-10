@@ -28,4 +28,6 @@
     <string name="change_topic">Change topic</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="to">to</string>
+    <string name="i">I</string>
 </resources>

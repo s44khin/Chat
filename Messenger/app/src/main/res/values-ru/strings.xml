@@ -29,4 +29,6 @@
     <string name="change_topic">Изменить топик</string>
     <string name="edit">Редактировать</string>
     <string name="delete">Удалить</string>
+    <string name="to">в</string>
+    <string name="i">Я</string>
 </resources>
