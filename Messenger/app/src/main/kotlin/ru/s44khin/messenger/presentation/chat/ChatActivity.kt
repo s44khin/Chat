@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.s44khin.messenger.MessengerApplication
+import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityChatBinding
 import ru.s44khin.messenger.presentation.chat.adapter.ChatAdapter
 import ru.s44khin.messenger.presentation.chat.elm.*
@@ -118,7 +119,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
 
     private fun initToolBar() = binding.apply {
         streamName.text = this@ChatActivity.streamName
-        topicName.text = this@ChatActivity.topicName ?: "all topics"
+        topicName.text = this@ChatActivity.topicName ?: resources.getText(R.string.all_topics)
         backButton.setOnClickListener { finish() }
     }
 

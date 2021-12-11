@@ -119,4 +119,18 @@ class AdapterHelper(
             }
         }
     )
+
+    fun getLinkImage(content: String): String {
+        val start = content.indexOf("/user_uploads/")
+        var result = "https://tinkoff-android-fall21.zulipchat.com"
+
+        for (i in start until content.length) {
+            result += content[i]
+
+            if (content[i + 1] == ')')
+                break
+        }
+
+        return result
+    }
 }

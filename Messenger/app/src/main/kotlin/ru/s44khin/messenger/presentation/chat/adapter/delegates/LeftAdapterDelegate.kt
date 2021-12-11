@@ -8,8 +8,13 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
+import okhttp3.Credentials
 import ru.s44khin.messenger.R
+import ru.s44khin.messenger.data.network.api.API_KEY
+import ru.s44khin.messenger.data.network.api.EMAIL
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.MenuHandler
 import ru.s44khin.messenger.presentation.chat.adapter.AdapterHelper
@@ -24,6 +29,7 @@ class LeftAdapterDelegate(
     class LeftViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val avatar: ImageView = itemView.findViewById(R.id.leftMessageAvatar)
         val cardView: CardView = itemView.findViewById(R.id.leftMessageCardView)
+        val image: ImageView = itemView.findViewById(R.id.leftMessageImage)
         val profile: TextView = itemView.findViewById(R.id.leftMessageProfile)
         val content: TextView = itemView.findViewById(R.id.leftMessageContent)
         val topicName: TextView = itemView.findViewById(R.id.leftMessageTopicName)
@@ -49,6 +55,25 @@ class LeftAdapterDelegate(
             .load(item.avatar)
             .circleCrop()
             .into(holder.avatar)
+
+        if (item.content.contains("](/user_uploads/")) {
+            val linkImage = adapterHelper.getLinkImage(item.content)
+val credentials = Credentials.basic(EMAIL, API_KEY)
+
+val glideUrl = GlideUrl(
+    linkImage,
+    LazyHeaders.Builder()
+        .addHeader("Authorization", credentials)
+        .build()
+)
+
+
+            Glide.with(holder.image)
+                .load(glideUrl)
+                .into(holder.image)
+
+            holder.image.visibility = View.VISIBLE
+        }
 
         holder.content.text = item.content
         holder.profile.text = item.profile

@@ -3,11 +3,18 @@ package ru.s44khin.messenger.presentation.chat.adapter.delegates
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
+import okhttp3.Credentials
 import ru.s44khin.messenger.R
+import ru.s44khin.messenger.data.network.api.API_KEY
+import ru.s44khin.messenger.data.network.api.EMAIL
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.MenuHandler
 import ru.s44khin.messenger.presentation.chat.adapter.AdapterHelper
@@ -21,6 +28,7 @@ class RightAdapterDelegate(
 
     class RightViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val content: TextView = itemView.findViewById(R.id.rightMessageContent)
+        val image: ImageView = itemView.findViewById(R.id.rightMessageImage)
         val topicName: TextView = itemView.findViewById(R.id.rightMessageTopicName)
         val cardView: CardView = itemView.findViewById(R.id.rightMessageCardView)
         val reactions: FlexBoxLayout = itemView.findViewById(R.id.rightMessageReactions)
@@ -43,6 +51,24 @@ class RightAdapterDelegate(
         holder: RightViewHolder,
         payloads: MutableList<Any>
     ) {
+        if (item.content.contains("](/user_uploads/")) {
+            val linkImage = adapterHelper.getLinkImage(item.content)
+            val credentials = Credentials.basic(EMAIL, API_KEY)
+
+            val glideUrl = GlideUrl(
+                linkImage,
+                LazyHeaders.Builder()
+                    .addHeader("Authorization", credentials)
+                    .build()
+            )
+
+            Glide.with(holder.image)
+                .load(glideUrl)
+                .into(holder.image)
+
+            holder.image.visibility = View.VISIBLE
+        }
+
         holder.content.text = item.content
         holder.topicName.text = item.topicName
 
