@@ -24,10 +24,11 @@ val difItemCallback = object : DiffUtil.ItemCallback<ChatItem>() {
 class ChatAdapter(
     private val paginationAdapterHelper: PaginationAdapterHelper,
     reactionSender: MenuHandler,
+    color: String?
 ) : AsyncListDifferDelegationAdapter<ChatItem>(
     difItemCallback,
-    LeftAdapterDelegate(reactionSender),
-    RightAdapterDelegate(reactionSender)
+    LeftAdapterDelegate(reactionSender, color),
+    RightAdapterDelegate(reactionSender, color)
 ) {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

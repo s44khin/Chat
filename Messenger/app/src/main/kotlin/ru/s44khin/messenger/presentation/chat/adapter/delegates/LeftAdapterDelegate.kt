@@ -1,34 +1,32 @@
 package ru.s44khin.messenger.presentation.chat.adapter.delegates
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
+import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
-import okhttp3.Credentials
 import ru.s44khin.messenger.R
-import ru.s44khin.messenger.data.network.api.API_KEY
-import ru.s44khin.messenger.data.network.api.EMAIL
+import ru.s44khin.messenger.data.network.GlideApp
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.MenuHandler
 import ru.s44khin.messenger.presentation.chat.adapter.AdapterHelper
 import ru.s44khin.messenger.views.FlexBoxLayout
 
 class LeftAdapterDelegate(
-    private val adapterHandler: MenuHandler
+    private val adapterHandler: MenuHandler,
+    private val color: String?
 ) : AbsListItemAdapterDelegate<ChatItem, ChatItem, LeftAdapterDelegate.LeftViewHolder>() {
 
     private val adapterHelper = AdapterHelper(adapterHandler)
 
     class LeftViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val avatar: ImageView = itemView.findViewById(R.id.leftMessageAvatar)
-        val cardView: CardView = itemView.findViewById(R.id.leftMessageCardView)
+        val cardView: MaterialCardView = itemView.findViewById(R.id.leftMessageCardView)
         val image: ImageView = itemView.findViewById(R.id.leftMessageImage)
         val profile: TextView = itemView.findViewById(R.id.leftMessageProfile)
         val content: TextView = itemView.findViewById(R.id.leftMessageContent)
@@ -56,20 +54,16 @@ class LeftAdapterDelegate(
             .circleCrop()
             .into(holder.avatar)
 
+        holder.cardView.strokeColor = if (color == null)
+            holder.itemView.context.getColor(R.color.tabBottom)
+        else
+            Color.parseColor(color)
+
         if (item.content.contains("](/user_uploads/")) {
             val linkImage = adapterHelper.getLinkImage(item.content)
-val credentials = Credentials.basic(EMAIL, API_KEY)
 
-val glideUrl = GlideUrl(
-    linkImage,
-    LazyHeaders.Builder()
-        .addHeader("Authorization", credentials)
-        .build()
-)
-
-
-            Glide.with(holder.image)
-                .load(glideUrl)
+            GlideApp.with(holder.image)
+                .load(linkImage)
                 .into(holder.image)
 
             holder.image.visibility = View.VISIBLE

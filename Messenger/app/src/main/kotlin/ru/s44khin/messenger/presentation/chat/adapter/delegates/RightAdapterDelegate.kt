@@ -1,5 +1,6 @@
 package ru.s44khin.messenger.presentation.chat.adapter.delegates
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,21 +8,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
-import com.bumptech.glide.load.model.LazyHeaders
+import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
-import okhttp3.Credentials
 import ru.s44khin.messenger.R
-import ru.s44khin.messenger.data.network.api.API_KEY
-import ru.s44khin.messenger.data.network.api.EMAIL
+import ru.s44khin.messenger.data.network.GlideApp
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.MenuHandler
 import ru.s44khin.messenger.presentation.chat.adapter.AdapterHelper
 import ru.s44khin.messenger.views.FlexBoxLayout
 
 class RightAdapterDelegate(
-    reactionSender: MenuHandler
+    reactionSender: MenuHandler,
+    private val color: String?
 ) : AbsListItemAdapterDelegate<ChatItem, ChatItem, RightAdapterDelegate.RightViewHolder>() {
 
     private val adapterHelper = AdapterHelper(reactionSender)
@@ -30,7 +28,7 @@ class RightAdapterDelegate(
         val content: TextView = itemView.findViewById(R.id.rightMessageContent)
         val image: ImageView = itemView.findViewById(R.id.rightMessageImage)
         val topicName: TextView = itemView.findViewById(R.id.rightMessageTopicName)
-        val cardView: CardView = itemView.findViewById(R.id.rightMessageCardView)
+        val cardView: MaterialCardView = itemView.findViewById(R.id.rightMessageCardView)
         val reactions: FlexBoxLayout = itemView.findViewById(R.id.rightMessageReactions)
     }
 
@@ -38,9 +36,7 @@ class RightAdapterDelegate(
         item: ChatItem,
         items: MutableList<ChatItem>,
         position: Int
-    ): Boolean {
-        return item.isMyMessage
-    }
+    ) = item.isMyMessage
 
     override fun onCreateViewHolder(parent: ViewGroup) = RightViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.item_right_message, parent, false)
@@ -53,21 +49,18 @@ class RightAdapterDelegate(
     ) {
         if (item.content.contains("](/user_uploads/")) {
             val linkImage = adapterHelper.getLinkImage(item.content)
-            val credentials = Credentials.basic(EMAIL, API_KEY)
 
-            val glideUrl = GlideUrl(
-                linkImage,
-                LazyHeaders.Builder()
-                    .addHeader("Authorization", credentials)
-                    .build()
-            )
-
-            Glide.with(holder.image)
-                .load(glideUrl)
+            GlideApp.with(holder.image)
+                .load(linkImage)
                 .into(holder.image)
 
             holder.image.visibility = View.VISIBLE
         }
+
+        holder.cardView.strokeColor = if (color == null)
+            holder.itemView.context.getColor(R.color.tabBottom)
+        else
+            Color.parseColor(color)
 
         holder.content.text = item.content
         holder.topicName.text = item.topicName

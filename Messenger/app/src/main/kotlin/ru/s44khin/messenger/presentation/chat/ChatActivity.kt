@@ -3,6 +3,8 @@ package ru.s44khin.messenger.presentation.chat
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -24,12 +26,19 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         const val STREAM_ID = "STREAM_ID"
         const val STREAM_NAME = "STREAM_NAME"
         const val TOPIC_NAME = "TOPIC_NAME"
+        const val STREAM_COLOR = "STREAM_COLOR"
 
-        fun createIntent(context: Context, streamId: Int, streamName: String, topicName: String?) =
-            Intent(context, ChatActivity::class.java)
-                .putExtra(STREAM_ID, streamId)
-                .putExtra(STREAM_NAME, streamName)
-                .putExtra(TOPIC_NAME, topicName)
+        fun createIntent(
+            context: Context,
+            streamId: Int,
+            streamName: String,
+            topicName: String?,
+            color: String?
+        ) = Intent(context, ChatActivity::class.java)
+            .putExtra(STREAM_ID, streamId)
+            .putExtra(STREAM_NAME, streamName)
+            .putExtra(TOPIC_NAME, topicName)
+            .putExtra(STREAM_COLOR, color)
     }
 
     override val initEvent = Event.Ui.LoadNextPage
@@ -50,7 +59,8 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
             paginationAdapterHelper = PaginationAdapterHelper {
                 store.accept(Event.Ui.LoadNextPage)
             },
-            reactionSender = this
+            reactionSender = this,
+            color = color
         )
     }
 
@@ -66,6 +76,10 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         intent.getStringExtra(TOPIC_NAME)
     }
 
+    private val color by lazy {
+        intent.getStringExtra(STREAM_COLOR)
+    }
+
     private val binding: ActivityChatBinding by lazy {
         ActivityChatBinding.inflate(layoutInflater)
     }
@@ -76,6 +90,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         initRecyclerView()
         initToolBar()
         initButtons()
+        initColor()
     }
 
     override fun render(state: State) {
@@ -135,6 +150,23 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         } else {
             binding.messageInput.send.hide()
             binding.messageInput.attach.show()
+        }
+    }
+
+    private fun initColor() {
+        if (color != null) {
+            val newColor = Color.parseColor(color)
+
+            binding.backButton.setColorFilter(newColor)
+            binding.streamName.setTextColor(newColor)
+            binding.progressIndicator.setIndicatorColor(newColor)
+            binding.progressIndicator.trackColor = Color.argb(
+                100,
+                Color.red(newColor),
+                Color.green(newColor),
+                Color.blue(newColor)
+            )
+            binding.messageInput.send.backgroundTintList = ColorStateList.valueOf(newColor)
         }
     }
 }

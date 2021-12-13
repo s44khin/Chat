@@ -79,13 +79,19 @@ class StreamAdapter(
                 }
             }
 
+            itemView.setOnLongClickListener {
+                menuHandler.showMenu(stream)
+                true
+            }
+
             itemView.setOnClickListener {
                 itemView.context.startActivity(
                     ChatActivity.createIntent(
                         context = itemView.context,
                         streamId = stream.streamId,
                         streamName = stream.name,
-                        topicName = null
+                        topicName = null,
+                        color = stream.color
                     )
                 )
             }
@@ -97,7 +103,7 @@ class StreamAdapter(
             else
                 View.VISIBLE
 
-            topics.adapter = TopicAdapter(stream.streamId, stream.name, stream.topics)
+            topics.adapter = TopicAdapter(stream)
         }
     }
 

@@ -7,19 +7,20 @@
     android:layout_gravity="end"
     android:layout_marginTop="10dp">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/rightMessageCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:foreground="?android:selectableItemBackground"
-        app:cardBackgroundColor="@color/message"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/tabBottom"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="?android:selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -43,7 +44,7 @@
                 android:layout_marginTop="10dp"
                 android:paddingStart="10dp"
                 android:text="@string/i"
-                android:textColor="@color/primary"
+                android:textColor="@color/textColor"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rightMessageImage" />
@@ -83,7 +84,7 @@
                 app:layout_constraintTop_toBottomOf="@id/i"
                 tools:text="Здраствуйте! Не желаете оформить карту по моей реферальной ссылке?" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <ru.s44khin.messenger.views.FlexBoxLayout
         android:id="@+id/rightMessageReactions"
