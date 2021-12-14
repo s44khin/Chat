@@ -2,7 +2,6 @@ package ru.s44khin.messenger.data.network
 
 import android.content.Context
 import com.bumptech.glide.Glide
-import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
@@ -15,7 +14,7 @@ import ru.s44khin.messenger.data.network.api.EMAIL
 import java.io.InputStream
 
 @GlideModule
-class CustomGlideModule: AppGlideModule() {
+class CustomGlideModule : AppGlideModule() {
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         val okHttpClient = OkHttpClient.Builder()

@@ -80,6 +80,8 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         intent.getStringExtra(STREAM_COLOR)
     }
 
+    private var isLoadFirst = false
+
     private val binding: ActivityChatBinding by lazy {
         ActivityChatBinding.inflate(layoutInflater)
     }
@@ -97,8 +99,14 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         binding.progressBar.isVisible = state.isLoadingDB
         binding.progressIndicator.isVisible = state.isLoadingNetwork
 
-        if (state.messages != null)
+        if (state.messages != null) {
             adapter.items = state.messages
+
+            if (!isLoadFirst) {
+                binding.recyclerView.scrollToPosition(adapter.itemCount - 1)
+                isLoadFirst = true
+            }
+        }
     }
 
     override fun showProfile(avatar: String, name: String, email: String) {
@@ -127,8 +135,6 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
 
     private fun initRecyclerView() = binding.recyclerView.apply {
         val lm = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
-        lm.stackFromEnd = true
-        lm.reverseLayout = true
         lm.isSmoothScrollbarEnabled = true
         layoutManager = lm
         adapter = this@ChatActivity.adapter

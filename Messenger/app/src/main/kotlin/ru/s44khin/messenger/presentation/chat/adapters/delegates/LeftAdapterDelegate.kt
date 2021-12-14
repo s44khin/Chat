@@ -83,10 +83,11 @@ class LeftAdapterDelegate(
         holder.profile.text = item.profile
         holder.topicName.text = item.topicName
         if (item.reactions.isNotEmpty()) {
+            holder.reactions.visibility = View.VISIBLE
             holder.reactions.adapter =
                 ReactionsAdapter(item, ReactionsAdapter.Alignment.LEFT, menuHandler, color)
         } else {
-            holder.reactions.removeAllViews()
+            holder.reactions.visibility = View.GONE
         }
 
         holder.avatar.setOnClickListener {
