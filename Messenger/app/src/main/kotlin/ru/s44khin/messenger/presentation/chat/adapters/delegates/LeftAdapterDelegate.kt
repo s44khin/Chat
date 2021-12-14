@@ -1,5 +1,6 @@
 package ru.s44khin.messenger.presentation.chat.adapters.delegates
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,11 +65,6 @@ class LeftAdapterDelegate(
             .circleCrop()
             .into(holder.avatar)
 
-        holder.cardView.strokeColor = if (color == null)
-            holder.itemView.context.getColor(R.color.tabBottom)
-        else
-            color
-
         if (item.content.contains("](/user_uploads/")) {
             val linkImage = adapterHelper.getLinkImage(item.content)
 
@@ -79,21 +75,36 @@ class LeftAdapterDelegate(
             holder.image.visibility = View.VISIBLE
         }
 
-        holder.content.text = item.content
-        holder.profile.text = item.profile
-        holder.topicName.text = item.topicName
-        if (item.reactions.isNotEmpty()) {
-            holder.reactions.visibility = View.VISIBLE
-            holder.reactions.adapter =
-                ReactionsAdapter(item, ReactionsAdapter.Alignment.LEFT, menuHandler, color)
-        } else {
-            holder.reactions.visibility = View.GONE
-        }
+        holder.apply {
+            cardView.strokeColor = if (color == null)
+                itemView.context.getColor(R.color.tabBottom)
+            else
+                color
 
-        holder.avatar.setOnClickListener {
-            menuHandler.showProfile(item.avatar, item.profile, item.email)
-        }
+            content.text = item.content
+            profile.text = item.profile
+            topicName.text = item.topicName
 
-        holder.reactions.requestLayout()
+            if (item.reactions.isNotEmpty()) {
+                reactions.adapter =
+                    ReactionsAdapter(
+                        item,
+                        ReactionsAdapter.Alignment.LEFT,
+                        menuHandler,
+                        adapterHelper,
+                        color
+                    )
+            } else {
+                reactions.adapter = null
+            }
+
+            avatar.setOnClickListener {
+                menuHandler.showProfile(item.avatar, item.profile, item.email)
+            }
+
+            cardView.setOnLongClickListener {
+                adapterHelper.showBottomSheet(itemView.context, item)
+            }
+        }
     }
 }

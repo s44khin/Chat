@@ -74,11 +74,13 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
         }
 
         is Event.Internal.ReactionAdded -> {
-            state { copy() }
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadPage(state.pageNumber) }
         }
 
         is Event.Internal.ReactionRemoved -> {
-            state { copy() }
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadPage(state.pageNumber) }
         }
 
         is Event.Internal.MessageDeleted -> {

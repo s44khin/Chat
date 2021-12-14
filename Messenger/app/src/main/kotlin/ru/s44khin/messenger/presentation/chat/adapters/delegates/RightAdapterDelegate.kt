@@ -35,8 +35,8 @@ class RightAdapterDelegate(
 
         init {
             reactions.layoutManager = FlexboxLayoutManager(itemView.context).apply {
-                flexDirection = FlexDirection.ROW
-                justifyContent = JustifyContent.FLEX_END
+                flexDirection = FlexDirection.ROW_REVERSE
+                justifyContent = JustifyContent.FLEX_START
             }
         }
     }
@@ -66,22 +66,32 @@ class RightAdapterDelegate(
             holder.image.visibility = View.VISIBLE
         }
 
-        holder.cardView.strokeColor = if (color == null)
-            holder.itemView.context.getColor(R.color.tabBottom)
-        else
-            color
+        holder.apply {
+            cardView.strokeColor = if (color == null)
+                itemView.context.getColor(R.color.tabBottom)
+            else
+                color
 
-        holder.content.text = item.content
-        holder.topicName.text = item.topicName
+            content.text = item.content
+            topicName.text = item.topicName
 
-        if (item.reactions.isNotEmpty()) {
-            holder.reactions.visibility = View.VISIBLE
-            holder.reactions.adapter =
-                ReactionsAdapter(item, ReactionsAdapter.Alignment.RIGHT, menuHandler, color)
-        } else {
-            holder.reactions.visibility = View.GONE
+            if (item.reactions.isNotEmpty()) {
+                reactions.visibility = View.VISIBLE
+                reactions.adapter =
+                    ReactionsAdapter(
+                        item,
+                        ReactionsAdapter.Alignment.RIGHT,
+                        menuHandler,
+                        adapterHelper,
+                        color
+                    )
+            } else {
+                reactions.adapter = null
+            }
+
+            cardView.setOnLongClickListener {
+                adapterHelper.showBottomSheet(itemView.context, item)
+            }
         }
-
-        holder.reactions.requestLayout()
     }
 }

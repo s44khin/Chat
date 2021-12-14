@@ -24,6 +24,7 @@ class ReactionsAdapter(
     private val message: ChatItem,
     private val alignment: Alignment,
     private val reactionSender: MenuHandler,
+    private val adapterHelper: AdapterHelper,
     @ColorInt private val color: Int?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -100,7 +101,7 @@ class ReactionsAdapter(
         when (getItemViewType(position)) {
             FIRST_LEFT, FIRST_RIGHT -> {
                 holder.itemView.setOnClickListener {
-                    Toast.makeText(holder.itemView.context, "plus", Toast.LENGTH_SHORT).show()
+                    adapterHelper.showBottomSheet(holder.itemView.context, message)
                 }
             }
             else -> {
@@ -133,7 +134,7 @@ class ReactionsAdapter(
                 }
 
                 holder.card.setOnClickListener {
-                    if (holder.card.isSelected)
+                    if (reaction.iLiked)
                         removeReaction(holder, reaction)
                     else
                         addReaction(holder, reaction)
