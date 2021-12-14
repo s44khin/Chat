@@ -4,7 +4,7 @@
     <color name="black">#FF000000</color>
     <color name="background">#1E1E1E</color>
     <color name="textColor">#FFFFFFFF</color>
-    <color name="message">#1C1C1C</color>
+    <color name="message">#000000</color>
     <color name="messageSelected">#3A3A3A</color>
     <color name="tabBottom">#6A6A6A</color>
     <color name="shimmerBackground">#333333</color>

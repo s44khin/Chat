@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityChatBinding
-import ru.s44khin.messenger.presentation.chat.adapter.ChatAdapter
+import ru.s44khin.messenger.presentation.chat.adapters.ChatAdapter
 import ru.s44khin.messenger.presentation.chat.elm.*
 import ru.s44khin.messenger.presentation.chat.pagination.PaginationAdapterHelper
 import ru.s44khin.messenger.presentation.main.profile.ProfileFragment
@@ -128,6 +128,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
     private fun initRecyclerView() = binding.recyclerView.apply {
         val lm = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
         lm.stackFromEnd = true
+        lm.reverseLayout = true
         lm.isSmoothScrollbarEnabled = true
         layoutManager = lm
         adapter = this@ChatActivity.adapter

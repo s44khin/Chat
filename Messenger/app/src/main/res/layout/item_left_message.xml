@@ -21,25 +21,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/tabBottom"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:layout_constraintStart_toEndOf="@id/leftMessageAvatar"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/tabBottom"
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="?android:selectableItemBackground"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="?android:selectableItemBackground">
 
             <ImageView
                 android:id="@+id/leftMessageImage"
                 android:layout_width="0dp"
                 android:layout_height="180dp"
                 android:scaleType="centerCrop"
-                android:visibility="gone"
                 android:src="@drawable/image_message_preview"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/leftMessageProfile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:maxWidth="180dp"
                 android:maxLines="1"
                 android:paddingStart="10dp"
                 android:textColor="@color/textColor"
@@ -73,6 +74,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:maxWidth="180dp"
+                android:maxLines="1"
                 android:paddingEnd="10dp"
                 android:textStyle="italic"
                 app:layout_constraintBaseline_toBaselineOf="@id/to"
@@ -95,12 +98,10 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <ru.s44khin.messenger.views.FlexBoxLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/leftMessageReactions"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/leftMessageCardView"
         app:layout_constraintTop_toBottomOf="@id/leftMessageCardView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,20 +38,17 @@ class ZulipRepository(
         pageNumber: Int
     ): Single<BaseMessages> {
         val numBefore = pageNumber * 50 + 50
-        val numAfter = pageNumber * 50
 
         return if (topicName == null)
             service.getMessages(
                 narrow = "[{\"operator\": \"stream\", \"operand\": $streamId}]",
                 numBefore = numBefore,
-                numAfter = numAfter
             )
         else
             service.getMessages(
                 narrow = "[{\"operator\": \"stream\", \"operand\": $streamId}, " +
                         "{\"operator\": \"topic\", \"operand\": \"$topicName\"}]",
-                numBefore = numBefore,
-                numAfter = numAfter
+                numBefore = numBefore
             )
     }
 

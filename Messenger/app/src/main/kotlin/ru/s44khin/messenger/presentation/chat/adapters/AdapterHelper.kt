@@ -1,10 +1,9 @@
-package ru.s44khin.messenger.presentation.chat.adapter
+package ru.s44khin.messenger.presentation.chat.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.setPadding
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.card.MaterialCardView
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.AdapterReaction
@@ -78,47 +77,12 @@ class AdapterHelper(
         messageId: Int,
         reaction: AdapterReaction,
         flexBox: FlexBoxLayout
-    ) = flexBox.addView(
-        EmojiView(flexBox.context).apply {
-            this.emoji = try {
-                String(Character.toChars(reaction.emojiCode.toInt(16)))
-            } catch (error: Exception) {
-                reaction.emojiCode
-            }
+    ) {
+        val reaction = LayoutInflater.from(flexBox.context)
+            .inflate(R.layout.item_reaction_left, flexBox, false) as MaterialCardView
 
-            this.text = reaction.count.toString()
-            this.isSelected = reaction.iLiked
-            setPadding((7 * context.resources.displayMetrics.density).toInt())
-            background = ResourcesCompat.getDrawable(
-                resources,
-                R.drawable.emoji_view_background,
-                null
-            )
-            setOnClickListener { emojiView ->
-                emojiView as EmojiView
-
-                if (emojiView.isSelected) {
-                    emojiView.text = (Integer.parseInt(emojiView.text) - 1).toString()
-                    emojiView.isSelected = false
-                    reactionSender.removeReaction(messageId, reaction.emojiName)
-                } else {
-                    emojiView.text = (Integer.parseInt(emojiView.text) + 1).toString()
-                    emojiView.isSelected = true
-                    reactionSender.addReaction(messageId, reaction.emojiName)
-                }
-
-                if (emojiView.text == "0") {
-                    for (i in 1 until flexBox.childCount)
-                        if ((flexBox.getChildAt(i) as EmojiView).emoji == emojiView.emoji) {
-                            flexBox.removeViewAt(i)
-
-                            if (flexBox.childCount == 1)
-                                flexBox.removeAllViews()
-                        }
-                }
-            }
-        }
-    )
+        flexBox.addView(reaction)
+    }
 
     fun getLinkImage(content: String): String {
         val start = content.indexOf("/user_uploads/")

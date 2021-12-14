@@ -5,7 +5,7 @@ class PaginationAdapterHelper(
 ) {
 
     companion object {
-        private const val DEFAULT_LOAD_MORE_SUBSTITUTIONS = 50
+        private const val DEFAULT_LOAD_MORE_SUBSTITUTIONS = 2
     }
 
     fun onBind(adapterPosition: Int, totalItemCount: Int) {

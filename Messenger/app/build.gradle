@@ -53,6 +53,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationFragment"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationFragment"
     implementation "com.google.android.material:material:$materialVersion"
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     // Elmslie
     def elmslie = "1.2.0"

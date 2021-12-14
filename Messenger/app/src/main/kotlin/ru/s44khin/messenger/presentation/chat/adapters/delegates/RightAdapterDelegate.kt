@@ -1,35 +1,44 @@
-package ru.s44khin.messenger.presentation.chat.adapter.delegates
+package ru.s44khin.messenger.presentation.chat.adapters.delegates
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.google.android.material.card.MaterialCardView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.network.GlideApp
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.MenuHandler
-import ru.s44khin.messenger.presentation.chat.adapter.AdapterHelper
-import ru.s44khin.messenger.views.FlexBoxLayout
+import ru.s44khin.messenger.presentation.chat.adapters.AdapterHelper
+import ru.s44khin.messenger.presentation.chat.adapters.ReactionsAdapter
 
 class RightAdapterDelegate(
-    reactionSender: MenuHandler,
-    private val color: String?
+    private val menuHandler: MenuHandler,
+    @ColorInt private val color: Int?
 ) : AbsListItemAdapterDelegate<ChatItem, ChatItem, RightAdapterDelegate.RightViewHolder>() {
 
-    private val adapterHelper = AdapterHelper(reactionSender)
+    private val adapterHelper = AdapterHelper(menuHandler)
 
     class RightViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val content: TextView = itemView.findViewById(R.id.rightMessageContent)
         val image: ImageView = itemView.findViewById(R.id.rightMessageImage)
         val topicName: TextView = itemView.findViewById(R.id.rightMessageTopicName)
         val cardView: MaterialCardView = itemView.findViewById(R.id.rightMessageCardView)
-        val reactions: FlexBoxLayout = itemView.findViewById(R.id.rightMessageReactions)
+        val reactions: RecyclerView = itemView.findViewById(R.id.rightMessageReactions)
+
+        init {
+            reactions.layoutManager = FlexboxLayoutManager(itemView.context).apply {
+                flexDirection = FlexDirection.ROW
+                justifyContent = JustifyContent.FLEX_END
+            }
+        }
     }
 
     override fun isForViewType(
@@ -60,29 +69,16 @@ class RightAdapterDelegate(
         holder.cardView.strokeColor = if (color == null)
             holder.itemView.context.getColor(R.color.tabBottom)
         else
-            Color.parseColor(color)
+            color
 
         holder.content.text = item.content
         holder.topicName.text = item.topicName
 
-        holder.reactions.removeAllViews()
-
         if (item.reactions.isNotEmpty()) {
-            holder.reactions.visibility = View.VISIBLE
-            adapterHelper.addPlusButton(holder.reactions, item)
+            holder.reactions.adapter =
+                ReactionsAdapter(item, ReactionsAdapter.Alignment.RIGHT, menuHandler, color)
         } else {
-            holder.reactions.visibility = View.GONE
-        }
-
-        for (reaction in item.reactions)
-            adapterHelper.addReaction(
-                messageId = item.id,
-                reaction = reaction,
-                flexBox = holder.reactions
-            )
-
-        holder.cardView.setOnLongClickListener {
-            adapterHelper.showBottomSheet(it.context, item, holder.reactions)
+            holder.reactions.removeAllViews()
         }
 
         holder.reactions.requestLayout()

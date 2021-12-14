@@ -12,17 +12,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/tabBottom"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/tabBottom"
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="?android:selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?android:selectableItemBackground"
             android:orientation="vertical">
 
             <ImageView
@@ -86,13 +86,10 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <ru.s44khin.messenger.views.FlexBoxLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rightMessageReactions"
-        android:layout_width="250dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        app:alignment="right"
         app:layout_constraintEnd_toEndOf="@id/rightMessageCardView"
         app:layout_constraintTop_toBottomOf="@id/rightMessageCardView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

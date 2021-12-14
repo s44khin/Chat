@@ -103,5 +103,5 @@ class ChatActor(
         isMyMessage = MY_ID == this.senderId
     )
 
-    private fun List<Message>.toListOfChatItems() = this.map { it.toChatItem() }
+    private fun List<Message>.toListOfChatItems() = this.map { it.toChatItem() }.reversed()
 }
