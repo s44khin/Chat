@@ -7,7 +7,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
+import androidx.core.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.s44khin.messenger.MessengerApplication
@@ -131,6 +131,27 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
 
     override fun deleteMessage(id: Int) {
         store.accept(Event.Ui.DeleteMessage(id))
+    }
+
+    override fun editMessage(message: ChatItem) {
+        binding.messageInput.message.setText(message.content)
+
+        binding.messageInput.send.hide()
+        binding.messageInput.attach.hide()
+        binding.messageInput.edit.show()
+
+        binding.messageInput.edit.setOnClickListener {
+            store.accept(
+                Event.Ui.EditMessage(
+                    message.id,
+                    binding.messageInput.message.text.toString()
+                )
+            )
+            binding.messageInput.message.setText("")
+
+            binding.messageInput.edit.hide()
+            binding.messageInput.attach.show()
+        }
     }
 
     private fun initRecyclerView() = binding.recyclerView.apply {

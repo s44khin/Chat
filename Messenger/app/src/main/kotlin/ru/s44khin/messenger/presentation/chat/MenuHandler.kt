@@ -11,4 +11,6 @@ interface MenuHandler {
     fun copyTextToClipboard(content: String)
 
     fun deleteMessage(id: Int)
+
+    fun editMessage(message: ChatItem)
 }

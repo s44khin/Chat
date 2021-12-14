@@ -22,6 +22,8 @@ class LoadMessages(
     fun sendMessage(streamName: String, topicName: String?, content: String) =
         repository.sendMessage(streamName, topicName, content)
 
+    fun editMessage(id: Int, content: String) = repository.editMessage(id, content)
+
     fun addReaction(messageId: Int, emojiName: String) =
         repository.addReaction(messageId, emojiName)
 

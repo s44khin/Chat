@@ -54,6 +54,7 @@
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable-v24/ic_profile.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable-v24/ic_unpin.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable-v24/outline_content_copy_24.xml" value="0.3974358974358974" />
+        <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable-v24/outline_done_24.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable-v24/outline_edit_24.xml" value="0.3974358974358974" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable-v24/outline_more_vert_24.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/drawable-v24/outline_published_with_changes_24.xml" value="0.3974358974358974" />
@@ -75,7 +76,7 @@
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout-v31/tool_bar_search.xml" value="0.3875" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/activity_chat.xml" value="0.275" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/activity_main.xml" value="0.275" />
-        <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/chat_bottom.xml" value="0.1" />
+        <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/chat_bottom.xml" value="0.5983827493261455" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/emoji_bottom_item.xml" value="0.34193840579710144" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_add_new_stream.xml" value="0.33" />
         <entry key="..\:/Users/s44kh/Documents/tfs-android-fall-2021/Messenger/app/src/main/res/layout/fragment_dialog.xml" value="0.33" />

@@ -64,6 +64,11 @@ class EmojiBottomSheet(
             menuHandler.deleteMessage(message.id)
             dismiss()
         }
+
+        menuEdit.setOnClickListener {
+            menuHandler.editMessage(message)
+            dismiss()
+        }
     }
 
     override fun onDestroyView() {

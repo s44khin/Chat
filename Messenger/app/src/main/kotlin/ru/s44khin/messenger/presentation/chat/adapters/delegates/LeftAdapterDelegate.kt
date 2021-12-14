@@ -1,6 +1,5 @@
 package ru.s44khin.messenger.presentation.chat.adapters.delegates
 
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

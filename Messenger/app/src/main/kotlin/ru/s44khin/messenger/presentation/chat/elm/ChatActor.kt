@@ -60,6 +60,12 @@ class ChatActor(
                 { Event.Internal.MessageDeleted },
                 { error -> Event.Internal.ErrorDeleteMessage(error) }
             )
+
+        is Command.EditMessage -> loadMessages.editMessage(command.id, command.content)
+            .mapEvents(
+                { Event.Internal.MessageEdited },
+                { error -> Event.Internal.EditMessageError(error) }
+            )
     }
 
     private fun List<Reaction>.toAdapterReactions(): MutableList<AdapterReaction> {

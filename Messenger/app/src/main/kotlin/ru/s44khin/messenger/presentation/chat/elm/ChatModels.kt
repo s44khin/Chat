@@ -27,6 +27,11 @@ sealed class Event {
 
         data class SendMessage(val content: String) : Ui()
 
+        data class EditMessage(
+            val id: Int,
+            val content: String
+        ) : Ui()
+
         data class AddReaction(
             val messageId: Int,
             val emojiName: String
@@ -55,6 +60,8 @@ sealed class Event {
 
         object ReactionRemoved : Internal()
 
+        object MessageEdited : Internal()
+
         data class ReactionAddError(val error: Throwable) : Internal()
 
         data class ReactionRemoveError(val error: Throwable) : Internal()
@@ -66,6 +73,8 @@ sealed class Event {
         data class ErrorSendMessage(val error: Throwable) : Internal()
 
         data class ErrorDeleteMessage(val error: Throwable) : Internal()
+
+        data class EditMessageError(val error: Throwable) : Internal()
     }
 }
 
@@ -81,6 +90,8 @@ sealed class Command {
     object LoadMessagesDB : Command()
 
     data class SendMessage(val content: String) : Command()
+
+    data class EditMessage(val id: Int, val content: String) : Command()
 
     data class DeleteMessage(val id: Int) : Command()
 
