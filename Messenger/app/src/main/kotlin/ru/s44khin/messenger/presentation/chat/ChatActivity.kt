@@ -128,6 +128,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
     private fun initRecyclerView() = binding.recyclerView.apply {
         val lm = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
         lm.stackFromEnd = true
+        lm.isSmoothScrollbarEnabled = true
         layoutManager = lm
         adapter = this@ChatActivity.adapter
     }
