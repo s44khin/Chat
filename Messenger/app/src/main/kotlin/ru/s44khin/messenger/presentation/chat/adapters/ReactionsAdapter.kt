@@ -1,16 +1,12 @@
 package ru.s44khin.messenger.presentation.chat.adapters
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.blue
-import androidx.core.graphics.green
-import androidx.core.graphics.red
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import ru.s44khin.messenger.R
@@ -114,22 +110,9 @@ class ReactionsAdapter(
                         reaction.emojiCode
                     }
 
-                    if (color != null && reaction.iLiked)
-                        count.setTextColor(
-                            calculateTextColor(color)
-                        )
+                    card.isSelected = reaction.iLiked
 
                     count.text = reaction.count.toString()
-
-                    card.setCardBackgroundColor(
-                        if (reaction.iLiked)
-                            color ?: ContextCompat.getColor(
-                                holder.itemView.context,
-                                R.color.messageSelected
-                            )
-                        else
-                            ContextCompat.getColor(holder.itemView.context, R.color.message)
-                    )
                 }
 
                 holder.card.setOnClickListener {
@@ -176,19 +159,5 @@ class ReactionsAdapter(
 
         holder.count.text =
             (Integer.parseInt(holder.count.text.toString()) + 1).toString()
-
-        if (color != null) {
-            holder.count.setTextColor(
-                calculateTextColor(color)
-            )
-
-            holder.card.setCardBackgroundColor(color)
-        }
     }
-
-    private fun calculateTextColor(color: Int): Int =
-        if (color.red * 0.299 + color.green * 0.587 + color.blue * 0.144 > 186)
-            Color.BLACK
-        else
-            Color.WHITE
 }

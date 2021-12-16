@@ -4,19 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    android:padding="5dp">
+    android:padding="8dp">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/defaultPadding"
-        android:layout_marginEnd="@dimen/defaultPadding"
         android:background="@null"
-        android:hint="@string/write"
+        android:hint="@string/message"
+        android:maxLines="1"
         android:inputType="textCapSentences"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/send"
+        app:layout_constraintStart_toEndOf="@id/attach"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/attach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_attach"
+        app:backgroundTint="@color/background"
+        app:elevation="2dp"
+        app:fabSize="mini"
+        app:tint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,23 +43,11 @@
         android:visibility="invisible"
         app:backgroundTint="@color/primary"
         app:elevation="2dp"
+        app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@android:color/white" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/attach"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/send"
-        android:src="@drawable/ic_attach"
-        app:backgroundTint="@color/message"
-        app:elevation="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/gray" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/edit"
@@ -53,9 +55,10 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/send"
         android:src="@drawable/ic_done"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:backgroundTint="@color/message"
         app:elevation="2dp"
+        app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

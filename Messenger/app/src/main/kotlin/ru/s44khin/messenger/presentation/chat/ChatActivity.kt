@@ -137,7 +137,6 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         binding.messageInput.message.setText(message.content)
 
         binding.messageInput.send.hide()
-        binding.messageInput.attach.hide()
         binding.messageInput.edit.show()
 
         binding.messageInput.edit.setOnClickListener {
@@ -150,7 +149,6 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
             binding.messageInput.message.setText("")
 
             binding.messageInput.edit.hide()
-            binding.messageInput.attach.show()
         }
     }
 
@@ -175,10 +173,8 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
 
         if (text?.length != 0) {
             binding.messageInput.send.show()
-            binding.messageInput.attach.hide()
         } else {
             binding.messageInput.send.hide()
-            binding.messageInput.attach.show()
         }
     }
 

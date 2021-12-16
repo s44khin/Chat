@@ -9,15 +9,13 @@
     android:foreground="?android:selectableItemBackground"
     app:cardCornerRadius="20dp"
     app:cardElevation="0dp"
-    app:strokeColor="@color/tabBottom"
-    app:strokeWidth="1dp">
+    app:cardBackgroundColor="@color/message">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="+"
-        android:textColor="@color/textColor"
         android:textSize="20sp"
         android:textStyle="" />
 </com.google.android.material.card.MaterialCardView>

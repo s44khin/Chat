@@ -72,13 +72,17 @@ class LeftAdapterDelegate(
                 .into(holder.image)
 
             holder.image.visibility = View.VISIBLE
+        } else {
+            holder.image.visibility = View.GONE
         }
 
         holder.apply {
-            cardView.strokeColor = if (color == null)
-                itemView.context.getColor(R.color.tabBottom)
-            else
-                color
+            profile.setTextColor(
+                if (color == null)
+                    itemView.context.getColor(R.color.primary)
+                else
+                    color
+            )
 
             content.text = item.content
             profile.text = item.profile

@@ -28,6 +28,7 @@ class RightAdapterDelegate(
 
     class RightViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val content: TextView = itemView.findViewById(R.id.rightMessageContent)
+        val profile: TextView = itemView.findViewById(R.id.rightMessageProfile)
         val image: ImageView = itemView.findViewById(R.id.rightMessageImage)
         val topicName: TextView = itemView.findViewById(R.id.rightMessageTopicName)
         val cardView: MaterialCardView = itemView.findViewById(R.id.rightMessageCardView)
@@ -64,13 +65,17 @@ class RightAdapterDelegate(
                 .into(holder.image)
 
             holder.image.visibility = View.VISIBLE
+        } else {
+            holder.image.visibility = View.GONE
         }
 
         holder.apply {
-            cardView.strokeColor = if (color == null)
-                itemView.context.getColor(R.color.tabBottom)
-            else
-                color
+            profile.setTextColor(
+                if (color == null)
+                    itemView.context.getColor(R.color.primary)
+                else
+                    color
+            )
 
             content.text = item.content
             topicName.text = item.topicName

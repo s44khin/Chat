@@ -7,6 +7,7 @@ import ru.s44khin.messenger.domain.LoadAllStreams
 import ru.s44khin.messenger.domain.LoadTopics
 import ru.s44khin.messenger.utils.resultStreamFromStreamAndTopics
 import vivid.money.elmslie.core.ActorCompat
+import java.util.concurrent.TimeUnit
 
 class AllStreamsActor(
     private val loadAllStreams: LoadAllStreams,
@@ -16,7 +17,7 @@ class AllStreamsActor(
     override fun execute(command: Command): Observable<Event> = when (command) {
 
         is Command.LoadStreamsNetwork -> loadAllStreams.fromNetwork()
-            .flattenAsObservable { it.streams }
+            .flattenAsObservable { it.streams.subList(0, 10) }
             .flatMap {
                 Observable.zip(
                     Observable.just(it),
