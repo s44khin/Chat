@@ -60,6 +60,8 @@ class ZulipRepository(
 
     fun editMessage(id: Int, content: String) = service.editMessage(id, content)
 
+    fun editMessageTopic(id: Int, topic: String) = service.editMessageTopic(id, topic)
+
     fun deleteMessage(id: Int): Single<Result> = service.deleteMessage(id)
 
     fun addReaction(messageId: Int, emojiName: String) = service.addReaction(messageId, emojiName)

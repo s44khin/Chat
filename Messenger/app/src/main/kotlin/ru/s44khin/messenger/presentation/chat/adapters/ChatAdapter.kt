@@ -15,8 +15,8 @@ val difItemCallback = object : DiffUtil.ItemCallback<ChatItem>() {
     override fun areItemsTheSame(oldItem: ChatItem, newItem: ChatItem): Boolean {
         return (oldItem.id == newItem.id &&
                 oldItem.reactions == newItem.reactions &&
-                oldItem.content == newItem.content
-                )
+                oldItem.content == newItem.content &&
+                oldItem.topicName == newItem.topicName)
     }
 
     override fun areContentsTheSame(

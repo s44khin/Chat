@@ -24,6 +24,8 @@ class LoadMessages(
 
     fun editMessage(id: Int, content: String) = repository.editMessage(id, content)
 
+    fun editMessageTopic(id: Int, topicName: String) = repository.editMessageTopic(id, topicName)
+
     fun addReaction(messageId: Int, emojiName: String) =
         repository.addReaction(messageId, emojiName)
 

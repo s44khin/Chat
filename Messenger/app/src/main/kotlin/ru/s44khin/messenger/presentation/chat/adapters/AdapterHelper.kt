@@ -5,8 +5,8 @@ import androidx.fragment.app.FragmentActivity
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.MenuHandler
-import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiAdapter
-import ru.s44khin.messenger.presentation.chat.bottomSheet.EmojiBottomSheet
+import ru.s44khin.messenger.presentation.chat.bottomSheetEmoji.EmojiAdapter
+import ru.s44khin.messenger.presentation.chat.bottomSheetEmoji.EmojiBottomSheet
 
 class AdapterHelper(
     private val reactionSender: MenuHandler,

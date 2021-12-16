@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.core.widget.doAfterTextChanged
@@ -14,8 +16,10 @@ import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityChatBinding
 import ru.s44khin.messenger.presentation.chat.adapters.ChatAdapter
+import ru.s44khin.messenger.presentation.chat.changeTopicFragment.ChangeTopicFragment
 import ru.s44khin.messenger.presentation.chat.elm.*
 import ru.s44khin.messenger.presentation.chat.pagination.PaginationAdapterHelper
+import ru.s44khin.messenger.presentation.chat.selectTopicFragment.SelectTopicFragment
 import ru.s44khin.messenger.presentation.main.profile.ProfileFragment
 import vivid.money.elmslie.android.base.ElmActivity
 import vivid.money.elmslie.core.store.Store
@@ -81,6 +85,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
     }
 
     private var isLoadFirst = false
+    private var isSentMessage = false
 
     private val binding: ActivityChatBinding by lazy {
         ActivityChatBinding.inflate(layoutInflater)
@@ -106,6 +111,12 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
                 binding.recyclerView.scrollToPosition(adapter.itemCount - 1)
                 isLoadFirst = true
             }
+
+            if (isSentMessage)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
+                    isSentMessage = false
+                }, 100)
         }
     }
 
@@ -133,6 +144,29 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         store.accept(Event.Ui.DeleteMessage(id))
     }
 
+    override fun sendMessageToTopic(content: String, topic: String) {
+        store.accept(Event.Ui.SendMessageToTopic(content, topic))
+        binding.messageInput.message.setText("")
+        isSentMessage = true
+    }
+
+    override fun editTopic(id: Int, topic: String) {
+        store.accept(Event.Ui.EditMessageTopic(id, topic))
+    }
+
+    override fun showEditTopicMenu(id: Int) {
+        val newColor = if (color == null)
+            ContextCompat.getColor(
+                this,
+                R.color.primary
+            )
+        else
+            Color.parseColor(color)
+
+        ChangeTopicFragment.newInstance(this, streamId, id, newColor)
+            .show(supportFragmentManager, ChangeTopicFragment.TAG)
+    }
+
     override fun editMessage(message: ChatItem) {
         binding.messageInput.message.setText(message.content)
 
@@ -154,7 +188,6 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
 
     private fun initRecyclerView() = binding.recyclerView.apply {
         val lm = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
-        lm.isSmoothScrollbarEnabled = true
         layoutManager = lm
         adapter = this@ChatActivity.adapter
     }
@@ -169,12 +202,30 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         binding.messageInput.send.setOnClickListener {
             store.accept(Event.Ui.SendMessage(text.toString()))
             binding.messageInput.message.setText("")
+            isSentMessage = true
         }
 
         if (text?.length != 0) {
             binding.messageInput.send.show()
         } else {
             binding.messageInput.send.hide()
+        }
+
+        if (topicName == null) {
+            binding.messageInput.send.setOnLongClickListener {
+                val newColor = if (color == null)
+                    ContextCompat.getColor(
+                        this,
+                        R.color.primary
+                    )
+                else
+                    Color.parseColor(color)
+
+                SelectTopicFragment.newInstance(this, text.toString(), streamId, newColor)
+                    .show(supportFragmentManager, SelectTopicFragment.TAG)
+
+                true
+            }
         }
     }
 

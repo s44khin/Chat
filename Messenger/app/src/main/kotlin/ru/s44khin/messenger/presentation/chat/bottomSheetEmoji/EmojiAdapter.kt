@@ -1,4 +1,4 @@
-package ru.s44khin.messenger.presentation.chat.bottomSheet
+package ru.s44khin.messenger.presentation.chat.bottomSheetEmoji
 
 import android.view.LayoutInflater
 import android.view.View

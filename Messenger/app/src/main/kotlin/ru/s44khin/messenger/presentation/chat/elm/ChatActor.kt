@@ -40,6 +40,22 @@ class ChatActor(
                 { error -> Event.Internal.ErrorSendMessage(error) }
             )
 
+        is Command.SendMessageToTopic -> loadMessages.sendMessage(
+            streamName,
+            command.topicName,
+            command.content
+        )
+            .mapEvents(
+                { Event.Internal.MessageSent(command.content, command.topicName) },
+                { error -> Event.Internal.ErrorSendMessage(error) }
+            )
+
+        is Command.EditMessageTopic -> loadMessages.editMessageTopic(command.id, command.topicName)
+            .mapEvents(
+                { Event.Internal.MessageTopicChanged },
+                { error -> Event.Internal.ErrorSendMessage(error) }
+            )
+
         is Command.AddReaction -> loadMessages.addReaction(command.messageId, command.emojiName)
             .mapEvents(
                 { Event.Internal.ReactionAdded },

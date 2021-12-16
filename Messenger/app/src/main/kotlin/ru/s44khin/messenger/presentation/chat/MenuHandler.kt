@@ -13,4 +13,10 @@ interface MenuHandler {
     fun deleteMessage(id: Int)
 
     fun editMessage(message: ChatItem)
+
+    fun sendMessageToTopic(content: String, topic: String)
+
+    fun editTopic(id: Int, topic: String)
+
+    fun showEditTopicMenu(id: Int)
 }

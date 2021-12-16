@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
@@ -96,6 +97,10 @@ class RightAdapterDelegate(
 
             cardView.setOnLongClickListener {
                 adapterHelper.showBottomSheet(itemView.context, item)
+            }
+
+            cardView.setOnClickListener {
+                Toast.makeText(holder.itemView.context, "$position", Toast.LENGTH_SHORT).show()
             }
         }
     }

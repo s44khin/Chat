@@ -56,6 +56,12 @@ interface ZulipService {
         @Query("content") content: String
     ): Single<Result>
 
+    @PATCH("api/v1/messages/{msg_id}")
+    fun editMessageTopic(
+        @Path("msg_id") id: Int,
+        @Query("topic") topic: String
+    ): Single<Result>
+
     @POST("/api/v1/messages/{message_id}/reactions")
     fun addReaction(
         @Path("message_id") messageId: Int,

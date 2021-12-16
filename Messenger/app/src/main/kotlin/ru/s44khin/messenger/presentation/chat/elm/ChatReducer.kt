@@ -82,6 +82,11 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
             commands { +Command.LoadPage(state.pageNumber) }
         }
 
+        is Event.Internal.MessageTopicChanged -> {
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadPage(state.pageNumber) }
+        }
+
         is Event.Internal.ReactionRemoved -> {
             state { copy(isLoadingNetwork = true) }
             commands { +Command.LoadPage(state.pageNumber) }
@@ -109,6 +114,14 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
 
         is Event.Ui.SendMessage -> {
             commands { +Command.SendMessage(event.content) }
+        }
+
+        is Event.Ui.SendMessageToTopic -> {
+            commands { +Command.SendMessageToTopic(event.content, event.topicName) }
+        }
+
+        is Event.Ui.EditMessageTopic -> {
+            commands { +Command.EditMessageTopic(event.id, event.topicName) }
         }
 
         is Event.Ui.AddReaction -> {

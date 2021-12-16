@@ -1,4 +1,4 @@
-package ru.s44khin.messenger.presentation.chat.bottomSheet
+package ru.s44khin.messenger.presentation.chat.bottomSheetEmoji
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -67,6 +67,11 @@ class EmojiBottomSheet(
 
         menuEdit.setOnClickListener {
             menuHandler.editMessage(message)
+            dismiss()
+        }
+
+        menuChangeTopic.setOnClickListener {
+            menuHandler.showEditTopicMenu(message.id)
             dismiss()
         }
     }

@@ -27,6 +27,10 @@ sealed class Event {
 
         data class SendMessage(val content: String) : Ui()
 
+        data class SendMessageToTopic(val content: String, val topicName: String) : Ui()
+
+        data class EditMessageTopic(val id: Int, val topicName: String) : Ui()
+
         data class EditMessage(
             val id: Int,
             val content: String
@@ -62,6 +66,8 @@ sealed class Event {
 
         object MessageEdited : Internal()
 
+        object MessageTopicChanged: Internal()
+
         data class ReactionAddError(val error: Throwable) : Internal()
 
         data class ReactionRemoveError(val error: Throwable) : Internal()
@@ -90,6 +96,10 @@ sealed class Command {
     object LoadMessagesDB : Command()
 
     data class SendMessage(val content: String) : Command()
+
+    data class SendMessageToTopic(val content: String, val topicName: String) : Command()
+
+    data class EditMessageTopic(val id: Int, val topicName: String): Command()
 
     data class EditMessage(val id: Int, val content: String) : Command()
 
