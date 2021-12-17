@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,6 +18,7 @@ import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.databinding.FragmentTabStreamsBinding
 import ru.s44khin.messenger.presentation.main.ChildFragments
 import ru.s44khin.messenger.presentation.main.streams.adapters.StreamAdapter
+import ru.s44khin.messenger.presentation.main.streams.adapters.StreamDiffUtilCallback
 import ru.s44khin.messenger.presentation.main.streams.bottomMenu.BottomMenuFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 import ru.s44khin.messenger.presentation.main.streams.tabs.allStreams.elm.Effect
@@ -35,7 +37,7 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, 
     private var _binding: FragmentTabStreamsBinding? = null
     private val binding get() = _binding!!
     private val disposeBag = CompositeDisposable()
-    private val adapter = StreamAdapter(this)
+    private val adapter = StreamAdapter(this, emptyList())
     private var stockStreams: List<ResultStream>? = null
     override val initEvent = Event.Ui.LoadStreamsFirst
 
@@ -67,7 +69,13 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, 
         binding.progressIndicator.isVisible = state.isLoadingNetwork
 
         if (state.allStreams != null) {
+            val recyclerViewState = binding.recyclerView.layoutManager!!.onSaveInstanceState()
+            val streamDiffUtilCallback = StreamDiffUtilCallback(adapter.streams, state.allStreams)
+            val diffUtilResult = DiffUtil.calculateDiff(streamDiffUtilCallback, true)
             adapter.streams = state.allStreams
+            diffUtilResult.dispatchUpdatesTo(adapter)
+            binding.recyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
+
             stockStreams = state.allStreams.toList()
         }
 

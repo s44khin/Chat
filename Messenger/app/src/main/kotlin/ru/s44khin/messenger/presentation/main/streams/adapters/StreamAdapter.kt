@@ -1,6 +1,5 @@
 package ru.s44khin.messenger.presentation.main.streams.adapters
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -16,15 +15,9 @@ import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 import ru.s44khin.messenger.utils.parse2
 
 class StreamAdapter(
-    private val menuHandler: MenuHandler
+    private val menuHandler: MenuHandler,
+    var streams: List<ResultStream>
 ) : RecyclerView.Adapter<StreamAdapter.ViewHolder>() {
-
-    var streams: List<ResultStream> = emptyList()
-        @SuppressLint("NotifyDataSetChanged")
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val date: TextView = itemView.findViewById(R.id.streamDate)
