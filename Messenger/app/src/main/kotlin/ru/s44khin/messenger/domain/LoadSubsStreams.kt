@@ -1,6 +1,7 @@
 package ru.s44khin.messenger.domain
 
 import ru.s44khin.messenger.data.dataBase.MessengerDatabase
+import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.data.network.ZulipRepository
 
 class LoadSubsStreams(
@@ -10,7 +11,7 @@ class LoadSubsStreams(
 
     fun fromNetwork() = repository.getSubsStreams()
 
-    fun fromDataBase() = dataBase.streamsDao().getAll()
+    fun fromDataBase() = dataBase.streamsDao().getAll(true)
 
     fun unsubscribeFromStream(streamName: String) = repository.unsubscribeFromStream(streamName)
 
@@ -19,4 +20,6 @@ class LoadSubsStreams(
     fun pinStreamToTop(streamId: Int) = repository.pinStreamToTop(streamId)
 
     fun unpinStreamFromTop(streamId: Int) = repository.unpinStreamFromTop(streamId)
+
+    fun saveToDataBase(streams: List<ResultStream>) = dataBase.streamsDao().insertAll(streams)
 }

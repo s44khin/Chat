@@ -20,9 +20,16 @@ class SubsStreamsActor(
                 Observable.zip(
                     Observable.just(it),
                     loadTopics.execute(it.streamId).subscribeOn(Schedulers.io()).toObservable()
-                ) { stream, topics -> resultStreamFromStreamAndTopics(stream, topics.topics) }
+                ) { stream, topics ->
+                    resultStreamFromStreamAndTopics(
+                        stream = stream,
+                        subscription = true,
+                        topics = topics.topics
+                    )
+                }
             }
             .toList()
+            .doOnSuccess { loadSubsStreams.saveToDataBase(it) }
             .mapEvents(
                 { subsStreams -> Event.Internal.StreamsLoadedNetwork(subsStreams.sortedByDescending { it.pinToTop }) },
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }

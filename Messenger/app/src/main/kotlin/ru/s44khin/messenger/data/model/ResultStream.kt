@@ -27,6 +27,9 @@ data class ResultStream(
     @ColumnInfo(name = "color")
     val color: String?,
 
+    @ColumnInfo(name = "subscription")
+    val subscription: Boolean,
+
     @ColumnInfo(name = "topics")
     @TypeConverters(TopicConverter::class)
     val topics: List<Topic>

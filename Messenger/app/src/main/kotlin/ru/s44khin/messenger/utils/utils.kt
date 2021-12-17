@@ -26,13 +26,18 @@ fun parse2(time: Int): String = SimpleDateFormat("dd.MM.yyyy").format(Date(time 
 
 fun hexToEmoji(string: String) = String(Character.toChars(string.toInt(16)))
 
-fun resultStreamFromStreamAndTopics(stream: Stream, topics: List<Topic>) = ResultStream(
+fun resultStreamFromStreamAndTopics(
+    stream: Stream,
+    subscription: Boolean,
+    topics: List<Topic>
+) = ResultStream(
     streamId = stream.streamId,
     description = stream.description,
     name = stream.name,
     date = stream.date,
     pinToTop = stream.pinToTop,
     color = stream.color,
+    subscription = subscription,
     topics = topics
 )
 
