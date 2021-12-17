@@ -57,6 +57,11 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, 
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
+    override fun onResume() {
+        store.accept(Event.Ui.LoadStreamsNetwork)
+        super.onResume()
+    }
+
     override fun render(state: State) {
         binding.shimmer.root.isVisible = state.isLoadingDB
         binding.progressIndicator.isVisible = state.isLoadingNetwork

@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
@@ -28,11 +30,13 @@ class LeftAdapterDelegate(
     private val adapterHelper = AdapterHelper(menuHandler)
 
     class LeftViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val root: ConstraintLayout = itemView.findViewById(R.id.leftMessageRoot)
         val avatar: ImageView = itemView.findViewById(R.id.leftMessageAvatar)
         val cardView: MaterialCardView = itemView.findViewById(R.id.leftMessageCardView)
         val image: ImageView = itemView.findViewById(R.id.leftMessageImage)
         val profile: TextView = itemView.findViewById(R.id.leftMessageProfile)
         val content: TextView = itemView.findViewById(R.id.leftMessageContent)
+        val to: TextView = itemView.findViewById(R.id.leftMessageTo)
         val topicName: TextView = itemView.findViewById(R.id.leftMessageTopicName)
         val reactions: RecyclerView = itemView.findViewById(R.id.leftMessageReactions)
 
@@ -59,10 +63,22 @@ class LeftAdapterDelegate(
         holder: LeftViewHolder,
         payloads: MutableList<Any>
     ) {
-        Glide.with(holder.avatar)
-            .load(item.avatar)
-            .circleCrop()
-            .into(holder.avatar)
+        if(item.avatar != null) {
+            holder.avatar.visibility = View.VISIBLE
+            holder.profile.visibility = View.VISIBLE
+
+            Glide.with(holder.avatar)
+                .load(item.avatar)
+                .circleCrop()
+                .into(holder.avatar)
+
+            holder.avatar.setOnClickListener {
+                menuHandler.showProfile(item.avatar, item.profile, item.email)
+            }
+        } else {
+            holder.avatar.visibility = View.INVISIBLE
+            holder.profile.visibility = View.GONE
+        }
 
         if (item.content.contains("](/user_uploads/")) {
             val linkImage = adapterHelper.getLinkImage(item.content)
@@ -99,10 +115,6 @@ class LeftAdapterDelegate(
                     )
             } else {
                 reactions.adapter = null
-            }
-
-            avatar.setOnClickListener {
-                menuHandler.showProfile(item.avatar, item.profile, item.email)
             }
 
             cardView.setOnLongClickListener {

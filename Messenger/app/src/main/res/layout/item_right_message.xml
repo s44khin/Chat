@@ -49,13 +49,14 @@
                 app:layout_constraintTop_toBottomOf="@id/rightMessageImage" />
 
             <TextView
-                android:id="@+id/to"
+                android:id="@+id/rightMessageTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/to"
+                app:layout_constraintTop_toBottomOf="@id/rightMessageImage"
+                android:layout_marginTop="10dp"
                 android:textStyle="italic"
-                app:layout_constraintBaseline_toBaselineOf="@id/rightMessageProfile"
                 app:layout_constraintStart_toEndOf="@id/rightMessageProfile" />
 
             <TextView
@@ -63,11 +64,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                app:layout_constraintBaseline_toBaselineOf="@id/rightMessageTo"
                 android:paddingEnd="10dp"
                 android:textStyle="italic"
-                app:layout_constraintBaseline_toBaselineOf="@id/to"
-                app:layout_constraintStart_toEndOf="@id/to"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/rightMessageTo" />
 
             <TextView
                 android:id="@+id/rightMessageContent"
@@ -80,7 +80,7 @@
                 android:textColor="@color/textColor"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rightMessageProfile"
+                app:layout_constraintTop_toBottomOf="@id/rightMessageTo"
                 tools:text="Здраствуйте! Не желаете оформить карту по моей реферальной ссылке?" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

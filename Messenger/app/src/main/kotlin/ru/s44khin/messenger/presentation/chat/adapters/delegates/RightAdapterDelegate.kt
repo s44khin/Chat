@@ -58,6 +58,12 @@ class RightAdapterDelegate(
         holder: RightViewHolder,
         payloads: MutableList<Any>
     ) {
+        if (item.avatar == null) {
+            holder.profile.visibility = View.GONE
+        } else {
+            holder.profile.visibility = View.VISIBLE
+        }
+
         if (item.content.contains("](/user_uploads/")) {
             val linkImage = adapterHelper.getLinkImage(item.content)
 

@@ -113,11 +113,11 @@ class ChatActor(
         return result
     }
 
-    private fun Message.toChatItem() = ChatItem(
+    private fun Message.toChatItem(avatarIsNull: Boolean = false) = ChatItem(
         id = this.id,
         topicName = this.topicName,
         time = parse(this.timestamp),
-        avatar = this.avatar,
+        avatar = if (avatarIsNull) null else this.avatar,
         email = this.email,
         profile = this.profile,
         content = this.content,
@@ -125,5 +125,18 @@ class ChatActor(
         isMyMessage = MY_ID == this.senderId
     )
 
-    private fun List<Message>.toListOfChatItems() = this.map { it.toChatItem() }
+    private fun List<Message>.toListOfChatItems(): List<ChatItem> {
+        val result = mutableListOf<ChatItem>()
+
+        result.add(this[0].toChatItem())
+
+        for (i in 1..lastIndex) {
+            if (this[i].senderId == this[i - 1].senderId)
+                result.add(this[i].toChatItem(true))
+            else
+                result.add(this[i].toChatItem())
+        }
+
+        return result
+    }
 }

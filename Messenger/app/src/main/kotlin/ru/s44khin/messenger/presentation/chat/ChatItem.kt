@@ -6,7 +6,7 @@ data class ChatItem(
     val id: Int,
     val topicName: String,
     val time: String,
-    val avatar: String,
+    val avatar: String?,
     val profile: String,
     val email: String,
     val content: String,

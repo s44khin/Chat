@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/leftMessageRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp">
+    android:layout_marginTop="8dp">
 
     <ImageView
         android:id="@+id/leftMessageAvatar"
@@ -38,7 +39,7 @@
                 android:layout_height="180dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/image_message_preview"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@id/leftMessageProfile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -48,10 +49,10 @@
                 android:id="@+id/leftMessageProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:maxWidth="180dp"
                 android:maxLines="1"
-                android:paddingStart="10dp"
                 android:textColor="@color/primary"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,40 +60,45 @@
                 tools:text="Oleg Tinkoff" />
 
             <TextView
-                android:id="@+id/to"
+                android:id="@+id/leftMessageTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/to"
                 android:textStyle="italic"
-                app:layout_constraintBaseline_toBaselineOf="@id/leftMessageProfile"
-                app:layout_constraintStart_toEndOf="@id/leftMessageProfile" />
+                app:layout_constraintStart_toEndOf="@id/leftMessageProfile"
+                app:layout_constraintTop_toBottomOf="@id/leftMessageImage" />
 
             <TextView
                 android:id="@+id/leftMessageTopicName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_marginTop="10dp"
                 android:maxWidth="180dp"
                 android:maxLines="1"
                 android:paddingEnd="10dp"
                 android:textStyle="italic"
-                app:layout_constraintBaseline_toBaselineOf="@id/to"
-                app:layout_constraintStart_toEndOf="@id/to"
+                app:layout_constraintStart_toEndOf="@id/leftMessageTo"
+                app:layout_constraintTop_toBottomOf="@id/leftMessageImage"
                 tools:text="topicName" />
 
             <TextView
                 android:id="@+id/leftMessageContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="start"
                 android:maxWidth="250dp"
-                android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:paddingBottom="10dp"
+                android:textAlignment="viewStart"
                 android:textColor="@color/textColor"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/leftMessageProfile"
+                app:layout_constraintTop_toBottomOf="@id/leftMessageTo"
                 tools:text="Здраствуйте! Не желаете оформить карту по моей реферальной ссылке?" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
