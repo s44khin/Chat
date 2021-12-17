@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:hint="@string/message"
-        android:maxLines="1"
         android:inputType="textCapSentences"
+        android:maxLines="1"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,10 +29,10 @@
         app:backgroundTint="@color/background"
         app:elevation="2dp"
         app:fabSize="mini"
-        app:tint="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/gray" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/send"

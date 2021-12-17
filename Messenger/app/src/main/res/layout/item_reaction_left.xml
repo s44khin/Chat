@@ -12,10 +12,10 @@
     app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@drawable/emoji_view_background"
-
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
+        android:background="@drawable/emoji_view_background"
         android:paddingStart="8dp"
         android:paddingEnd="8dp">
 

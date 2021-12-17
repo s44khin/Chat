@@ -1,5 +1,6 @@
 package ru.s44khin.messenger.domain
 
+import okhttp3.MultipartBody
 import ru.s44khin.messenger.data.dataBase.MessengerDatabase
 import ru.s44khin.messenger.data.model.Message
 import ru.s44khin.messenger.data.network.ZulipRepository
@@ -33,4 +34,6 @@ class LoadMessages(
         repository.removeReaction(messageId, emojiName)
 
     fun deleteMessage(id: Int) = repository.deleteMessage(id)
+
+    fun sendPicture(filePart: MultipartBody.Part) = repository.sendPicture(filePart)
 }

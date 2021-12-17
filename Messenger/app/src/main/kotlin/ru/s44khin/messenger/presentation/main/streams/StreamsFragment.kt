@@ -6,18 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
-import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
-import ru.s44khin.messenger.data.network.ZulipRepository
 import ru.s44khin.messenger.databinding.FragmentStreamsBinding
 import ru.s44khin.messenger.presentation.main.ChildFragments
 import ru.s44khin.messenger.presentation.main.streams.adapters.PagerAdapter
-import ru.s44khin.messenger.presentation.main.streams.addNewStreamFragment.AddNewStreamFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.allStreams.AllStreamsFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.SubsStreamsFragment
 

@@ -2,7 +2,7 @@ package ru.s44khin.messenger.presentation.chat.elm
 
 import ru.s44khin.messenger.data.network.api.UserInfo
 import ru.s44khin.messenger.presentation.chat.ChatItem
-import ru.s44khin.messenger.utils.*
+import ru.s44khin.messenger.utils.parse
 import vivid.money.elmslie.core.store.dsl_reducer.DslReducer
 
 class ChatReducer : DslReducer<Event, State, Effect, Command>() {
@@ -11,7 +11,6 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
 
         is Event.Internal.ErrorLoadingNetwork -> {
             state { copy(error = event.error, isLoadingNetwork = false) }
-            effects { Effect.MessagesLoadError(event.error) }
         }
 
         is Event.Internal.ErrorLoadingDB -> {
@@ -36,6 +35,10 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
         }
 
         is Event.Internal.ReactionRemoveError -> {
+            state { copy(error = event.error) }
+        }
+
+        is Event.Internal.ErrorSendPicture -> {
             state { copy(error = event.error) }
         }
 
@@ -76,6 +79,11 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
 
                 copy(messages = newMessages)
             }
+        }
+
+        is Event.Internal.PictureSent -> {
+            state { copy(imageUri = event.uri) }
+            effects { Effect.ImageIsSend }
         }
 
         is Event.Internal.ReactionAdded -> {
@@ -139,6 +147,11 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
 
         is Event.Ui.EditMessage -> {
             commands { +Command.EditMessage(event.id, event.content) }
+        }
+
+        is Event.Ui.SendPicture -> {
+            effects { Effect.SendingImage }
+            commands { +Command.SendPicture(event.filePart) }
         }
     }
 }

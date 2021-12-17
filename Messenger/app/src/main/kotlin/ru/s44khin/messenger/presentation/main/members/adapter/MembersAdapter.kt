@@ -1,6 +1,5 @@
 package ru.s44khin.messenger.presentation.main.members.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

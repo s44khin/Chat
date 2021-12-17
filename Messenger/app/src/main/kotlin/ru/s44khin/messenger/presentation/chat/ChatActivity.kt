@@ -4,15 +4,22 @@ import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Bitmap.CompressFormat
 import android.graphics.Color
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.*
+import android.provider.MediaStore
+import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityChatBinding
@@ -24,6 +31,10 @@ import ru.s44khin.messenger.presentation.chat.selectTopicFragment.SelectTopicFra
 import ru.s44khin.messenger.presentation.main.profile.ProfileFragment
 import vivid.money.elmslie.android.base.ElmActivity
 import vivid.money.elmslie.core.store.Store
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+
 
 class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
 
@@ -85,6 +96,40 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         intent.getStringExtra(STREAM_COLOR)
     }
 
+    private val getContent = registerForActivityResult(GetContent()) { uri: Uri? ->
+        if (uri != null) {
+            val bitmap = if (Build.VERSION.SDK_INT >= 28) {
+                val source = ImageDecoder.createSource(this.contentResolver, uri)
+                ImageDecoder.decodeBitmap(source)
+            } else {
+                MediaStore.Images.Media.getBitmap(contentResolver, uri)
+            }
+
+            binding.imageSendImage.setImageBitmap(bitmap)
+            binding.cardSendImage.visibility = View.VISIBLE
+            binding.progressBarSendImage.visibility = View.VISIBLE
+
+            val file = File(cacheDir, "image123")
+            file.createNewFile()
+
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(CompressFormat.JPEG, 50, bos)
+            val bitmapdata = bos.toByteArray()
+
+            val fos = FileOutputStream(file)
+            fos.write(bitmapdata)
+            fos.flush()
+            fos.close()
+
+            val filePart = MultipartBody.Part.createFormData(
+                "file",
+                file.name,
+                RequestBody.create("image/*".toMediaTypeOrNull(), file)
+            )
+            store.accept(Event.Ui.SendPicture(filePart))
+        }
+    }
+
     private var isLoadFirst = false
     private var isSentMessage = false
 
@@ -97,9 +142,10 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         setContentView(binding.root)
         initRecyclerView()
         initToolBar()
-        initButtons()
+        initSendButton()
         initColor()
         initDownButton()
+        initAttachButton()
     }
 
     override fun render(state: State) {
@@ -119,6 +165,12 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
                     binding.recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
                     isSentMessage = false
                 }, 100)
+        }
+
+        if (state.imageUri != null) {
+            binding.messageInput.message.setText("[image123](${state.imageUri})")
+            binding.progressBarSendImage.visibility = View.GONE
+            state.imageUri = null
         }
     }
 
@@ -149,6 +201,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
     override fun sendMessageToTopic(content: String, topic: String) {
         store.accept(Event.Ui.SendMessageToTopic(content, topic))
         binding.messageInput.message.setText("")
+        binding.cardSendImage.visibility = View.GONE
         isSentMessage = true
     }
 
@@ -199,10 +252,11 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         backButton.setOnClickListener { finish() }
     }
 
-    private fun initButtons() = binding.messageInput.message.doAfterTextChanged { text ->
+    private fun initSendButton() = binding.messageInput.message.doAfterTextChanged { text ->
         binding.messageInput.send.setOnClickListener {
             store.accept(Event.Ui.SendMessage(text.toString()))
             binding.messageInput.message.setText("")
+            binding.cardSendImage.visibility = View.GONE
             isSentMessage = true
         }
 
@@ -227,6 +281,12 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
 
                 true
             }
+        }
+    }
+
+    private fun initAttachButton() {
+        binding.messageInput.attach.setOnClickListener {
+            getContent.launch("image/*")
         }
     }
 

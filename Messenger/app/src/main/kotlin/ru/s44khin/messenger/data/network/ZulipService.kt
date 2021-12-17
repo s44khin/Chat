@@ -1,6 +1,7 @@
 package ru.s44khin.messenger.data.network
 
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import retrofit2.http.*
 import ru.s44khin.messenger.data.model.*
 
@@ -79,4 +80,10 @@ interface ZulipService {
         @Path("message_id") messageId: Int,
         @Query("emoji_name") emojiName: String,
     ): Single<ResultReaction>
+
+    @Multipart
+    @POST("/api/v1/user_uploads")
+    fun sendPicture(
+        @Part filePart: MultipartBody.Part
+    ): Single<ResultImage>
 }

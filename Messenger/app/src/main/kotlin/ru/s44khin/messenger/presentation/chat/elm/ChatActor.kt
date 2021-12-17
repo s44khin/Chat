@@ -82,6 +82,12 @@ class ChatActor(
                 { Event.Internal.MessageEdited },
                 { error -> Event.Internal.EditMessageError(error) }
             )
+
+        is Command.SendPicture -> loadMessages.sendPicture(command.filePart)
+            .mapEvents(
+                { result -> Event.Internal.PictureSent(result.uri) },
+                { error -> Event.Internal.ErrorSendPicture(error) }
+            )
     }
 
     private fun List<Reaction>.toAdapterReactions(): MutableList<AdapterReaction> {

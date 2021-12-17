@@ -62,7 +62,7 @@ sealed class Event {
 
         object ErrorUnpinned : Internal()
 
-        object ErrorCreateStream: Internal()
+        object ErrorCreateStream : Internal()
     }
 }
 
@@ -78,7 +78,7 @@ sealed class Effect {
 
     object ErrorUnpinned : Effect()
 
-    object ErrorCreateStream: Effect()
+    object ErrorCreateStream : Effect()
 }
 
 sealed class Command {

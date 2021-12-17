@@ -1,6 +1,7 @@
 package ru.s44khin.messenger.data.network
 
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import ru.s44khin.messenger.data.model.*
 
 class ZulipRepository(
@@ -64,4 +65,6 @@ class ZulipRepository(
 
     fun removeReaction(messageId: Int, emojiName: String) =
         service.deleteReaction(messageId, emojiName)
+
+    fun sendPicture(filePart: MultipartBody.Part) = service.sendPicture(filePart)
 }
