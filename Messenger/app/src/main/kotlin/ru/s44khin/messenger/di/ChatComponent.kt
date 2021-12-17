@@ -11,7 +11,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [ChatModule::class])
 interface ChatComponent {
-
     val loadMessages: LoadMessages
 }
 

@@ -32,11 +32,7 @@ class ZulipRepository(
 
     fun getSelfProfile(): Single<Profile> = service.getSelfProfile()
 
-    fun getMessages(
-        streamId: Int,
-        topicName: String?,
-        pageNumber: Int
-    ): Single<BaseMessages> {
+    fun getMessages(streamId: Int, topicName: String?, pageNumber: Int): Single<BaseMessages> {
         val numBefore = pageNumber * 50 + 50
 
         return if (topicName == null)
@@ -66,8 +62,6 @@ class ZulipRepository(
 
     fun addReaction(messageId: Int, emojiName: String) = service.addReaction(messageId, emojiName)
 
-    fun removeReaction(
-        messageId: Int,
-        emojiName: String
-    ) = service.deleteReaction(messageId, emojiName)
+    fun removeReaction(messageId: Int, emojiName: String) =
+        service.deleteReaction(messageId, emojiName)
 }

@@ -12,17 +12,14 @@ import ru.s44khin.messenger.presentation.chat.pagination.PaginationAdapterHelper
 
 val difItemCallback = object : DiffUtil.ItemCallback<ChatItem>() {
 
-    override fun areItemsTheSame(oldItem: ChatItem, newItem: ChatItem): Boolean {
-        return (oldItem.id == newItem.id &&
-                oldItem.reactions == newItem.reactions &&
-                oldItem.content == newItem.content &&
-                oldItem.topicName == newItem.topicName)
-    }
+    override fun areItemsTheSame(oldItem: ChatItem, newItem: ChatItem) =
+        oldItem.id == newItem.id
 
     override fun areContentsTheSame(
         oldItem: ChatItem,
         newItem: ChatItem
-    ): Boolean = true
+    ) = oldItem.reactions == newItem.reactions && oldItem.content == newItem.content &&
+            oldItem.topicName == newItem.topicName
 }
 
 class ChatAdapter(

@@ -21,7 +21,7 @@ import ru.s44khin.messenger.presentation.main.streams.addNewStreamFragment.AddNe
 import ru.s44khin.messenger.presentation.main.streams.tabs.allStreams.AllStreamsFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.SubsStreamsFragment
 
-class StreamsFragment : Fragment(), ChildFragments, NewStreamHandler {
+class StreamsFragment : Fragment(), ChildFragments {
 
     companion object {
         const val TAG = "STREAMS_FRAGMENT"
@@ -34,24 +34,18 @@ class StreamsFragment : Fragment(), ChildFragments, NewStreamHandler {
     private var _binding: FragmentStreamsBinding? = null
     private val binding get() = _binding!!
 
-    private val disposeBag = CompositeDisposable()
-
-    lateinit var repository: ZulipRepository
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentStreamsBinding.inflate(inflater, container, false)
-        repository = MessengerApplication.instance.appComponent.repository
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initTabs()
-        initCreateStream()
     }
 
     private fun initTabs() {
@@ -78,25 +72,8 @@ class StreamsFragment : Fragment(), ChildFragments, NewStreamHandler {
         subsStreamsFragment.update()
     }
 
-    override fun createNewStream(name: String, description: String) {
-        repository.subscribeToStream(name, description)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = { update() },
-                onError = {}
-            )
-            .addTo(disposeBag)
-
-    }
-
-    private fun initCreateStream() = binding.newStream.setOnClickListener {
-        AddNewStreamFragment.newInstance(this).show(parentFragmentManager, AddNewStreamFragment.TAG)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        disposeBag.dispose()
         _binding = null
     }
 }

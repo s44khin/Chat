@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -19,6 +20,7 @@ import ru.s44khin.messenger.databinding.FragmentTabStreamsBinding
 import ru.s44khin.messenger.presentation.main.ChildFragments
 import ru.s44khin.messenger.presentation.main.streams.adapters.StreamAdapter
 import ru.s44khin.messenger.presentation.main.streams.adapters.StreamDiffUtilCallback
+import ru.s44khin.messenger.presentation.main.streams.addNewStreamFragment.AddNewStreamFragment
 import ru.s44khin.messenger.presentation.main.streams.bottomMenu.BottomMenuFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 import ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.elm.Effect
@@ -57,6 +59,7 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        initCreateStream()
     }
 
     override fun onResume() {
@@ -133,6 +136,28 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
             parentFragmentManager,
             BottomMenuFragment.TAG
         )
+    }
+
+    override fun createNewStream(name: String, description: String) {
+        store.accept(Event.Ui.CreateNewStream(name, description))
+    }
+
+    private fun initCreateStream() {
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    binding.newStream.hide()
+                } else if (dy < 0) {
+                    binding.newStream.show()
+                }
+            }
+        })
+
+        binding.newStream.setOnClickListener {
+            AddNewStreamFragment.newInstance(this)
+                .show(parentFragmentManager, AddNewStreamFragment.TAG)
+        }
     }
 
     override fun onDestroyView() {

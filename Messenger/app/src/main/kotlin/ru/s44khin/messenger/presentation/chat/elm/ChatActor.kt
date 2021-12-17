@@ -4,9 +4,9 @@ import io.reactivex.Observable
 import ru.s44khin.messenger.data.model.AdapterReaction
 import ru.s44khin.messenger.data.model.Message
 import ru.s44khin.messenger.data.model.Reaction
+import ru.s44khin.messenger.data.network.api.UserInfo
 import ru.s44khin.messenger.domain.LoadMessages
 import ru.s44khin.messenger.presentation.chat.ChatItem
-import ru.s44khin.messenger.utils.MY_ID
 import ru.s44khin.messenger.utils.parse
 import vivid.money.elmslie.core.ActorCompat
 
@@ -96,7 +96,7 @@ class ChatActor(
             else
                 map[reaction.emojiCode to reaction.emojiName] = 1
 
-            if (reaction.user.id == MY_ID)
+            if (reaction.user.id == UserInfo.ID)
                 reactionsILiked.add(reaction.emojiCode)
         }
 
@@ -122,7 +122,7 @@ class ChatActor(
         profile = this.profile,
         content = this.content,
         reactions = this.reactions.toAdapterReactions(),
-        isMyMessage = MY_ID == this.senderId
+        isMyMessage = UserInfo.ID == this.senderId
     )
 
     private fun List<Message>.toListOfChatItems(): List<ChatItem> {

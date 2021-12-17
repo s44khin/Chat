@@ -32,6 +32,10 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
             effects { Effect.ErrorUnpinned }
         }
 
+        is Event.Internal.ErrorCreateStream -> {
+            effects { Effect.ErrorCreateStream }
+        }
+
         is Event.Internal.StreamsLoadedNetwork -> {
             state {
                 copy(
@@ -61,6 +65,11 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
         }
 
         is Event.Internal.SuccessfulSetStreamColor -> {
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadStreamsNetwork }
+        }
+
+        is Event.Internal.StreamCreated -> {
             state { copy(isLoadingNetwork = true) }
             commands { +Command.LoadStreamsNetwork }
         }
@@ -107,6 +116,10 @@ class SubsStreamsReducer : DslReducer<Event, State, Effect, Command>() {
 
         is Event.Ui.UnpinStreamFromTop -> {
             commands { +Command.UnpinFromTop(event.streamId) }
+        }
+
+        is Event.Ui.CreateNewStream -> {
+            commands { +Command.CreateNewStream(event.streamName, event.description) }
         }
     }
 }

@@ -1,5 +1,6 @@
 package ru.s44khin.messenger.presentation.chat.elm
 
+import ru.s44khin.messenger.data.network.api.UserInfo
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.utils.*
 import vivid.money.elmslie.core.store.dsl_reducer.DslReducer
@@ -61,13 +62,13 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
 
                 newMessages.add(
                     ChatItem(
-                        id = MY_ID,
+                        id = UserInfo.ID,
                         topicName = event.topicName,
                         time = currentTime,
                         content = event.content,
-                        profile = MY_NAME,
-                        avatar = MY_AVATAR,
-                        email = MY_EMAIL,
+                        profile = UserInfo.NAME,
+                        avatar = UserInfo.AVATAR,
+                        email = UserInfo.EMAIL,
                         isMyMessage = true,
                         reactions = mutableListOf()
                     )

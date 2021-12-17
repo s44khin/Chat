@@ -13,7 +13,9 @@ interface ZulipService {
     fun getAllStreams(): Single<BaseAll>
 
     @GET("/api/v1/users/me/{stream_id}/topics")
-    fun getTopics(@Path("stream_id") streamId: Int): Single<BaseTopics>
+    fun getTopics(
+        @Path("stream_id") streamId: Int
+    ): Single<BaseTopics>
 
     @POST("/api/v1/users/me/subscriptions")
     fun subscribeToStream(
@@ -26,7 +28,9 @@ interface ZulipService {
     ): Single<Result>
 
     @POST("/api/v1/users/me/subscriptions/properties")
-    fun updateSettings(@Query("subscription_data") array: String): Single<Result>
+    fun updateSettings(
+        @Query("subscription_data") array: String
+    ): Single<Result>
 
     @GET("/api/v1/users")
     fun getMembers(): Single<BaseMembers>
@@ -48,7 +52,9 @@ interface ZulipService {
     ): Single<ResultMessage>
 
     @DELETE("api/v1/messages/{msg_id}")
-    fun deleteMessage(@Path("msg_id") id: Int): Single<Result>
+    fun deleteMessage(
+        @Path("msg_id") id: Int
+    ): Single<Result>
 
     @PATCH("api/v1/messages/{msg_id}")
     fun editMessage(

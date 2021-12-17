@@ -58,6 +58,8 @@ class RightAdapterDelegate(
         holder: RightViewHolder,
         payloads: MutableList<Any>
     ) {
+        val context = holder.itemView.context
+
         if (item.avatar == null) {
             holder.profile.visibility = View.GONE
         } else {
@@ -76,38 +78,27 @@ class RightAdapterDelegate(
             holder.image.visibility = View.GONE
         }
 
-        holder.apply {
-            profile.setTextColor(
-                if (color == null)
-                    itemView.context.getColor(R.color.primary)
-                else
+        holder.profile.setTextColor(color ?: context.getColor(R.color.primary))
+
+        holder.content.text = item.content
+        holder.topicName.text = item.topicName
+
+        if (item.reactions.isNotEmpty()) {
+            holder.reactions.visibility = View.VISIBLE
+            holder.reactions.adapter =
+                ReactionsAdapter(
+                    item,
+                    ReactionsAdapter.Alignment.RIGHT,
+                    menuHandler,
+                    adapterHelper,
                     color
-            )
+                )
+        } else {
+            holder.reactions.adapter = null
+        }
 
-            content.text = item.content
-            topicName.text = item.topicName
-
-            if (item.reactions.isNotEmpty()) {
-                reactions.visibility = View.VISIBLE
-                reactions.adapter =
-                    ReactionsAdapter(
-                        item,
-                        ReactionsAdapter.Alignment.RIGHT,
-                        menuHandler,
-                        adapterHelper,
-                        color
-                    )
-            } else {
-                reactions.adapter = null
-            }
-
-            cardView.setOnLongClickListener {
-                adapterHelper.showBottomSheet(itemView.context, item)
-            }
-
-            cardView.setOnClickListener {
-                Toast.makeText(holder.itemView.context, "$position", Toast.LENGTH_SHORT).show()
-            }
+        holder.cardView.setOnLongClickListener {
+            adapterHelper.showBottomSheet(context, item)
         }
     }
 }

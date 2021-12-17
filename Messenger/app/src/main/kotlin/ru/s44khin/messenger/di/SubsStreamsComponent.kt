@@ -12,7 +12,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [SubsStreamsModule::class])
 interface SubsStreamsComponent {
-
     val subsStreamsStore: ElmStoreCompat<Event, State, Effect, Command>
 }
 

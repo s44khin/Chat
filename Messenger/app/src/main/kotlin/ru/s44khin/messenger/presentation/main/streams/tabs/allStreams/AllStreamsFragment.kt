@@ -57,6 +57,7 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.newStream.visibility = View.GONE
     }
 
     override fun onResume() {
@@ -125,6 +126,10 @@ class AllStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments, 
     }
 
     override fun unpinFromTop(streamId: Int) {
+        store.accept(Event.Ui.LoadStreamsNetwork)
+    }
+
+    override fun createNewStream(name: String, description: String) {
         store.accept(Event.Ui.LoadStreamsNetwork)
     }
 

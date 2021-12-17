@@ -9,8 +9,7 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
-import ru.s44khin.messenger.data.network.api.API_KEY
-import ru.s44khin.messenger.data.network.api.EMAIL
+import ru.s44khin.messenger.data.network.api.UserInfo
 import java.io.InputStream
 
 @GlideModule
@@ -19,7 +18,7 @@ class CustomGlideModule : AppGlideModule() {
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         val okHttpClient = OkHttpClient.Builder()
         okHttpClient.authenticator { _, response ->
-            val credentials = Credentials.basic(EMAIL, API_KEY)
+            val credentials = Credentials.basic(UserInfo.EMAIL, UserInfo.API_KEY)
             response.request.newBuilder().header("Authorization", credentials).build()
         }
 

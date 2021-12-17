@@ -89,5 +89,19 @@ class SubsStreamsActor(
                 },
                 { Event.Internal.ErrorUnpinned }
             )
+
+        is Command.CreateNewStream -> loadSubsStreams.createNewStream(
+            command.streamName,
+            command.description
+        )
+            .mapEvents(
+                { result ->
+                    if (result.result == "success")
+                        Event.Internal.StreamCreated
+                    else
+                        Event.Internal.ErrorCreateStream
+                },
+                { Event.Internal.ErrorCreateStream }
+            )
     }
 }

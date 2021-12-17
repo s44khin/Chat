@@ -15,4 +15,6 @@ interface MenuHandler {
     fun unpinFromTop(streamId: Int)
 
     fun showMenu(stream: ResultStream)
+
+    fun createNewStream(name: String, description: String)
 }

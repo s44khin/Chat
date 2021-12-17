@@ -13,17 +13,10 @@ import ru.s44khin.messenger.data.model.Profile
 import ru.s44khin.messenger.data.model.ResultStream
 
 @Database(
-    entities = [
-        Profile::class,
-        ResultStream::class,
-        Message::class
-    ],
+    entities = [Profile::class, ResultStream::class, Message::class],
     version = 1
 )
-@TypeConverters(
-    TopicConverter::class,
-    ReactionConverter::class
-)
+@TypeConverters(TopicConverter::class, ReactionConverter::class)
 abstract class MessengerDatabase : RoomDatabase() {
 
     abstract fun profileDao(): ProfileDao

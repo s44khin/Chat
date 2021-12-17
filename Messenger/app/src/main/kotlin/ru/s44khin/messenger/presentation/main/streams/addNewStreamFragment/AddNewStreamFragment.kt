@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.s44khin.messenger.databinding.FragmentAddNewStreamBinding
-import ru.s44khin.messenger.presentation.main.streams.NewStreamHandler
+import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 
 class AddNewStreamFragment(
-    private val newStreamHandler: NewStreamHandler
+    private val menuHandler: MenuHandler
 ) : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "CREATE_NEW_STREAM_FRAGMENT"
-        fun newInstance(newStreamHandler: NewStreamHandler) = AddNewStreamFragment(newStreamHandler)
+        fun newInstance(menuHandler: MenuHandler) = AddNewStreamFragment(menuHandler)
     }
 
     private var _binding: FragmentAddNewStreamBinding? = null
@@ -37,7 +37,7 @@ class AddNewStreamFragment(
     }
 
     private fun initButton() = binding.button.setOnClickListener {
-        newStreamHandler.createNewStream(
+        menuHandler.createNewStream(
             binding.name.text.toString(),
             binding.description.text.toString()
         )

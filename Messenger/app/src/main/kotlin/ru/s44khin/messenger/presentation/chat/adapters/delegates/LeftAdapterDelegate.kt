@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
@@ -63,7 +62,9 @@ class LeftAdapterDelegate(
         holder: LeftViewHolder,
         payloads: MutableList<Any>
     ) {
-        if(item.avatar != null) {
+        val context = holder.itemView.context
+
+        if (item.avatar != null) {
             holder.avatar.visibility = View.VISIBLE
             holder.profile.visibility = View.VISIBLE
 
@@ -92,34 +93,27 @@ class LeftAdapterDelegate(
             holder.image.visibility = View.GONE
         }
 
-        holder.apply {
-            profile.setTextColor(
-                if (color == null)
-                    itemView.context.getColor(R.color.primary)
-                else
+        holder.profile.setTextColor(color ?: context.getColor(R.color.primary))
+
+        holder.content.text = item.content
+        holder.profile.text = item.profile
+        holder.topicName.text = item.topicName
+
+        if (item.reactions.isNotEmpty()) {
+            holder.reactions.adapter =
+                ReactionsAdapter(
+                    item,
+                    ReactionsAdapter.Alignment.LEFT,
+                    menuHandler,
+                    adapterHelper,
                     color
-            )
+                )
+        } else {
+            holder.reactions.adapter = null
+        }
 
-            content.text = item.content
-            profile.text = item.profile
-            topicName.text = item.topicName
-
-            if (item.reactions.isNotEmpty()) {
-                reactions.adapter =
-                    ReactionsAdapter(
-                        item,
-                        ReactionsAdapter.Alignment.LEFT,
-                        menuHandler,
-                        adapterHelper,
-                        color
-                    )
-            } else {
-                reactions.adapter = null
-            }
-
-            cardView.setOnLongClickListener {
-                adapterHelper.showBottomSheet(itemView.context, item)
-            }
+        holder.cardView.setOnLongClickListener {
+            adapterHelper.showBottomSheet(context, item)
         }
     }
 }

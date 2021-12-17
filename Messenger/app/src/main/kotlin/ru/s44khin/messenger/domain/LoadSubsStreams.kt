@@ -22,4 +22,7 @@ class LoadSubsStreams(
     fun unpinStreamFromTop(streamId: Int) = repository.unpinStreamFromTop(streamId)
 
     fun saveToDataBase(streams: List<ResultStream>) = dataBase.streamsDao().insertAll(streams)
+
+    fun createNewStream(streamName: String, description: String) =
+        repository.subscribeToStream(streamName, description)
 }
