@@ -13,15 +13,9 @@ import ru.s44khin.messenger.data.model.Profile
 import ru.s44khin.messenger.presentation.main.members.OnClick
 
 class MembersAdapter(
-    private val onClick: OnClick
+    private val onClick: OnClick,
+    var members: List<Profile>
 ) : RecyclerView.Adapter<MembersAdapter.ViewHolder>() {
-
-    var members: List<Profile> = emptyList()
-        @SuppressLint("NotifyDataSetChanged")
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val avatar: ImageView = itemView.findViewById(R.id.peopleAvatar)

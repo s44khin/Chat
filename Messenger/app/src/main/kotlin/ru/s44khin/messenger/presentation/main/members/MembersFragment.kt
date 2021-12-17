@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,6 +18,7 @@ import ru.s44khin.messenger.data.model.Profile
 import ru.s44khin.messenger.databinding.FragmentMembersBinding
 import ru.s44khin.messenger.presentation.main.ChildFragments
 import ru.s44khin.messenger.presentation.main.members.adapter.MembersAdapter
+import ru.s44khin.messenger.presentation.main.members.adapter.MembersDiffUtilCallback
 import ru.s44khin.messenger.presentation.main.members.elm.Effect
 import ru.s44khin.messenger.presentation.main.members.elm.Event
 import ru.s44khin.messenger.presentation.main.members.elm.State
@@ -35,7 +37,7 @@ class MembersFragment : ElmFragment<Event, Effect, State>(), ChildFragments, OnC
     private val binding get() = _binding!!
     private val disposeBag = CompositeDisposable()
     override val initEvent = Event.Ui.LoadMembersFirst
-    private val adapter = MembersAdapter(this)
+    private val adapter = MembersAdapter(this, emptyList())
     private var stockMembers: List<Profile>? = null
 
     override fun createStore() = MessengerApplication.instance.membersComponent.membersStore
@@ -62,7 +64,7 @@ class MembersFragment : ElmFragment<Event, Effect, State>(), ChildFragments, OnC
         binding.progressIndicator.isVisible = state.isLoadingNetwork
 
         if (state.members != null) {
-            adapter.members = state.members
+            updateRecyclerView(state.members)
             stockMembers = state.members
         }
 
@@ -74,15 +76,28 @@ class MembersFragment : ElmFragment<Event, Effect, State>(), ChildFragments, OnC
 
     override fun search(text: String) {
         Observable.fromCallable { stockMembers }
-            .map { members -> members.filter { it.name.contains(text, true) } }
+            .map { members ->
+                members.filter {
+                    it.name.contains(text, true)
+                }
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onNext = { adapter.members = it },
+                onNext = { updateRecyclerView(it) },
                 onError = { }
             )
             .addTo(disposeBag)
 
+    }
+
+    private fun updateRecyclerView(list: List<Profile>) {
+        val recyclerViewState = binding.recyclerView.layoutManager?.onSaveInstanceState()
+        val membersDiffUtilCallback = MembersDiffUtilCallback(adapter.members, list)
+        val diffUtilResult = DiffUtil.calculateDiff(membersDiffUtilCallback, true)
+        adapter.members = list
+        diffUtilResult.dispatchUpdatesTo(adapter)
+        binding.recyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
     }
 
     override fun update() {

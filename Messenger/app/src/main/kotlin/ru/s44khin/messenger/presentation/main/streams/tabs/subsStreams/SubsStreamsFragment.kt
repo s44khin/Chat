@@ -69,14 +69,8 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
         binding.progressIndicator.isVisible = state.isLoadingNetwork
 
         if (state.subsStreams != null) {
-            val recyclerViewState = binding.recyclerView.layoutManager!!.onSaveInstanceState()
-            val streamDiffUtilCallback = StreamDiffUtilCallback(adapter.streams, state.subsStreams)
-            val diffUtilResult = DiffUtil.calculateDiff(streamDiffUtilCallback, true)
-            adapter.streams = state.subsStreams
-            diffUtilResult.dispatchUpdatesTo(adapter)
-            binding.recyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
-
-            stockStreams = state.subsStreams.toList()
+            updateRecyclerView(state.subsStreams)
+            stockStreams = state.subsStreams
         }
 
         if (state.error != null)
@@ -87,14 +81,27 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
 
     override fun search(text: String) {
         Observable.fromCallable { stockStreams }
-            .map { streams -> streams.filter { it.name.contains(text, true) } }
+            .map { streams ->
+                streams.filter {
+                    it.name.contains(text, true)
+                }
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onNext = { adapter.streams = it },
+                onNext = { updateRecyclerView(it) },
                 onError = { }
             )
             .addTo(disposeBag)
+    }
+
+    private fun updateRecyclerView(list: List<ResultStream>) {
+        val recyclerViewState = binding.recyclerView.layoutManager?.onSaveInstanceState()
+        val streamDiffUtilCallback = StreamDiffUtilCallback(adapter.streams, list)
+        val diffUtilResult = DiffUtil.calculateDiff(streamDiffUtilCallback, true)
+        adapter.streams = list
+        diffUtilResult.dispatchUpdatesTo(adapter)
+        binding.recyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
     }
 
     override fun update() {
