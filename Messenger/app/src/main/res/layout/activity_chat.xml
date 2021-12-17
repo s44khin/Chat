@@ -78,6 +78,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/defaultPadding"
+        android:layout_marginBottom="@dimen/defaultPadding"
+        android:src="@drawable/ic_down"
+        app:backgroundTint="@color/background"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@id/view2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/gray" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"

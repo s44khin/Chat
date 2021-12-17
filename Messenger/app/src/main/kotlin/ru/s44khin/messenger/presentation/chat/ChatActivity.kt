@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ru.s44khin.messenger.MessengerApplication
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityChatBinding
@@ -98,6 +99,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
         initToolBar()
         initButtons()
         initColor()
+        initDownButton()
     }
 
     override fun render(state: State) {
@@ -187,8 +189,7 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
     }
 
     private fun initRecyclerView() = binding.recyclerView.apply {
-        val lm = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
-        layoutManager = lm
+        layoutManager = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
         adapter = this@ChatActivity.adapter
     }
 
@@ -226,6 +227,25 @@ class ChatActivity : ElmActivity<Event, Effect, State>(), MenuHandler {
 
                 true
             }
+        }
+    }
+
+    private fun initDownButton() {
+        binding.down.hide()
+
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 30) {
+                    binding.down.hide()
+                } else if (dy < 0) {
+                    binding.down.show()
+                }
+            }
+        })
+
+        binding.down.setOnClickListener {
+            binding.recyclerView.smoothScrollToPosition(adapter.itemCount - 1)
         }
     }
 
