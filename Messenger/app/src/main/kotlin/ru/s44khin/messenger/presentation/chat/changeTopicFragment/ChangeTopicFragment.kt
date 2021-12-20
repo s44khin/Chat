@@ -15,6 +15,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import ru.s44khin.messenger.MessengerApplication
+import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentSelectTopicBinding
 import ru.s44khin.messenger.presentation.chat.MenuHandler
 
@@ -40,6 +41,8 @@ class ChangeTopicFragment(
     private val binding get() = _binding!!
     private val repository = MessengerApplication.instance.appComponent.repository
     private val disposeBag = CompositeDisposable()
+
+    override fun getTheme() = R.style.BottomSheetNormalTheme
 
     override fun onCreateView(
         inflater: LayoutInflater,

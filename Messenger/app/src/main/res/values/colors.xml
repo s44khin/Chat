@@ -11,4 +11,5 @@
     <color name="messageSelected">#D6D6D6</color>
     <color name="tabBottom">#E3E3E3</color>
     <color name="lineCard">#E8E8E8</color>
+    <color name="bottomSheetBackground">#FFFFFF</color>
 </resources>

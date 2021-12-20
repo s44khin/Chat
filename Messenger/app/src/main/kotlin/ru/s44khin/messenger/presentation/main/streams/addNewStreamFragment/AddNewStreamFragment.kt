@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentAddNewStreamBinding
 import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 
@@ -20,6 +21,8 @@ class AddNewStreamFragment(
 
     private var _binding: FragmentAddNewStreamBinding? = null
     private val binding get() = _binding!!
+
+    override fun getTheme() = R.style.BottomSheetNormalTheme
 
     override fun onCreateView(
         inflater: LayoutInflater,

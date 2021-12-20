@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentProfileBinding
 
 class ProfileFragment(
@@ -26,6 +27,8 @@ class ProfileFragment(
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    override fun getTheme() = R.style.BottomSheetNormalTheme
 
     override fun onCreateView(
         inflater: LayoutInflater,

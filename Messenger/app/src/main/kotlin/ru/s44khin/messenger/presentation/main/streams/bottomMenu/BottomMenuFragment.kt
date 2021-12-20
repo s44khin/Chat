@@ -29,6 +29,8 @@ class BottomMenuFragment(
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
 
+    override fun getTheme() = R.style.BottomSheetNormalTheme
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

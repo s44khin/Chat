@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.FragmentEmojiBottomSheetBinding
 import ru.s44khin.messenger.presentation.chat.ChatItem
 import ru.s44khin.messenger.presentation.chat.MenuHandler
@@ -26,6 +27,8 @@ class EmojiBottomSheet(
 
     private var _binding: FragmentEmojiBottomSheetBinding? = null
     private val binding get() = _binding!!
+
+    override fun getTheme() = R.style.BottomSheetNormalTheme
 
     override fun onCreateView(
         inflater: LayoutInflater,
