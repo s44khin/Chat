@@ -49,6 +49,8 @@ class StreamsFragment : Fragment(), ChildFragments {
             lifecycle
         )
 
+        binding.viewPager.isSaveEnabled = false
+
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabs[position]
         }.attach()

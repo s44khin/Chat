@@ -3,16 +3,14 @@ package ru.s44khin.messenger.presentation.main
 import android.os.Bundle
 import androidx.core.view.WindowCompat
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import ru.s44khin.messenger.MessengerApplication
+import ru.s44khin.messenger.R
 import ru.s44khin.messenger.databinding.ActivityMainBinding
 import ru.s44khin.messenger.presentation.main.elm.Effect
 import ru.s44khin.messenger.presentation.main.elm.Event
 import ru.s44khin.messenger.presentation.main.elm.State
 import ru.s44khin.messenger.presentation.main.members.MembersFragment
-import ru.s44khin.messenger.presentation.main.navigation.Mediator
-import ru.s44khin.messenger.presentation.main.navigation.PagerAdapter
 import ru.s44khin.messenger.presentation.main.profile.ProfileFragment
 import ru.s44khin.messenger.presentation.main.streams.StreamsFragment
 import vivid.money.elmslie.android.base.ElmActivity
@@ -41,16 +39,27 @@ class MainActivity : ElmActivity<Event, Effect, State>() {
     }
 
     private fun initNavigation() {
-        val fragments = mapOf<Int, Fragment>(
-            0 to streamsFragment,
-            1 to membersFragment
-        )
-        val adapter = PagerAdapter(this, fragments)
-        binding.viewPager.adapter = adapter
-        binding.viewPager.clearAnimation()
-        Mediator(binding.navView, binding.viewPager) { _, vp2 ->
-            vp2.isUserInputEnabled = false
-        }.attach()
+        binding.navView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navStreams -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(binding.fragmentContainerView.id, streamsFragment)
+                        .commit()
+                    true
+                }
+                R.id.navMembers -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(binding.fragmentContainerView.id, membersFragment)
+                        .commit()
+                    true
+                }
+                else -> {
+                    error("Unknown menu item")
+                }
+            }
+        }
+
+        binding.navView.selectedItemId = R.id.navStreams
     }
 
     private fun initSearch() = binding.titleBar.search.doAfterTextChanged { text ->
