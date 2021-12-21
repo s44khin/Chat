@@ -6,7 +6,6 @@ import dagger.Provides
 import ru.s44khin.messenger.data.dataBase.MessengerDatabase
 import ru.s44khin.messenger.data.network.ZulipRepository
 import ru.s44khin.messenger.domain.LoadMessages
-import javax.inject.Singleton
 
 @ScreenScope
 @Component(
@@ -27,7 +26,7 @@ interface ChatComponent {
 
 @Module
 class ChatModule {
-    
+
     @Provides
     fun provideLoadMessages(
         repository: ZulipRepository,
