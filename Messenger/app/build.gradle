@@ -39,7 +39,6 @@ android {
 }
 
 dependencies {
-
     // Core
     def coreKtxVersion = "1.7.0"
     def appCompatVersion = "1.4.0"
@@ -55,6 +54,16 @@ dependencies {
     implementation "com.google.android.material:material:$materialVersion"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    // Tests
+    def uiAutomator = "2.2.0"
+    def jUnit = "4.13.2"
+    def androidJUnit = "1.1.3"
+    def espresso = "3.4.0"
+    implementation "androidx.test.uiautomator:uiautomator:$uiAutomator"
+    testImplementation "junit:junit:$jUnit"
+    androidTestImplementation "androidx.test.ext:junit:$androidJUnit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
 
     // Elmslie
     def elmslie = "1.3.0"
