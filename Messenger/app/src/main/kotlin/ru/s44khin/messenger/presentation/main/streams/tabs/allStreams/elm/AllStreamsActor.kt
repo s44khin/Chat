@@ -16,7 +16,7 @@ class AllStreamsActor(
     override fun execute(command: Command): Observable<Event> = when (command) {
 
         is Command.LoadStreamsNetwork -> loadAllStreams.fromNetwork()
-            .flattenAsObservable { it.streams.subList(0, 10) }
+            .flattenAsObservable { it.streams }
             .flatMap {
                 Observable.zip(
                     Observable.just(it),
