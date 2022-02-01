@@ -1,47 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
-
-    <androidx.constraintlayout.helper.widget.Flow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:constraint_referenced_ids="flow, send"
-        app:flow_horizontalGap="5dp" />
-
-    <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow"
-        android:layout_width="0dp"
-        android:layout_height="42dp"
-        android:background="@drawable/emoji_view_background"
-        android:padding="10dp"
-        app:constraint_referenced_ids="message, emoji" />
+    android:clipToPadding="false"
+    android:padding="8dp">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:autofillHints="no"
         android:background="@null"
-        android:hint="@string/write"
+        android:hint="@string/message"
         android:inputType="textCapSentences"
         android:maxLines="1"
-        android:singleLine="true"
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="17dp" />
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/send"
+        app:layout_constraintStart_toEndOf="@id/attach"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/emoji"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/attach"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackground"
-        android:contentDescription="@string/emojis"
-        android:src="@drawable/ic_emoji"
-        app:layout_constraintStart_toEndOf="@id/message"
-        app:layout_constraintTop_toTopOf="@id/message"
+        android:src="@drawable/ic_attach"
+        app:backgroundTint="@color/background"
+        app:elevation="2dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/gray" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -49,12 +39,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/send"
-        android:elevation="0dp"
-        android:src="@drawable/ic_attach"
+        android:src="@drawable/ic_send"
+        android:visibility="invisible"
+        app:backgroundTint="@color/primary"
+        app:elevation="2dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/send"
+        android:src="@drawable/ic_done"
+        android:visibility="invisible"
         app:backgroundTint="@color/message"
-        app:elevation="0dp"
-        app:fabCustomSize="42dp"
-        app:layout_constraintBottom_toBottomOf="@id/flow"
-        app:layout_constraintStart_toEndOf="@id/flow"
+        app:elevation="2dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/gray" />
 </androidx.constraintlayout.widget.ConstraintLayout>

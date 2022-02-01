@@ -36,14 +36,17 @@ class MessengerApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        initDI()
+        instance = this
+    }
 
+    private fun initDI() {
         appComponent = DaggerAppComponent.create()
         mainComponent = DaggerMainComponent.create()
         allStreamsComponent = DaggerAllStreamsComponent.create()
         subsStreamsComponent = DaggerSubsStreamsComponent.create()
         membersComponent = DaggerMembersComponent.create()
-        chatComponent = DaggerChatComponent.create()
-
-        instance = this
+        chatComponent = DaggerChatComponent.factory()
+            .create(appComponent)
     }
 }

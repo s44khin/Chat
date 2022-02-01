@@ -9,9 +9,8 @@ import ru.s44khin.messenger.data.dataBase.converters.ReactionConverter
 
 @Entity(tableName = "message")
 data class Message(
-
-    @ColumnInfo(name = "id")
     @PrimaryKey
+    @ColumnInfo(name = "id")
     @field:Json(name = "id")
     val id: Int,
 
@@ -34,6 +33,10 @@ data class Message(
     @ColumnInfo(name = "sender_full_name")
     @field:Json(name = "sender_full_name")
     val profile: String,
+
+    @ColumnInfo(name = "sender_email")
+    @field:Json(name = "sender_email")
+    val email: String,
 
     @ColumnInfo(name = "content")
     @field:Json(name = "content")

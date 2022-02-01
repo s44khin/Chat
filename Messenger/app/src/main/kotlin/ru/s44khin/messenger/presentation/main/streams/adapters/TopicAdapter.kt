@@ -6,13 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.s44khin.messenger.R
-import ru.s44khin.messenger.data.model.Topic
+import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.presentation.chat.ChatActivity
 
 class TopicAdapter(
-    private val streamId: Int,
-    private val streamName: String,
-    private val topics: List<Topic>
+    private val stream: ResultStream
 ) : RecyclerView.Adapter<TopicAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,7 +24,7 @@ class TopicAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val topic = topics[position]
+        val topic = stream.topics[position]
 
         holder.apply {
             name.text = topic.name
@@ -35,14 +33,15 @@ class TopicAdapter(
                 itemView.context.startActivity(
                     ChatActivity.createIntent(
                         holder.itemView.context,
-                        streamId,
-                        streamName,
-                        topic.name
+                        stream.streamId,
+                        stream.name,
+                        topic.name,
+                        stream.color
                     )
                 )
             }
         }
     }
 
-    override fun getItemCount() = topics.size
+    override fun getItemCount() = stream.topics.size
 }

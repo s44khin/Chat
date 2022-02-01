@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/leftMessageRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp">
+
+    <ImageView
+        android:id="@+id/leftMessageAvatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:foreground="?android:selectableItemBackground"
+        android:src="@drawable/ic_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/leftMessageCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:cardBackgroundColor="@color/message"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toEndOf="@id/leftMessageAvatar"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/leftMessageImage"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_message_preview"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@id/leftMessageProfile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/leftMessageProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:maxWidth="180dp"
+                android:maxLines="1"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/leftMessageImage"
+                tools:text="Oleg Tinkoff" />
+
+            <TextView
+                android:id="@+id/leftMessageTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/to"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@id/leftMessageProfile"
+                app:layout_constraintTop_toBottomOf="@id/leftMessageImage" />
+
+            <TextView
+                android:id="@+id/leftMessageTopicName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="10dp"
+                android:maxWidth="180dp"
+                android:maxLines="1"
+                android:paddingEnd="10dp"
+                android:textStyle="italic"
+                app:layout_constraintStart_toEndOf="@id/leftMessageTo"
+                app:layout_constraintTop_toBottomOf="@id/leftMessageImage"
+                tools:text="topicName" />
+
+            <TextView
+                android:id="@+id/leftMessageContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="start"
+                android:maxWidth="250dp"
+                android:paddingEnd="10dp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/leftMessageTo"
+                tools:text="Здраствуйте! Не желаете оформить карту по моей реферальной ссылке?" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/leftMessageReactions"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/leftMessageCardView"
+        app:layout_constraintTop_toBottomOf="@id/leftMessageCardView" />
+</androidx.constraintlayout.widget.ConstraintLayout>

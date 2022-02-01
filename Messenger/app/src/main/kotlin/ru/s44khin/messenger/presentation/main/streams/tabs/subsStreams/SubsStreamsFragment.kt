@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -17,6 +19,8 @@ import ru.s44khin.messenger.data.model.ResultStream
 import ru.s44khin.messenger.databinding.FragmentTabStreamsBinding
 import ru.s44khin.messenger.presentation.main.ChildFragments
 import ru.s44khin.messenger.presentation.main.streams.adapters.StreamAdapter
+import ru.s44khin.messenger.presentation.main.streams.adapters.StreamDiffUtilCallback
+import ru.s44khin.messenger.presentation.main.streams.addNewStreamFragment.AddNewStreamFragment
 import ru.s44khin.messenger.presentation.main.streams.bottomMenu.BottomMenuFragment
 import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 import ru.s44khin.messenger.presentation.main.streams.tabs.subsStreams.elm.Effect
@@ -35,7 +39,7 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
     private var _binding: FragmentTabStreamsBinding? = null
     private val binding get() = _binding!!
     private val disposeBag = CompositeDisposable()
-    private val adapter = StreamAdapter(this)
+    private val adapter = StreamAdapter(this, emptyList())
     private var stockStreams: List<ResultStream>? = null
     override val initEvent = Event.Ui.LoadStreamsFirst
 
@@ -55,6 +59,12 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        initCreateStream()
+    }
+
+    override fun onResume() {
+        store.accept(Event.Ui.LoadStreamsNetwork)
+        super.onResume()
     }
 
     override fun render(state: State) {
@@ -62,8 +72,8 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
         binding.progressIndicator.isVisible = state.isLoadingNetwork
 
         if (state.subsStreams != null) {
-            adapter.streams = state.subsStreams
-            stockStreams = state.subsStreams.toList()
+            updateRecyclerView(state.subsStreams)
+            stockStreams = state.subsStreams
         }
 
         if (state.error != null)
@@ -74,14 +84,27 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
 
     override fun search(text: String) {
         Observable.fromCallable { stockStreams }
-            .map { streams -> streams.filter { it.name.contains(text, true) } }
+            .map { streams ->
+                streams.filter {
+                    it.name.contains(text, true)
+                }
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onNext = { adapter.streams = it },
+                onNext = { updateRecyclerView(it) },
                 onError = { }
             )
             .addTo(disposeBag)
+    }
+
+    private fun updateRecyclerView(list: List<ResultStream>) {
+        val recyclerViewState = binding.recyclerView.layoutManager?.onSaveInstanceState()
+        val streamDiffUtilCallback = StreamDiffUtilCallback(adapter.streams, list)
+        val diffUtilResult = DiffUtil.calculateDiff(streamDiffUtilCallback, true)
+        adapter.streams = list
+        diffUtilResult.dispatchUpdatesTo(adapter)
+        binding.recyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
     }
 
     override fun update() {
@@ -113,6 +136,28 @@ class SubsStreamsFragment : ElmFragment<Event, Effect, State>(), ChildFragments,
             parentFragmentManager,
             BottomMenuFragment.TAG
         )
+    }
+
+    override fun createNewStream(name: String, description: String) {
+        store.accept(Event.Ui.CreateNewStream(name, description))
+    }
+
+    private fun initCreateStream() {
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    binding.newStream.hide()
+                } else if (dy < 0) {
+                    binding.newStream.show()
+                }
+            }
+        })
+
+        binding.newStream.setOnClickListener {
+            AddNewStreamFragment.newInstance(this)
+                .show(parentFragmentManager, AddNewStreamFragment.TAG)
+        }
     }
 
     override fun onDestroyView() {

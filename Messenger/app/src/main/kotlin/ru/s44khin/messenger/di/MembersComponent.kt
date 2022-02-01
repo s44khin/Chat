@@ -11,7 +11,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [MembersModule::class])
 interface MembersComponent {
-
     val membersStore: ElmStoreCompat<Event, State, Effect, Command>
 }
 

@@ -1,9 +1,7 @@
 package ru.s44khin.messenger.presentation.chat.elm
 
+import ru.s44khin.messenger.data.network.api.UserInfo
 import ru.s44khin.messenger.presentation.chat.ChatItem
-import ru.s44khin.messenger.utils.MY_AVATAR
-import ru.s44khin.messenger.utils.MY_ID
-import ru.s44khin.messenger.utils.MY_NAME
 import ru.s44khin.messenger.utils.parse
 import vivid.money.elmslie.core.store.dsl_reducer.DslReducer
 
@@ -13,15 +11,23 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
 
         is Event.Internal.ErrorLoadingNetwork -> {
             state { copy(error = event.error, isLoadingNetwork = false) }
-            effects { Effect.MessagesLoadError(event.error) }
         }
 
         is Event.Internal.ErrorLoadingDB -> {
-            state { copy() }
+            state { copy(isLoadingDB = true, isLoadingNetwork = true) }
+            commands { +Command.LoadPage(state.pageNumber) }
         }
 
         is Event.Internal.ErrorSendMessage -> {
             state { copy(error = event.error) }
+        }
+
+        is Event.Internal.ErrorDeleteMessage -> {
+            state { copy() }
+        }
+
+        is Event.Internal.EditMessageError -> {
+            state { copy() }
         }
 
         is Event.Internal.ReactionAddError -> {
@@ -29,6 +35,10 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
         }
 
         is Event.Internal.ReactionRemoveError -> {
+            state { copy(error = event.error) }
+        }
+
+        is Event.Internal.ErrorSendPicture -> {
             state { copy(error = event.error) }
         }
 
@@ -53,17 +63,15 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
                 val newMessages = state.messages?.toMutableList() ?: mutableListOf()
                 val currentTime = parse((System.currentTimeMillis() / 1000).toInt())
 
-                if ((newMessages.last() as ChatItem.Message).time != currentTime)
-                    newMessages.add(ChatItem.Date(currentTime))
-
                 newMessages.add(
-                    ChatItem.Message(
-                        id = MY_ID,
+                    ChatItem(
+                        id = UserInfo.ID,
                         topicName = event.topicName,
                         time = currentTime,
                         content = event.content,
-                        profile = MY_NAME,
-                        avatar = MY_AVATAR,
+                        profile = UserInfo.NAME,
+                        avatar = UserInfo.AVATAR,
+                        email = UserInfo.EMAIL,
                         isMyMessage = true,
                         reactions = mutableListOf()
                     )
@@ -73,16 +81,33 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
             }
         }
 
+        is Event.Internal.PictureSent -> {
+            state { copy(imageUri = event.uri) }
+            effects { Effect.ImageIsSend }
+        }
+
         is Event.Internal.ReactionAdded -> {
-            state { copy() }
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadPage(state.pageNumber) }
+        }
+
+        is Event.Internal.MessageTopicChanged -> {
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadPage(state.pageNumber) }
         }
 
         is Event.Internal.ReactionRemoved -> {
-            state { copy() }
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadPage(state.pageNumber) }
         }
 
-        is Event.Ui.LoadFirstPage -> {
-            state { copy(isLoadingNetwork = true, error = null) }
+        is Event.Internal.MessageDeleted -> {
+            state { copy(isLoadingNetwork = true) }
+            commands { +Command.LoadPage(state.pageNumber) }
+        }
+
+        is Event.Internal.MessageEdited -> {
+            state { copy(isLoadingNetwork = true) }
             commands { +Command.LoadPage(state.pageNumber) }
         }
 
@@ -100,12 +125,33 @@ class ChatReducer : DslReducer<Event, State, Effect, Command>() {
             commands { +Command.SendMessage(event.content) }
         }
 
+        is Event.Ui.SendMessageToTopic -> {
+            commands { +Command.SendMessageToTopic(event.content, event.topicName) }
+        }
+
+        is Event.Ui.EditMessageTopic -> {
+            commands { +Command.EditMessageTopic(event.id, event.topicName) }
+        }
+
         is Event.Ui.AddReaction -> {
             commands { +Command.AddReaction(event.messageId, event.emojiName) }
         }
 
         is Event.Ui.RemoveReaction -> {
             commands { +Command.RemoveReaction(event.messageId, event.emojiName) }
+        }
+
+        is Event.Ui.DeleteMessage -> {
+            commands { +Command.DeleteMessage(event.id) }
+        }
+
+        is Event.Ui.EditMessage -> {
+            commands { +Command.EditMessage(event.id, event.content) }
+        }
+
+        is Event.Ui.SendPicture -> {
+            effects { Effect.SendingImage }
+            commands { +Command.SendPicture(event.filePart) }
         }
     }
 }

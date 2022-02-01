@@ -1,16 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:maxHeight="450dp">
+    android:clipToPadding="false"
+    android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/lineMenu"
+        android:layout_width="60dp"
+        android:layout_height="8dp"
+        app:cardBackgroundColor="@color/tabBottom"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/defaultPadding"
+        android:textColor="@color/textColor"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/lineMenu"
+        tools:text="Здраствуйте! Не желаете оформить карту по моей реферальной ссылке?" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/defaultPadding"
+        android:background="@color/lineCard"
+        app:layout_constraintTop_toBottomOf="@id/content" />
+
+    <TextView
+        android:id="@+id/menuCopy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/copy"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_copy"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line" />
+
+    <TextView
+        android:id="@+id/menuChangeTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/change_topic"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_change"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuCopy" />
+
+    <TextView
+        android:id="@+id/menuEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/edit"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_edit"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuChangeTopic" />
+
+    <TextView
+        android:id="@+id/menuDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawablePadding="10dp"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/defaultPadding"
+        android:paddingBottom="@dimen/defaultPadding"
+        android:text="@string/delete"
+        android:textColor="@color/textColor"
+        app:drawableStartCompat="@drawable/ic_delete"
+        app:drawableTint="@color/textColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuEdit" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineCard"
+        app:layout_constraintTop_toBottomOf="@id/menuDelete" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:padding="16dp"
+        android:paddingTop="@dimen/defaultPadding"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

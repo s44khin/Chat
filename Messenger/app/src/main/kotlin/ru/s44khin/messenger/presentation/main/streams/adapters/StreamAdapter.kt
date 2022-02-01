@@ -1,6 +1,5 @@
 package ru.s44khin.messenger.presentation.main.streams.adapters
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -11,19 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.s44khin.messenger.R
 import ru.s44khin.messenger.data.model.ResultStream
+import ru.s44khin.messenger.presentation.chat.ChatActivity
 import ru.s44khin.messenger.presentation.main.streams.tabs.MenuHandler
 import ru.s44khin.messenger.utils.parse2
 
 class StreamAdapter(
-    private val menuHandler: MenuHandler
+    private val menuHandler: MenuHandler,
+    var streams: List<ResultStream>
 ) : RecyclerView.Adapter<StreamAdapter.ViewHolder>() {
-
-    var streams: List<ResultStream> = emptyList()
-        @SuppressLint("NotifyDataSetChanged")
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val date: TextView = itemView.findViewById(R.id.streamDate)
@@ -78,6 +72,23 @@ class StreamAdapter(
                 }
             }
 
+            itemView.setOnLongClickListener {
+                menuHandler.showMenu(stream)
+                true
+            }
+
+            itemView.setOnClickListener {
+                itemView.context.startActivity(
+                    ChatActivity.createIntent(
+                        context = itemView.context,
+                        streamId = stream.streamId,
+                        streamName = stream.name,
+                        topicName = null,
+                        color = stream.color
+                    )
+                )
+            }
+
             // Тут description.text == "." нужно потому что все потоки кроме
             // главного имеют описание ".", у меня внутренний перфекционист умирает
             description.visibility = if (description.text == "" || description.text == ".")
@@ -85,7 +96,7 @@ class StreamAdapter(
             else
                 View.VISIBLE
 
-            topics.adapter = TopicAdapter(stream.streamId, stream.name, stream.topics)
+            topics.adapter = TopicAdapter(stream)
         }
     }
 

@@ -19,7 +19,7 @@ object RequestManager {
 
         val okHttpClient = OkHttpClient.Builder()
         okHttpClient.authenticator { _, response ->
-            val credentials = Credentials.basic(EMAIL, API_KEY)
+            val credentials = Credentials.basic(UserInfo.EMAIL, UserInfo.API_KEY)
             response.request.newBuilder().header("Authorization", credentials).build()
         }
         okHttpClient.addInterceptor(httpLoggingInterceptor)

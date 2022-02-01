@@ -8,7 +8,7 @@ import ru.s44khin.messenger.data.model.Reaction
 class ReactionConverter {
 
     companion object {
-        private const val SPLITTER = "/#/"
+        private const val SPLITTER = "?#$%?"
         private val moshi: Moshi = Moshi.Builder().build()
         private val jsonAdapter: JsonAdapter<Reaction> =
             moshi.adapter(Reaction::class.java)

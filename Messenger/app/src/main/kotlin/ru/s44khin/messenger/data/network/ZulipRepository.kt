@@ -1,6 +1,7 @@
 package ru.s44khin.messenger.data.network
 
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import ru.s44khin.messenger.data.model.*
 
 class ZulipRepository(
@@ -32,32 +33,38 @@ class ZulipRepository(
 
     fun getSelfProfile(): Single<Profile> = service.getSelfProfile()
 
-    fun getMessages(
-        streamId: Int,
-        topicName: String,
-        pageNumber: Int
-    ): Single<BaseMessages> {
+    fun getMessages(streamId: Int, topicName: String?, pageNumber: Int): Single<BaseMessages> {
         val numBefore = pageNumber * 50 + 50
-        val numAfter = pageNumber * 50
 
-        return service.getMessages(
-            narrow = "[{\"operator\": \"stream\", \"operand\": $streamId}, " +
-                    "{\"operator\": \"topic\", \"operand\": \"$topicName\"}]",
-            numBefore = numBefore,
-            numAfter = numAfter
-        )
+        return if (topicName == null)
+            service.getMessages(
+                narrow = "[{\"operator\": \"stream\", \"operand\": $streamId}]",
+                numBefore = numBefore,
+            )
+        else
+            service.getMessages(
+                narrow = "[{\"operator\": \"stream\", \"operand\": $streamId}, " +
+                        "{\"operator\": \"topic\", \"operand\": \"$topicName\"}]",
+                numBefore = numBefore
+            )
     }
 
     fun sendMessage(
         streamName: String,
-        topicName: String,
+        topicName: String?,
         content: String
-    ): Single<ResultMessage> = service.sendMessage(streamName, topicName, content)
+    ): Single<ResultMessage> = service.sendMessage(streamName, topicName ?: "(no topic)", content)
+
+    fun editMessage(id: Int, content: String) = service.editMessage(id, content)
+
+    fun editMessageTopic(id: Int, topic: String) = service.editMessageTopic(id, topic)
+
+    fun deleteMessage(id: Int): Single<Result> = service.deleteMessage(id)
 
     fun addReaction(messageId: Int, emojiName: String) = service.addReaction(messageId, emojiName)
 
-    fun removeReaction(
-        messageId: Int,
-        emojiName: String
-    ) = service.deleteReaction(messageId, emojiName)
+    fun removeReaction(messageId: Int, emojiName: String) =
+        service.deleteReaction(messageId, emojiName)
+
+    fun sendPicture(filePart: MultipartBody.Part) = service.sendPicture(filePart)
 }

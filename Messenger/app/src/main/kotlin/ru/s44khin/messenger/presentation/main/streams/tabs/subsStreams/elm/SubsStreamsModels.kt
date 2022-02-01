@@ -19,6 +19,11 @@ sealed class Event {
 
         data class UnsubscribeFromStream(val streamName: String) : Ui()
 
+        data class CreateNewStream(
+            val streamName: String,
+            val description: String
+        ) : Ui()
+
         data class SetStreamColor(
             val streamId: Int,
             val color: String
@@ -43,6 +48,8 @@ sealed class Event {
 
         object SuccessfulUnpinned : Internal()
 
+        object StreamCreated : Internal()
+
         data class ErrorLoadingNetwork(val error: Throwable) : Internal()
 
         data class ErrorLoadingDB(val error: Throwable?) : Internal()
@@ -54,6 +61,8 @@ sealed class Event {
         object ErrorPinned : Internal()
 
         object ErrorUnpinned : Internal()
+
+        object ErrorCreateStream : Internal()
     }
 }
 
@@ -68,6 +77,8 @@ sealed class Effect {
     object ErrorPinned : Effect()
 
     object ErrorUnpinned : Effect()
+
+    object ErrorCreateStream : Effect()
 }
 
 sealed class Command {
@@ -86,4 +97,9 @@ sealed class Command {
     data class PinStreamToTop(val streamId: Int) : Command()
 
     data class UnpinFromTop(val streamId: Int) : Command()
+
+    data class CreateNewStream(
+        val streamName: String,
+        val description: String
+    ) : Command()
 }

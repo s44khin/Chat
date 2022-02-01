@@ -6,19 +6,27 @@ import dagger.Provides
 import ru.s44khin.messenger.data.dataBase.MessengerDatabase
 import ru.s44khin.messenger.data.network.ZulipRepository
 import ru.s44khin.messenger.domain.LoadMessages
-import javax.inject.Singleton
 
-@Singleton
-@Component(modules = [ChatModule::class])
+@ScreenScope
+@Component(
+    modules = [ChatModule::class],
+    dependencies = [AppComponent::class]
+)
 interface ChatComponent {
 
     val loadMessages: LoadMessages
+
+    @Component.Factory
+    interface Factory {
+        fun create(
+            appComponent: AppComponent
+        ): ChatComponent
+    }
 }
 
-@Module(includes = [AppModule::class])
+@Module
 class ChatModule {
 
-    @Singleton
     @Provides
     fun provideLoadMessages(
         repository: ZulipRepository,

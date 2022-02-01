@@ -17,7 +17,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [AppModule::class])
 interface AppComponent {
-
     val repository: ZulipRepository
     val database: MessengerDatabase
 }

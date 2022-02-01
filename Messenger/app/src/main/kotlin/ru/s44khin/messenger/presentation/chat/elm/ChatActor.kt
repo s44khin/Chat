@@ -4,9 +4,9 @@ import io.reactivex.Observable
 import ru.s44khin.messenger.data.model.AdapterReaction
 import ru.s44khin.messenger.data.model.Message
 import ru.s44khin.messenger.data.model.Reaction
+import ru.s44khin.messenger.data.network.api.UserInfo
 import ru.s44khin.messenger.domain.LoadMessages
 import ru.s44khin.messenger.presentation.chat.ChatItem
-import ru.s44khin.messenger.utils.MY_ID
 import ru.s44khin.messenger.utils.parse
 import vivid.money.elmslie.core.ActorCompat
 
@@ -14,7 +14,7 @@ class ChatActor(
     private val loadMessages: LoadMessages,
     private val streamId: Int,
     private val streamName: String,
-    private val topicName: String
+    private val topicName: String?
 ) : ActorCompat<Command, Event> {
 
     override fun execute(command: Command): Observable<Event> = when (command) {
@@ -28,7 +28,7 @@ class ChatActor(
                 { error -> Event.Internal.ErrorLoadingNetwork(error) }
             )
 
-        is Command.LoadMessagesDB -> loadMessages.fromDataBase(topicName)
+        is Command.LoadMessagesDB -> loadMessages.fromDataBase(topicName ?: "")
             .mapEvents(
                 { messages -> Event.Internal.MessagesLoadedDB(messages.toListOfChatItems()) },
                 { error -> Event.Internal.ErrorLoadingDB(error) }
@@ -36,7 +36,23 @@ class ChatActor(
 
         is Command.SendMessage -> loadMessages.sendMessage(streamName, topicName, command.content)
             .mapEvents(
-                { Event.Internal.MessageSent(command.content, topicName) },
+                { Event.Internal.MessageSent(command.content, topicName ?: "(no topic)") },
+                { error -> Event.Internal.ErrorSendMessage(error) }
+            )
+
+        is Command.SendMessageToTopic -> loadMessages.sendMessage(
+            streamName,
+            command.topicName,
+            command.content
+        )
+            .mapEvents(
+                { Event.Internal.MessageSent(command.content, command.topicName) },
+                { error -> Event.Internal.ErrorSendMessage(error) }
+            )
+
+        is Command.EditMessageTopic -> loadMessages.editMessageTopic(command.id, command.topicName)
+            .mapEvents(
+                { Event.Internal.MessageTopicChanged },
                 { error -> Event.Internal.ErrorSendMessage(error) }
             )
 
@@ -49,10 +65,29 @@ class ChatActor(
         is Command.RemoveReaction -> loadMessages.removeReaction(
             command.messageId,
             command.emojiName
-        ).mapEvents(
-            { Event.Internal.ReactionRemoved },
-            { error -> Event.Internal.ReactionRemoveError(error) }
         )
+            .mapEvents(
+                { Event.Internal.ReactionRemoved },
+                { error -> Event.Internal.ReactionRemoveError(error) }
+            )
+
+        is Command.DeleteMessage -> loadMessages.deleteMessage(command.id)
+            .mapEvents(
+                { Event.Internal.MessageDeleted },
+                { error -> Event.Internal.ErrorDeleteMessage(error) }
+            )
+
+        is Command.EditMessage -> loadMessages.editMessage(command.id, command.content)
+            .mapEvents(
+                { Event.Internal.MessageEdited },
+                { error -> Event.Internal.EditMessageError(error) }
+            )
+
+        is Command.SendPicture -> loadMessages.sendPicture(command.filePart)
+            .mapEvents(
+                { result -> Event.Internal.PictureSent(result.uri) },
+                { error -> Event.Internal.ErrorSendPicture(error) }
+            )
     }
 
     private fun List<Reaction>.toAdapterReactions(): MutableList<AdapterReaction> {
@@ -67,7 +102,7 @@ class ChatActor(
             else
                 map[reaction.emojiCode to reaction.emojiName] = 1
 
-            if (reaction.user.id == MY_ID)
+            if (reaction.user.id == UserInfo.ID)
                 reactionsILiked.add(reaction.emojiCode)
         }
 
@@ -84,28 +119,28 @@ class ChatActor(
         return result
     }
 
-    private fun Message.toMessageItem(topicName: String) = ChatItem.Message(
+    private fun Message.toChatItem(avatarIsNull: Boolean = false) = ChatItem(
         id = this.id,
-        topicName = topicName,
+        topicName = this.topicName,
         time = parse(this.timestamp),
-        avatar = this.avatar,
+        avatar = if (avatarIsNull) null else this.avatar,
+        email = this.email,
         profile = this.profile,
         content = this.content,
         reactions = this.reactions.toAdapterReactions(),
-        isMyMessage = MY_ID == this.senderId
+        isMyMessage = UserInfo.ID == this.senderId
     )
 
     private fun List<Message>.toListOfChatItems(): List<ChatItem> {
-        val result = mutableListOf(
-            ChatItem.Date(parse(this[0].timestamp)),
-            this[0].toMessageItem(topicName)
-        )
+        val result = mutableListOf<ChatItem>()
 
-        for (i in 0 until this.lastIndex) {
-            if (parse(this[i].timestamp) != parse(this[i + 1].timestamp))
-                result.add(ChatItem.Date(parse(this[i + 1].timestamp)))
+        result.add(this[0].toChatItem())
 
-            result.add(this[i + 1].toMessageItem(topicName))
+        for (i in 1..lastIndex) {
+            if (this[i].senderId == this[i - 1].senderId)
+                result.add(this[i].toChatItem(true))
+            else
+                result.add(this[i].toChatItem())
         }
 
         return result

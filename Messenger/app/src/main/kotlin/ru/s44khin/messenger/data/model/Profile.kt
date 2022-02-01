@@ -7,9 +7,8 @@ import com.squareup.moshi.Json
 
 @Entity(tableName = "profile")
 data class Profile(
-
-    @ColumnInfo(name = "user_id")
     @PrimaryKey
+    @ColumnInfo(name = "user_id")
     @field:Json(name = "user_id")
     val id: Int,
 

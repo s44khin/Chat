@@ -10,8 +10,8 @@ import ru.s44khin.messenger.data.model.ResultStream
 @Dao
 interface StreamsDao {
 
-    @Query("SELECT * FROM stream")
-    fun getAll(): Single<List<ResultStream>>
+    @Query("SELECT * FROM stream WHERE subscription=:subscription")
+    fun getAll(subscription: Boolean = false): Single<List<ResultStream>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(streams: List<ResultStream>)
